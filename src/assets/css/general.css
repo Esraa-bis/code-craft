@@ -7,14 +7,12 @@
 html {
   /* font-size: 10px; */
   /* 10px / 16px = 0.625 = 62.5% */
-  font-size: 62.5%;
+  /* font-size: 62.5%; */
 }
 
 body {
   font-family: "Rubik", sans-serif;
-  line-height: 1;
-  font-weight: 400;
-  color: #555;
+  color: #383838;
 }
 
 /**************************/
