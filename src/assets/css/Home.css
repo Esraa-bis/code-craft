@@ -1,17 +1,17 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-.Explore-Courses-Text{
-    text-align: center;
-    font-size: 30px;
+.Explore-Courses-Text {
+  text-align: center;
+  font-size: 30px;
 }
-.main-container{
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-gap: 20px;
-margin-top: 20px ;
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
 }

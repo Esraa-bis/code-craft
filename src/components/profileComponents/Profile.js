@@ -1,11 +1,11 @@
-import ProfileEditMenu from './ProfileEditMenu';
+import ProfileEditMenu from "./ProfileEditMenu";
 
 function Profile() {
-    return (
-        <main>
-            <ProfileEditMenu/>
-        </main>
-    );
+  return (
+    <main>
+      <ProfileEditMenu />
+    </main>
+  );
 }
 
 export default Profile;
