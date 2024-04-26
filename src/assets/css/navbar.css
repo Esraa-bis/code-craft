@@ -195,4 +195,14 @@
   .sign-up-btn {
     background-color: var(--buttons-color);
   }
+
+  .sign-up-btn,
+  .sign-in-btn {
+    color: #fff;
+    text-decoration: none;
+    line-height: 40px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+  }
 }
