@@ -1,23 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
-
+import './assets/css/general.css';
+import { Routes, Route } from 'react-router-dom';
+import Home from './components/home';
+import Discussion from './components/Discussion';
+import Navbar from './components/navbar';
+import Cart from './components/Cart'; 
+import SignIn from './components/SignIn';
+import SignUp from './components/SignUp';
+import ForgotPassword from './components/ForgotPassword';
+import EmailCode from './components/EmailCode';
+import Footer from './components/footer';
+import ResetPassword from './components/ResetPassword';
+import Profile from './components/profileComponents/Profile';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/discussion' element={<Discussion />} />
+        <Route path='/Cart' element={<Cart/>} />
+        <Route path='/SignIn' element={<SignIn/>} />
+        <Route path='/SignUp' element={<SignUp/>} />
+        <Route path='/ForgotPassword' element={<ForgotPassword/>} />
+        <Route path='/EmailCode' element={<EmailCode/>} />
+        <Route path='/ResetPassword' element={<ResetPassword />} />
+        <Route path='/Profile' element={<Profile/>} />
+      </Routes>
+      <Footer/>
     </div>
   );
 }

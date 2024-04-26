@@ -1,0 +1,12 @@
+.section-title{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    
+}
+.HomeCoursesSections{
+    padding: 20px;
+    width: 90%;
+    border: 1px solid rgb(131, 131, 131);
+    border-radius: 4px;
+}

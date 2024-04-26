@@ -1,0 +1,35 @@
+
+.profile-icon {
+
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.courses-drop-down{
+display: inline-block;
+margin:0;
+padding: 0;
+
+}
+.avatar.dropdown-menu {
+    text-align: left;
+    width: 50px;
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+.arabic-dropdown-menu{
+        text-align: right !important;
+}
+
+.dropdown-item {
+    font-size: 14px;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+} 
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #000;
+}

@@ -1,0 +1,7 @@
+
+.ProfileEditSection{
+    list-style-type: none;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+}
