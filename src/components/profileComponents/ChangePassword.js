@@ -1,17 +1,20 @@
+import React from "react";
 import styles from "./Profile.module.css";
-// import component
-import profileSectionTitleAndDescription from "./ProfileContentTitle";
+// other compnents
+import ProfileSectionTitleAndDescription from "./ProfileContentTitle";
+
+
 function ChangePassword() {
   return (
     <>
-      {" "}
-      <profileSectionTitleAndDescription
+      
+      <ProfileSectionTitleAndDescription
         title="Change Password"
-        description="Please fill out the form below to update your password
-"
+        description="Please fill out the form below to update your password"
       />
-      <div className={`${styles.mainContet}`}></div>
+      <div className={styles.mainContent}></div>
     </>
   );
 }
+
 export default ChangePassword;

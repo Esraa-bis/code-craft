@@ -50,7 +50,7 @@ i18n
 
 //////////////////////////////////
 // appears only when user sign in
-let isUserSignedIn = false;
+let isUserSignedIn = true;
 // appears only when user keeps streak &sign in
 let keepStreak = false;
 // appears only when user added his pp &sign in
