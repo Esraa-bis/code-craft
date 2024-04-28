@@ -1,4 +1,4 @@
-import styles from "./Profile.module.css";
+import styles from "../assets/css/Profile.module.css";
 function profileSectionTitleAndDescription(props) {
   return (
     <div className={styles.TitleAndDescription}>

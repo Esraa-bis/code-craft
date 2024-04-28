@@ -1,11 +1,11 @@
 import "../assets/css/CourseCard.css";
 //
 import i18n from "i18next";
-import { useTranslation, initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
-import { useEffect } from "react";
 import HttpApi from "i18next-http-backend";
 import cookies from "js-cookie";
+import { useEffect } from "react";
+import { initReactI18next, useTranslation } from "react-i18next";
 
 i18n
   .use(LanguageDetector)

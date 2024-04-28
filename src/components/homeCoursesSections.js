@@ -1,15 +1,12 @@
 // for translate into arabic
 import i18n from "i18next";
-import { useTranslation, initReactI18next } from "react-i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
-import HttpApi from "i18next-http-backend";
 import cookies from "js-cookie";
 import { useEffect } from "react";
 //
-import CourseCard from "./CourseCard";
+import "../assets/css/HomeCoursesSections.css";
 import CardImg1 from "../assets/images/css.avif";
 import CardImg2 from "../assets/images/js.avif";
-import "../assets/css/HomeCoursesSections.css";
+import CourseCard from "./CourseCard";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -107,7 +104,7 @@ const breakpoints = {
 };
 
 function HomeCoursesSections(props) {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const lng = cookies.get("i18next") || "en";
   useEffect(() => {
     window.document.dir = i18n.dir();

@@ -1,17 +1,22 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import "./assets/css/general.css";
-import { Routes, Route } from "react-router-dom";
-import Home from "./components/home";
 import Discussion from "./components/Discussion";
-import Navbar from "./components/navbar";
-import Cart from "./components/Cart";
+import EmailCode from "./components/EmailCode";
+import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
-import ForgotPassword from "./components/ForgotPassword";
-import EmailCode from "./components/EmailCode";
 import Footer from "./components/footer";
-import ResetPassword from "./components/ResetPassword";
-import Profile from "./components/profileComponents/Profile";
+import Home from "./components/home";
+import Navbar from "./components/navbar";
+import ChangePassword from "./pages/ChangePassword";
+import Profile from "./pages/Profile";
+import DeleteAccount from "./pages/deleteAccount";
+import ChangePhoto from "./pages/ChangePhoto";
+import PaymentMethods from "./pages/PaymentMethods";
+import Cart from "./pages/Cart";
+
 function App() {
   return (
     <div className="App">
@@ -26,7 +31,12 @@ function App() {
         <Route path="/EmailCode" element={<EmailCode />} />
         <Route path="/ResetPassword" element={<ResetPassword />} />
         <Route path="/Profile" element={<Profile />} />
+        <Route path="/ChangePassword" element={<ChangePassword />} />
+        <Route path="/DeleteAccount" element={<DeleteAccount />} />
+        <Route path="/ChangePhoto" element={<ChangePhoto />} />
+        <Route path="/PaymentMethods" element={<PaymentMethods />} />
       </Routes>
+
       <Footer />
     </div>
   );

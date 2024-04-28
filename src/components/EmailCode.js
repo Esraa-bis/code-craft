@@ -1,4 +1,5 @@
 import styles from "../assets/css/signForms.module.css";
+
 function EmailCode() {
   return (
     <section className={`${styles.signFormSection}`}>

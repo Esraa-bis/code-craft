@@ -1,12 +1,10 @@
 import i18n from "i18next";
-import { useEffect } from "react";
-import { useTranslation, initReactI18next } from "react-i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
-import HttpApi from "i18next-http-backend";
 import cookies from "js-cookie";
-import ProfilePicture from "../assets/images/pp.jpg";
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import "../assets/css/profileDropDown.css";
+import ProfilePicture from "../assets/images/pp.jpg";
 
 let ProfilePic = ProfilePicture;
 

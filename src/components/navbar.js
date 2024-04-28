@@ -5,25 +5,22 @@ import { Link } from "react-router-dom";
 import LogoImg from "../assets/images/logo.png";
 import StreakOff from "../assets/images/streak-off.png";
 import StreakOn from "../assets/images/streak-on.png";
-import ProfilePic from "../assets/images/pp.jpg";
 
 // for styles
 import "../assets/css/general.css";
 import "../assets/css/navbar.css";
 
 // for translate into arabicP
-import React, { useEffect } from "react";
 import i18n from "i18next";
-import { useTranslation, initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import HttpApi from "i18next-http-backend";
 import cookies from "js-cookie";
+import React, { useEffect } from "react";
+import { initReactI18next, useTranslation } from "react-i18next";
 
 // imported components
 import CoursesDropDownNavMenu from "./navcourses.js";
 import ProfileDropDown from "./profileDropDown.js";
-import Cart from "./Cart.js";
-import SignIn from "./SignIn.js";
 
 i18n
   .use(LanguageDetector)
@@ -57,7 +54,7 @@ let keepStreak = false;
 
 ////////////////////
 function Navbar() {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const lng = cookies.get("i18next") || "en";
   useEffect(() => {
     window.document.dir = i18n.dir();
@@ -166,7 +163,6 @@ function SignInAndUp() {
   );
 }
 function UserBasicsInNav() {
-  const hasProfilePicture = Boolean(ProfilePic);
   return (
     <div className="profile-nav-info">
       <Link title="Streak">

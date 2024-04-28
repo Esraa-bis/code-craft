@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 // for translate into arabicP
 import i18n from "i18next";
-import { useTranslation, initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import HttpApi from "i18next-http-backend";
 import cookies from "js-cookie";
+import { initReactI18next, useTranslation } from "react-i18next";
 //
 import "../assets/css/HeroSection.css";
 //

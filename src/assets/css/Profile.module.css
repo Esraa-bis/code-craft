@@ -1,0 +1,213 @@
+/* common styles */
+.ProfileUserImageAndName {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 165px;
+  flex-direction: column;
+  gap: 10px;
+}
+.TitleAndDescription {
+  height: 125px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.234);
+}
+
+/* the whole profile component*/
+.container {
+  margin: 60px auto;
+  display: flex;
+  border: 1px solid rgba(128, 128, 128, 0.234);
+  max-width: 900px;
+  box-shadow: 0px 0px 4px 0px #c0bcbc;
+  border-radius: 5px;
+  min-height: 700px;
+}
+/* profile side bar */
+.ProfileSideBar {
+  border-right: 1px solid rgba(128, 128, 128, 0.234);
+  width: 30%;
+}
+
+.ProfilePicture {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0px 0px 20px 1px gray;
+}
+.ProfileEditMenu {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+}
+.ProfileEditSection .ProfileEditMenu {
+  padding: 0;
+}
+.ProfileEditMenu .ProfileEditMenuItem {
+  padding: 7px;
+}
+.ProfileEditMenu .ProfileEditMenuItem.active {
+  background-color: #39476d;
+}
+.ProfileEditMenuItem.active .menuItemLink {
+  color: white;
+}
+
+.menuItemLink {
+  text-decoration: none;
+  color: #3e3838;
+}
+.ProfileEditMenuItem:hover {
+  background-color: #39476d;
+}
+.ProfileEditMenuItem:hover .menuItemLink {
+  color: white;
+}
+/* main content */
+.mainContent {
+  width: 70%;
+}
+/* main profile form */
+
+/* Form container */
+.formContainer {
+  max-width: 600px;
+  width: 90%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Form fieldset */
+fieldset {
+  border: none;
+  margin-bottom: 15px;
+}
+
+/* Form legend */
+legend {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+/* Form group */
+.formContainer .formGroup {
+  margin-bottom: 10px;
+}
+
+/* Form label */
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/* Form input */
+input[type="text"],
+input[type="number"],
+input[type="url"],
+input[type="password"],
+textarea {
+  width: 80%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Form buttons */
+.ChangePhotoForm .submitButton,
+.DeleteProfile .submitButton,
+.formContainer .submitButton {
+      background-color: #354161;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    width: 200px;
+}
+.formContainer .submitButton:hover {
+  background-color: #3f4f7c;
+}
+.DeleteProfile .submitButton:hover {
+  background-color: #3f4f7c;
+}
+/* delete profile */
+.WarningText {
+  font-weight: bold;
+  margin-bottom: 10px;
+  padding: 30px;
+}
+.Warning {
+  color: rgb(233, 40, 40);
+}
+.ChangePhotoForm .submitButton,
+.DeleteProfile .submitButton
+{
+  margin:0 30px;
+}
+/* change profile picture */
+.CurrentProfilePicture{
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  border-right: 1px solid rgba(128, 128, 128, 0.234);
+  background-color:  rgba(212, 212, 212, 0.234) ;
+}
+.CurrentPicture{
+width: 300px;
+height: 250px;
+  object-fit: contain;
+  
+}
+.ChangePhotoForm .formGroup{
+display: flex;
+    flex-direction: column;
+    padding: 20px 30px;}
+.PhotoInput {
+  /* Add your custom styles here */
+  /* Example styles */
+  border: 2px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  color: #333;
+  font-size: 16px;
+  /* Customize further as needed */
+}
+
+/* ================== */
+/* payment method */
+/* ================== */
+.paymentMethodsContainer {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  border-radius: 5px;
+  margin: 20px;
+  min-height: 50vh;
+}
+
+.paymentMethodsContainer {
+  padding: 20px;
+  border-radius: 5px;
+  margin: 20px;
+}
+
+.savedMethods p{
+ text-align: center;
+    border-radius: 5px;
+    border: 1px rgb(128 128 128 / 89%);
+    border-style: dashed;
+    padding: 56px;
+    width: 50%;
+    margin: 30px auto;
+
+} 
+
+
