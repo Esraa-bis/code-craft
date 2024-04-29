@@ -1,0 +1,126 @@
+/* cart */
+.Cart {
+  margin: 55px;
+}
+.CartTitle {
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+.CartContainer {
+  min-height: 100%;
+  height: 550px;
+  border: 1px solid rgba(128, 128, 128, 0.393);
+  border-radius: 5px;
+  display: flex;
+}
+.CartContainer section {
+  width: 80%;
+}
+.CheckOut {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-left: 1px solid rgba(128, 128, 128, 0.382);
+}
+.PromotionCode {
+  display: flex;
+}
+.apply {
+  border-radius: 0%;
+}
+.CheckOutButton {
+  width: 90%;
+  margin: auto;
+}
+
+.CheckOutContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.NumCourse {
+  font-size: 15px;
+  margin: 12px 10px;
+}
+.CourseList {
+  list-style-type: none;
+  display: flex;
+  gap: 15px;
+}
+
+/* card */
+.CartCard {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 15px 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  max-width: 260px;
+}
+.CartCard .img {
+  width: 240px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+.CartCard .title {
+  color: #333;
+  font-size: 12px;
+  margin-bottom: 10px;
+  font-weight: bolder;
+  -webkit-line-clamp: 1;
+  margin-bottom: 20px;
+}
+.CartCard .description {
+  color: #666;
+  font-size: 10px;
+  margin-bottom: 12px;
+  line-height: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.CartCard .details {
+  display: flex;
+  flex-direction: column;
+}
+.CartCard .detail {
+  display: flex;
+  align-items: center;
+  margin-bottom: 7px;
+}
+.CartCard .icon {
+}
+.CartCard .PriceIcon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: #002f61f1;
+}
+.CartCard .Price {
+  margin: 3px 1px;
+  font-size: 10px;
+}
+.CardBtns {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+.CardBtns button {
+  width: 120px;
+  padding: 3px;
+  text-align: center;
+  font-size: 12px;
+}
+.removeBTN {
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #333;
+}
+.removeBTN:hover {
+  background-color: #ececec;
+}

@@ -16,6 +16,9 @@ import DeleteAccount from "./pages/deleteAccount";
 import ChangePhoto from "./pages/ChangePhoto";
 import PaymentMethods from "./pages/PaymentMethods";
 import Cart from "./pages/Cart";
+import ContactUs from "./pages/ContactUs";
+import AboutUs from "./pages/AboutUs";
+
 
 function App() {
   return (
@@ -35,6 +38,9 @@ function App() {
         <Route path="/DeleteAccount" element={<DeleteAccount />} />
         <Route path="/ChangePhoto" element={<ChangePhoto />} />
         <Route path="/PaymentMethods" element={<PaymentMethods />} />
+        <Route path="/Cart" element={<Cart />} />
+        <Route path="/ContactUs" element={<ContactUs />} />
+        <Route path="/AboutUs" element={<AboutUs />} />
       </Routes>
 
       <Footer />

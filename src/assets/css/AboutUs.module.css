@@ -1,0 +1,20 @@
+.aboutUsContainer {
+  max-width: 800px;
+  padding: 20px;
+  margin:  110px 10px ;
+}
+
+.content {
+  padding: 20px;
+  border-radius: 8px;
+}
+.content .heading{
+    color: #166ec4;
+
+}
+.aboutUsContainer.heading {
+}
+
+.description {
+  line-height: 1.6;
+}

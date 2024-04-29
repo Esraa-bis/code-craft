@@ -130,8 +130,12 @@ function FooterLinks() {
   return (
     <section className="FooterLinks">
       <div className="footer-column">
-        <Link className="FooterLink">About Us</Link>
-        <Link className="FooterLink">Contact Us</Link>
+        <Link className="FooterLink" to="/AboutUs">
+          About Us
+        </Link>
+        <Link className="FooterLink" to="/ContactUs">
+          Contact Us
+        </Link>
         <Link className="FooterLink">Help And Support</Link>
       </div>
       <div className="footer-column">
