@@ -13,7 +13,7 @@
   padding: 15px 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-color: #f9f9f9;
-  max-width: 280px;
+  width: 290px;
 }
 @media screen and (max-width: 800px) {
   .course-card {
@@ -35,14 +35,14 @@
 .course-card h2 {
   color: #333;
   font-size: 16px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   font-weight: bolder;
 }
 
 .course-card p {
   color: #666;
   font-size: 12px;
-  margin-bottom: 15px;
+  margin-bottom: 13px;
   line-height: 14px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -68,7 +68,7 @@
   margin-right: 5px;
 }
 .rating-icon {
-  color: #b4690e;
+  color: #ffbc15;
 }
 
 .time-icon {
@@ -83,17 +83,39 @@
   font-weight: bold;
 }
 
-.course-card button {
+.course-card .ViewCourseBTN {
   background-color: var(--buttons-color);
   color: #fff;
   border: none;
   border-radius: 4px;
-  padding: 10px ;
+  padding: 8px ;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.course-card button:hover {
+.course-card .ViewCourseBTN:hover {
   background-color: var(--darker-color);
+}
+.CardBTN{
+   width: 100%;
+  display: flex;
+  gap: 10px;
+}
+.CardBtns {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+
+.AddToCartBTN{
+  color: #333;
+  background-color: #fff;
+  border: 1px solid #ffbc15;
+}
+.removeBTN:hover {
+  background-color: #ececec;
+}
+.course-card .AddToCartBTN:hover {
+  background-color: #ffffff;
 }

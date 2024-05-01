@@ -45,9 +45,10 @@ function Home() {
       <HeroSection />
       <h2 className="Explore-Courses-Text"> {t("Explore Courses")} </h2>
       <main className="main-container">
+        <HomeCoursesSections sectionTitle={t("Recommended for you ")} />
         <HomeCoursesSections sectionTitle={t("Most Popular")} />
         <HomeCoursesSections sectionTitle={t("Recently Added")} />
-        <HomeCoursesSections sectionTitle={t("Free")} />
+        <HomeCoursesSections sectionTitle={t(" Start now with zero fees")} />
       </main>
     </>
   );

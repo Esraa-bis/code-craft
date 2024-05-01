@@ -18,6 +18,7 @@ import PaymentMethods from "./pages/PaymentMethods";
 import Cart from "./pages/Cart";
 import ContactUs from "./pages/ContactUs";
 import AboutUs from "./pages/AboutUs";
+import Courses from "./pages/Courses";
 
 
 function App() {
@@ -41,7 +42,9 @@ function App() {
         <Route path="/Cart" element={<Cart />} />
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/AboutUs" element={<AboutUs />} />
+        <Route path="/Courses" element={<Courses />} />
       </Routes>
+    
 
       <Footer />
     </div>

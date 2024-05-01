@@ -19,7 +19,6 @@ import React, { useEffect } from "react";
 import { initReactI18next, useTranslation } from "react-i18next";
 
 // imported components
-import CoursesDropDownNavMenu from "./navcourses.js";
 import ProfileDropDown from "./profileDropDown.js";
 
 i18n
@@ -63,7 +62,7 @@ function Navbar() {
     <nav className="navbar">
       <MenuBar />
       <Logo />
-      <CoursesDropDownNavMenu />
+      <CoursesLink />
       <SearchBar />
       <DiscussionsLink />
       {isUserSignedIn ? <UserBasicsInNav /> : <SignInAndUp />}
@@ -129,6 +128,18 @@ function SearchBar() {
           />
         </svg>
       </button>
+    </div>
+  );
+}
+function CoursesLink() {
+  const { t } = useTranslation();
+  const lng = cookies.get("i18next") || "en";
+  useEffect(() => {
+    window.document.dir = i18n.dir();
+  }, [lng]);
+  return (
+    <div className="discussions">
+      <Link to="/Courses">{t("Courses")}</Link>
     </div>
   );
 }

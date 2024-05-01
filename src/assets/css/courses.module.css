@@ -1,0 +1,70 @@
+.CoursesFilters {
+  display: flex;
+    
+
+}
+.filters{
+    box-shadow: inset 2px -2px 15px rgba(0, 0, 0, 0.1);
+}
+.Courses {
+}
+.CoursesFilters .filters {
+  padding: 30px 20px;
+  width: 17%;
+  background-color: white;
+  height: 100%;
+}
+.CoursesFilters .filterIcon {
+  width: 35px;
+  height: 35px;
+}
+.CoursesFilters .Courses {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 45px 20px;
+  gap: 25px;
+  align-items: center;
+  justify-content: center;
+}
+.Filter .stars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.star {
+  width: 20px;
+  height: 20px;
+  color: #ffbc15;
+}
+.stars .AndUp {
+  color: #797979;
+}
+/* check box  list*/
+.FilterName {
+  font-weight: bold;
+}
+.checkboxList {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.checkboxList label {
+  margin-bottom: 0.5rem;
+  font-size: 12px;
+  color: #333;
+  font-weight: 400;
+}
+
+.checkboxList input[type="checkbox"] {
+  margin-right: 0.5rem;
+  padding: 0;
+  transform: translateY(2px);
+  height: 15px;
+  width: 15px;
+  display: inline-block;
+}
+
+.checkboxList input[type="checkbox"]:checked + label {
+  font-weight: bold; /* Change font weight for checked checkboxes */
+  color: #007bff; /* Change text color for checked checkboxes */
+}
