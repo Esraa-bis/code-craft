@@ -9,6 +9,7 @@
 .center-div {
     margin: 20px auto;
 }*/
+
 :root {
   --main-color: #166ec4;
   --darker-color: #07213b;
@@ -89,6 +90,7 @@
   gap: 10px;
   width: 70%;
 }
+
 /* media query for */
 @media screen and (max-width: 830px) {
   .container {
@@ -128,7 +130,7 @@
   margin-bottom: 8px;
 }
 
-button {
+.signform button {
   background-color: var(--main-color);
   color: #fff;
   padding: 10px;
@@ -138,7 +140,7 @@ button {
   width: 50%;
 }
 
-button:hover {
+.signform button:hover {
   background-color: var(--secondary-color);
 }
 

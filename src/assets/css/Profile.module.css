@@ -64,7 +64,7 @@
   color: #3e3838;
 }
 .ProfileEditMenuItem:hover {
-  background-color: #39476d;
+  background-color: #154c84;
 }
 .ProfileEditMenuItem:hover .menuItemLink {
   color: white;
@@ -123,19 +123,20 @@ textarea {
 .ChangePhotoForm .submitButton,
 .DeleteProfile .submitButton,
 .formContainer .submitButton {
-      background-color: #354161;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 15px;
-    width: 200px;
+      padding: 9px;
+  background-color: #154c84;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+  width: 200px;
 }
 .formContainer .submitButton:hover {
-  background-color: #3f4f7c;
+  background-color: #1e5d88;
 }
 .DeleteProfile .submitButton:hover {
-  background-color: #3f4f7c;
+  background-color: #1e5d88;
 }
 /* delete profile */
 .WarningText {
@@ -147,30 +148,28 @@ textarea {
   color: rgb(233, 40, 40);
 }
 .ChangePhotoForm .submitButton,
-.DeleteProfile .submitButton
-{
-  margin:0 30px;
+.DeleteProfile .submitButton {
+  margin: 0 30px;
 }
 /* change profile picture */
-.CurrentProfilePicture{
-   
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
+.CurrentProfilePicture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
   border-right: 1px solid rgba(128, 128, 128, 0.234);
-  background-color:  rgba(212, 212, 212, 0.234) ;
+  background-color: rgba(212, 212, 212, 0.234);
 }
-.CurrentPicture{
-width: 300px;
-height: 250px;
+.CurrentPicture {
+  width: 300px;
+  height: 250px;
   object-fit: contain;
-  
 }
-.ChangePhotoForm .formGroup{
-display: flex;
-    flex-direction: column;
-    padding: 20px 30px;}
+.ChangePhotoForm .formGroup {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 30px;
+}
 .PhotoInput {
   /* Add your custom styles here */
   /* Example styles */
@@ -199,15 +198,12 @@ display: flex;
   margin: 20px;
 }
 
-.savedMethods p{
- text-align: center;
-    border-radius: 5px;
-    border: 1px rgb(128 128 128 / 89%);
-    border-style: dashed;
-    padding: 56px;
-    width: 50%;
-    margin: 30px auto;
-
-} 
-
-
+.savedMethods p {
+  text-align: center;
+  border-radius: 5px;
+  border: 1px rgb(128 128 128 / 89%);
+  border-style: dashed;
+  padding: 56px;
+  width: 50%;
+  margin: 30px auto;
+}

@@ -1,4 +1,5 @@
 import styles from "../assets/css/Cart.module.css"
+import { Link } from "react-router-dom";
 function CartCourseCard(props) {
   return (
     <div className={styles.CartCard}>
@@ -24,7 +25,9 @@ function CartCourseCard(props) {
           <p className={styles.Price}>{props.price}EGP</p>
         </div>
         <div className={styles.CardBtns}>
-          <button>View Course</button>
+          <Link to="/ViewCourse" className={styles.ViewCourseBTN}>
+            View Course
+          </Link>
           <button className={styles.removeBTN}>Remove</button>
         </div>
       </div>

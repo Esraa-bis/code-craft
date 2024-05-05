@@ -1,0 +1,134 @@
+.discussion {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.discussion h1 {
+  margin: 0;
+  margin-bottom: 40px;
+}
+
+.discussion .comment {
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.discussion .comment.main {
+  padding: 0 20px;
+  border-right: 1px solid #d3d3d3;
+}
+
+.discussion .userAvatar {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.discussion .userAvatar img {
+      width: 45px;
+    height: 45px;
+    object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #d3d3d3;
+  display: block;
+}
+
+.discussion .commentDetails {
+  flex-grow: 1;
+}
+
+.discussion .commentDetails h3 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+.discussion .commentDetails p {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.discussion .replies {
+  margin-left: 60px;
+  margin-top: 20px;
+  /* Indent replies */
+}
+
+.discussion .replies .comment {
+  border-left: 2px solid #ccc;
+  padding-left: 10px;
+}
+
+.discussion .loadMore {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.discussion .loadMore button {
+  background: transparent;
+  outline: unset;
+  border: unset;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.discussion .comment .reply {
+  margin-left: 60px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.discussion .comment .reply input.discussionInput {
+  border-radius: 20px;
+  border: 1px solid #d3d3d3;
+  background: #f2f2f2;
+  height: 40px;
+  padding: 10px;
+  flex: 1;
+  width: auto;
+}
+
+.discussion .comment .reply button {
+  border: unset;
+  border-radius: 20px;
+  padding: 10px;
+  color: #fff;
+  background: #1f76de;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.discussion form {
+  width: 100%;
+}
+
+.discussion form textarea.discussionInput {
+  display: block;
+  width: calc(100% - 20px);
+  min-height: 200px;
+  outline: unset;
+  border-radius: 10px;
+  border: 1px solid #d3d3d3;
+  background: #f2f2f2;
+  padding: 10px;
+}
+
+.discussion form button {
+  margin: 20px 0;
+  width: 100%;
+  height: 50px;
+  border: 1px solid #d3d3d3;
+  border-radius: 10px;
+  background: #1f76de;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}

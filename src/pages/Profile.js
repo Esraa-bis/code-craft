@@ -2,12 +2,12 @@
 import styles from "../assets/css/Profile.module.css";
 
 // Other components
-import ProfileSideBar from "../components/ProfileSideBar";
 import EditProfileForm from "../components/MainProfile";
+import ProfileSideBar from "../components/ProfileSideBar";
 
 function Profile() {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${styles.profile}`}>
       <ProfileSideBar />
       <main className={styles.mainContent}>
         {/* edit profile form */}
@@ -21,5 +21,3 @@ function Profile() {
 }
 
 export default Profile;
-
-

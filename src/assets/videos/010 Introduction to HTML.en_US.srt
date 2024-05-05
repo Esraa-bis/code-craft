@@ -1,0 +1,296 @@
+1
+00:00:01,660 --> 00:00:03,270
+Welcome back.
+
+2
+00:00:03,270 --> 00:00:07,720
+Let's now very quickly learn what HTML actually is
+
+3
+00:00:07,720 --> 00:00:09,813
+and what we can do with it.
+
+4
+00:00:11,270 --> 00:00:16,270
+So basically HTML stands for Hypertext Markup language and
+
+5
+00:00:17,310 --> 00:00:21,510
+remembered how we learned earlier that HTML is one of the
+
+6
+00:00:21,510 --> 00:00:26,510
+core web technologies along with CSS and JavaScript.
+
+7
+00:00:26,910 --> 00:00:28,300
+Right, now,
+
+8
+00:00:28,300 --> 00:00:33,300
+HTML is a markup language that we web developers can use to
+
+9
+00:00:34,040 --> 00:00:39,040
+structure and describe the entire content of any webpage.
+
+10
+00:00:39,520 --> 00:00:42,280
+So notice how I said markup language,
+
+11
+00:00:42,280 --> 00:00:46,220
+because HTML is really not a programming language.
+
+12
+00:00:46,220 --> 00:00:49,040
+It's a markup language because we use it
+
+13
+00:00:49,040 --> 00:00:51,150
+to describe something.
+
+14
+00:00:51,150 --> 00:00:53,370
+And in the case of HTML,
+
+15
+00:00:53,370 --> 00:00:57,170
+we do describe content using elements.
+
+16
+00:00:57,170 --> 00:01:00,520
+So we have different elements that we can use to describe
+
+17
+00:01:00,520 --> 00:01:03,580
+different types of content. So for example,
+
+18
+00:01:03,580 --> 00:01:08,450
+we have the P element that we already used in the lecture
+
+19
+00:01:08,450 --> 00:01:11,860
+where we created our very first webpage.
+
+20
+00:01:11,860 --> 00:01:16,600
+And so we use the P element there to create a paragraph,
+
+21
+00:01:16,600 --> 00:01:20,130
+but we really have all kinds of different elements.
+
+22
+00:01:20,130 --> 00:01:24,570
+So elements to create links, to create page headings,
+
+23
+00:01:24,570 --> 00:01:27,950
+images, video, and a lot more,
+
+24
+00:01:27,950 --> 00:01:30,200
+as you will learn throughout this section.
+
+25
+00:01:30,200 --> 00:01:33,670
+And basically throughout the entire course,
+
+26
+00:01:33,670 --> 00:01:36,830
+then, as we also learned in that lecture
+
+27
+00:01:36,830 --> 00:01:39,370
+where we built our very first webpage,
+
+28
+00:01:39,370 --> 00:01:42,400
+web browsers, such as Google Chrome,
+
+29
+00:01:42,400 --> 00:01:46,970
+do essentially understand HTML code and can render it
+
+30
+00:01:46,970 --> 00:01:50,873
+as a final website, so website that we can see
+
+31
+00:01:50,873 --> 00:01:53,010
+in the browser.
+
+32
+00:01:53,010 --> 00:01:53,843
+Okay.
+
+33
+00:01:53,843 --> 00:01:57,330
+So this is essentially what HTML is and
+
+34
+00:01:57,330 --> 00:01:59,010
+what we can do with it.
+
+35
+00:01:59,010 --> 00:02:02,960
+But now let's just zoom in a little bit and take a look at
+
+36
+00:02:02,960 --> 00:02:06,430
+the anatomy of a HTML element.
+
+37
+00:02:06,430 --> 00:02:10,160
+So basically take a look at the building blocks of
+
+38
+00:02:10,160 --> 00:02:12,480
+each HTML element.
+
+39
+00:02:12,480 --> 00:02:16,020
+And again, we are looking at the paragraph element here,
+
+40
+00:02:16,020 --> 00:02:18,840
+as you can see by the P.
+
+41
+00:02:18,840 --> 00:02:23,570
+And so all of this here is actually the element itself.
+
+42
+00:02:23,570 --> 00:02:28,360
+Now an HTML element is usually made up of three parts.
+
+43
+00:02:28,360 --> 00:02:33,360
+First is the opening tag, which is the name of the element.
+
+44
+00:02:33,600 --> 00:02:34,550
+So in this case,
+
+45
+00:02:34,550 --> 00:02:39,420
+it's the P wrapped in the less than in the greater den
+
+46
+00:02:39,420 --> 00:02:43,270
+symbols, probably they have some other names,
+
+47
+00:02:43,270 --> 00:02:45,880
+but that's how I like to call the symbols.
+
+48
+00:02:45,880 --> 00:02:49,700
+So it's less than P and then greater than.
+
+49
+00:02:49,700 --> 00:02:51,150
+Then, after that,
+
+50
+00:02:51,150 --> 00:02:55,030
+we have basically the content of the element.
+
+51
+00:02:55,030 --> 00:02:57,940
+So in this example, that is just text,
+
+52
+00:02:57,940 --> 00:03:00,550
+but there might be other types of content.
+
+53
+00:03:00,550 --> 00:03:04,050
+For example, an element can contain in itself,
+
+54
+00:03:04,050 --> 00:03:08,240
+another element which we then call a child element.
+
+55
+00:03:08,240 --> 00:03:12,230
+Also some elements such as images have actually
+
+56
+00:03:12,230 --> 00:03:16,530
+no content at all and have only an opening tech.
+
+57
+00:03:16,530 --> 00:03:18,450
+And all of this will of course become
+
+58
+00:03:18,450 --> 00:03:21,930
+very intuitive as we start writing HTML.
+
+59
+00:03:21,930 --> 00:03:23,100
+This is just so that,
+
+60
+00:03:23,100 --> 00:03:27,380
+you know what I'm talking about when I speak of opening tag
+
+61
+00:03:27,380 --> 00:03:32,380
+or closing tag or content, and speaking of the closing tag,
+
+62
+00:03:32,814 --> 00:03:36,110
+it is basically the same as the opening tag,
+
+63
+00:03:36,110 --> 00:03:38,230
+but with a slash.
+
+64
+00:03:38,230 --> 00:03:42,280
+So it opens its paragraph element simply with the P
+
+65
+00:03:42,280 --> 00:03:46,510
+and we then close it with slash P, okay.
+
+66
+00:03:46,510 --> 00:03:49,670
+Now for elements that do not have content
+
+67
+00:03:49,670 --> 00:03:53,270
+such as the image element that I mentioned before,
+
+68
+00:03:53,270 --> 00:03:56,460
+we actually omit the closing tag. So in that case,
+
+69
+00:03:56,460 --> 00:04:00,010
+we only have the opening tag and that's it,
+
+70
+00:04:00,010 --> 00:04:01,940
+and we will see that in action of course
+
+71
+00:04:01,940 --> 00:04:06,600
+once we start integrating images into a webpage.
+
+72
+00:04:06,600 --> 00:04:08,230
+Okay, and that's really,
+
+73
+00:04:08,230 --> 00:04:12,400
+all you need in order to start learning HTML and practice,
+
+74
+00:04:12,400 --> 00:04:15,773
+which is exactly what we will do in the next lecture.
+

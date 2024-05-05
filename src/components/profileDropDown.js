@@ -16,15 +16,15 @@ function ProfileDropDown() {
   }, [lng]);
   const isArabic = lng === "ar";
   return (
-    <div className="dropdown ">
-      <button
-        className=" dropdown-toggle explore-courses dropdown"
+    <div className="dropdown ProfileDropDown ">
+      <div
+        className=" dropdown-toggle dropdown "
         type="button"
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
         <img src={ProfilePic} alt="Profile" className="profile-icon" />
-      </button>
+      </div>
 
       <ul
         className={`avatar dropdown-menu ${

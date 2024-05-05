@@ -58,6 +58,7 @@ function Cart() {
                   type="text"
                   name="Promotion"
                   className={styles.PromotionInput}
+                  placeholder="Promotion.."
                 />
                 <button className={styles.Apply}>Apply</button>
               </div>
@@ -66,8 +67,8 @@ function Cart() {
               Total: <span className={styles.TotalPrice}>1000 LE</span>
             </h3>
             <button className={styles.CheckOutButton}>Check Out</button>
-                    </div>
           </div>
+        </div>
       </div>
     </div>
   );

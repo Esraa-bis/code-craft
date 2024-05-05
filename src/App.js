@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import "./assets/css/general.css";
-import Discussion from "./components/Discussion";
 import EmailCode from "./components/EmailCode";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
@@ -10,16 +9,20 @@ import SignUp from "./components/SignUp";
 import Footer from "./components/footer";
 import Home from "./components/home";
 import Navbar from "./components/navbar";
-import ChangePassword from "./pages/ChangePassword";
-import Profile from "./pages/Profile";
-import DeleteAccount from "./pages/deleteAccount";
-import ChangePhoto from "./pages/ChangePhoto";
-import PaymentMethods from "./pages/PaymentMethods";
-import Cart from "./pages/Cart";
-import ContactUs from "./pages/ContactUs";
 import AboutUs from "./pages/AboutUs";
+import Cart from "./pages/Cart";
+import ChangePassword from "./pages/ChangePassword";
+import ChangePhoto from "./pages/ChangePhoto";
+import ContactUs from "./pages/ContactUs";
+import CourseVideos from "./pages/CourseVideos";
 import Courses from "./pages/Courses";
-
+import Discussion from "./pages/Discussion";
+import MyLearning from "./pages/MyLearning";
+import PaymentMethods from "./pages/PaymentMethods";
+import Profile from "./pages/Profile";
+import ViewCourse from "./pages/ViewCourse";
+import DeleteAccount from "./pages/deleteAccount";
+import UploadCourse from "./pages/UploadCourse";
 
 function App() {
   return (
@@ -27,7 +30,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/discussion" element={<Discussion />} />
+
         <Route path="/Cart" element={<Cart />} />
         <Route path="/SignIn" element={<SignIn />} />
         <Route path="/SignUp" element={<SignUp />} />
@@ -43,9 +46,12 @@ function App() {
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/AboutUs" element={<AboutUs />} />
         <Route path="/Courses" element={<Courses />} />
+        <Route path="/ViewCourse" element={<ViewCourse />} />
+        <Route path="/MyLearning" element={<MyLearning />} />
+        <Route path="/Discussion" element={<Discussion />} />
+        <Route path="/CourseVideos" element={<CourseVideos />} />
+        <Route path="/UploadCourse" element={<UploadCourse />} />
       </Routes>
-    
-
       <Footer />
     </div>
   );
