@@ -6,7 +6,7 @@ import styles from "../assets/css/signForms.module.css"; // Assuming correct pat
 import { signUp } from "../services/auth";
 import { sweetAlert } from "../services/sweetalert";
 
-function SignUp() {
+function SignUp({ signedIn }) {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
@@ -39,6 +39,7 @@ function SignUp() {
 
   return (
     <section className={styles.signFormSection}>
+      {signedIn && <Navigate to="/" replace={true} />}
       {signedUp && <Navigate to="/SignIn" replace={true} />}
       <div className={styles.container}>
         <h2>Sign Up</h2>

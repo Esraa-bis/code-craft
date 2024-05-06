@@ -45,14 +45,12 @@ i18n
   });
 
 //////////////////////////////////
-// appears only when user sign in
-let isUserSignedIn = true;
 // appears only when user keeps streak &sign in
 let keepStreak = false;
 // appears only when user added his pp &sign in
 
 ////////////////////
-function Navbar() {
+function Navbar({ signedIn, setSignedIn }) {
   // const { t } = useTranslation();
   const lng = cookies.get("i18next") || "en";
   useEffect(() => {
@@ -65,7 +63,11 @@ function Navbar() {
       <CoursesLink />
       <SearchBar />
       <DiscussionsLink />
-      {isUserSignedIn ? <UserBasicsInNav /> : <SignInAndUp />}
+      {signedIn ? (
+        <UserBasicsInNav signedIn={signedIn} setSignedIn={setSignedIn} />
+      ) : (
+        <SignInAndUp />
+      )}
     </nav>
   );
 }
@@ -173,7 +175,7 @@ function SignInAndUp() {
     </div>
   );
 }
-function UserBasicsInNav() {
+function UserBasicsInNav({ setSignedIn }) {
   return (
     <div className="profile-nav-info">
       <Link title="Streak">
@@ -199,7 +201,7 @@ function UserBasicsInNav() {
           />
         </svg>
       </Link>
-      <ProfileDropDown />
+      <ProfileDropDown setSignedIn={setSignedIn} />
     </div>
   );
 }
