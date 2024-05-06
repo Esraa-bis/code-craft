@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import "./assets/css/general.css";
@@ -20,20 +21,35 @@ import Discussion from "./pages/Discussion";
 import MyLearning from "./pages/MyLearning";
 import PaymentMethods from "./pages/PaymentMethods";
 import Profile from "./pages/Profile";
+import UploadCourse from "./pages/UploadCourse";
 import ViewCourse from "./pages/ViewCourse";
 import DeleteAccount from "./pages/deleteAccount";
-import UploadCourse from "./pages/UploadCourse";
+import { SessionTokenStorage } from "./services/local-storage";
 
 function App() {
+  const [signedIn, setSignedIn] = useState(SessionTokenStorage.hasToken());
+  const [user, setUser] = useState(SessionTokenStorage.hasToken());
+
+  useEffect(() => {
+    if (signedIn) {
+      // fetch user.
+    } else {
+      // remove user.
+    }
+  }, [signedIn]);
+
   return (
     <div className="App">
-      <Navbar />
+      <Navbar signedIn={signedIn} setSignedIn={setSignedIn} />
       <Routes>
         <Route path="/" element={<Home />} />
 
         <Route path="/Cart" element={<Cart />} />
-        <Route path="/SignIn" element={<SignIn />} />
-        <Route path="/SignUp" element={<SignUp />} />
+        <Route
+          path="/SignIn"
+          element={<SignIn signedIn={signedIn} setSignedIn={setSignedIn} />}
+        />
+        <Route path="/SignUp" element={<SignUp signedIn={signedIn} />} />
         <Route path="/ForgotPassword" element={<ForgotPassword />} />
         <Route path="/EmailCode" element={<EmailCode />} />
         <Route path="/ResetPassword" element={<ResetPassword />} />
