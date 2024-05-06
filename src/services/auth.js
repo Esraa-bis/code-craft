@@ -1,4 +1,5 @@
-import { BASE_URL } from "./api";
+import { BASE_URL, BEARER_KEY } from "./api";
+import { SessionTokenStorage } from "./local-storage";
 // sign up
 export async function signUp({
   firstname,
@@ -40,6 +41,18 @@ export async function signIn({ email, password }) {
       email,
       password,
     }),
+  });
+
+  return response.json();
+}
+// sign out
+export async function logOut() {
+  const response = await fetch(`${BASE_URL}/Auth/logOut`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+    },
   });
 
   return response.json();
