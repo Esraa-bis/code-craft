@@ -83,3 +83,26 @@ export async function editProfile({
 
   return response.json();
 }
+
+// change password
+
+export async function changePassword({
+  oldPassword,
+  newPassword,
+  confirmPassword,
+}) {
+  const response = await fetch(`${BASE_URL}/User/updatePassword`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+    },
+    body: JSON.stringify({
+      oldPassword,
+      newPassword,
+      confirmPassword,
+    }),
+  });
+
+  return response.json();
+}

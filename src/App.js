@@ -68,10 +68,22 @@ function App() {
             <Profile user={user} setUser={setUser} signedIn={signedIn} />
           }
         />
-        <Route path="/ChangePassword" element={<ChangePassword />} />
-        <Route path="/DeleteAccount" element={<DeleteAccount />} />
-        <Route path="/ChangePhoto" element={<ChangePhoto />} />
-        <Route path="/PaymentMethods" element={<PaymentMethods />} />
+        <Route
+          path="/ChangePassword"
+          element={<ChangePassword signedIn={signedIn} user={user} />}
+        />
+        <Route
+          path="/DeleteAccount"
+          element={<DeleteAccount signedIn={signedIn} user={user} />}
+        />
+        <Route
+          path="/ChangePhoto"
+          element={<ChangePhoto signedIn={signedIn} user={user} />}
+        />
+        <Route
+          path="/PaymentMethods"
+          element={<PaymentMethods signedIn={signedIn} user={user} />}
+        />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/AboutUs" element={<AboutUs />} />
