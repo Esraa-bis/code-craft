@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "../assets/css/MyLearning.module.css";
 // course photo
-import CoursePhoto from "../assets/images/css.avif"
+import CoursePhoto from "../assets/images/css.avif";
 // link
 import { Link } from "react-router-dom";
 
@@ -127,7 +127,6 @@ function InProgress() {
             development journey.
           </p>
           <p className={styles.NotCompletedProgress}>
-            {" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -168,7 +167,6 @@ function InProgress() {
             development journey.
           </p>
           <p className={styles.NotCompletedProgress}>
-            {" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -216,7 +214,6 @@ function Completed() {
             development journey.
           </p>
           <p className={styles.Progress}>
-            
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -257,7 +254,6 @@ function Completed() {
             development journey.
           </p>
           <p className={styles.Progress}>
-            {" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
