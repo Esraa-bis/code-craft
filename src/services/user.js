@@ -13,6 +13,12 @@ export const SOCIAL_MEDIA_KEYS = {
   linkedin: "linkedin",
 };
 
+let USER_LOADED = false;
+export const isUserLoaded = () => USER_LOADED;
+export const setIsUserLoaded = (value) => {
+  USER_LOADED = value;
+};
+
 export async function getUser() {
   const response = await fetch(`${BASE_URL}/User/get_user_profile`, {
     method: "GET",
@@ -22,7 +28,31 @@ export async function getUser() {
     },
   });
 
-  return response.json();
+  // when the problem is fixed:
+
+  // uncomment this line:
+  // return response.json();
+
+  // delete those lines:
+  // start delete
+  const res = await response.json();
+  res.profile = {
+    ...res.profile,
+    firstname: res.profile.firstName,
+    lastname: res.profile.lastName,
+    phonenumber: res.profile.phoneNumber,
+    bio: res.profile.Bio,
+    contactinfo: res.profile.contactInfo,
+  };
+
+  delete res.profile.firstName;
+  delete res.profile.lastName;
+  delete res.profile.phoneNumber;
+  delete res.profile.Bio;
+  delete res.profile.contactInfo;
+
+  return res;
+  // end delete
 }
 
 export async function editProfile({

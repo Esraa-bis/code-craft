@@ -1,5 +1,5 @@
 // styles
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "../assets/css/Profile.module.css";
 // components
@@ -11,10 +11,19 @@ import {
 } from "../services/user";
 import ProfileSectionTitleAndDescription from "./ProfileContentTitle";
 
-function EditProfileForm({ signedIn }) {
+function EditProfileForm({ user, setUser }) {
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({});
-  const [contactInfo, setContactInfo] = useState(["", "", ""]);
+  const [formData, setFormData] = useState(() => ({ ...user }));
+
+  const [contactInfo, setContactInfo] = useState(
+    () => user.contactinfo || ["", "", ""]
+  );
+
+  useEffect(() => {
+    setFormData({ ...user });
+    setContactInfo(user.contactinfo || ["", "", ""]);
+  }, [user]);
+
   const updateContactInfo = (key, value) => {
     if (typeof SOCIAL_MEDIA_INDEX[key] !== "number") {
       throw new Error(`Invalid social media key ${key}`);
@@ -28,6 +37,7 @@ function EditProfileForm({ signedIn }) {
     setLoading(true);
     editProfile({ ...formData, contactinfo: contactInfo })
       .then((response) => {
+        if (response.success) setUser(response.user);
         sweetAlert({
           title: response.message,
           icon: response.success ? "success" : "error",

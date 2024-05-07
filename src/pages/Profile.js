@@ -5,7 +5,7 @@ import styles from "../assets/css/Profile.module.css";
 import EditProfileForm from "../components/MainProfile";
 import ProfileSideBar from "../components/ProfileSideBar";
 
-function Profile() {
+function Profile({ user, setUser }) {
   return (
     <div className={`${styles.container} ${styles.profile}`}>
       <ProfileSideBar />
@@ -14,7 +14,7 @@ function Profile() {
         {/* <Routes>
           <Route path="/Profile" element={<EditProfileForm/>}/>
         </Routes> */}
-        <EditProfileForm />
+        <EditProfileForm user={user} setUser={setUser} />
       </main>
     </div>
   );

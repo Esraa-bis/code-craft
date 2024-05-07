@@ -25,16 +25,26 @@ import UploadCourse from "./pages/UploadCourse";
 import ViewCourse from "./pages/ViewCourse";
 import DeleteAccount from "./pages/deleteAccount";
 import { SessionTokenStorage } from "./services/local-storage";
+import { getUser, isUserLoaded, setIsUserLoaded } from "./services/user";
 
 function App() {
   const [signedIn, setSignedIn] = useState(SessionTokenStorage.hasToken());
-  const [user, setUser] = useState(SessionTokenStorage.hasToken());
+  const [user, setUser] = useState(() => ({}));
 
   useEffect(() => {
-    if (signedIn) {
+    if (signedIn && isUserLoaded() === false) {
       // fetch user.
-    } else {
+      setIsUserLoaded(true);
+      getUser()
+        .then((response) => {
+          if (response.success !== true) isUserLoaded(false);
+          else setUser(response.profile);
+        })
+        .catch(() => isUserLoaded(false));
+    } else if (signedIn !== true && isUserLoaded()) {
       // remove user.
+      setIsUserLoaded(false);
+      setUser({});
     }
   }, [signedIn]);
 
@@ -43,7 +53,6 @@ function App() {
       <Navbar signedIn={signedIn} setSignedIn={setSignedIn} />
       <Routes>
         <Route path="/" element={<Home />} />
-
         <Route path="/Cart" element={<Cart />} />
         <Route
           path="/SignIn"
@@ -53,7 +62,10 @@ function App() {
         <Route path="/ForgotPassword" element={<ForgotPassword />} />
         <Route path="/EmailCode" element={<EmailCode />} />
         <Route path="/ResetPassword" element={<ResetPassword />} />
-        <Route path="/Profile" element={<Profile />} />
+        <Route
+          path="/Profile"
+          element={<Profile user={user} setUser={setUser} />}
+        />
         <Route path="/ChangePassword" element={<ChangePassword />} />
         <Route path="/DeleteAccount" element={<DeleteAccount />} />
         <Route path="/ChangePhoto" element={<ChangePhoto />} />

@@ -1,6 +1,6 @@
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 
 import styles from "../assets/css/signForms.module.css";
@@ -12,12 +12,6 @@ function SignIn({ signedIn, setSignedIn }) {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
-  const [token, setToken] = useState("");
-
-  useEffect(() => {
-    if (!token) return;
-    SessionTokenStorage.saveToken(token);
-  }, [token]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -25,8 +19,8 @@ function SignIn({ signedIn, setSignedIn }) {
     signIn(formData)
       .then((response) => {
         if (response.success) {
+          SessionTokenStorage.saveToken(response.data.token);
           setSignedIn(true);
-          setToken(response.data.token);
         } else {
           sweetAlert({
             title: response.message,
