@@ -1,20 +1,23 @@
 // link
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 // photos
-import ProfilePicture from "../assets/images/pp.jpg"
 // styles
 import styles from "../assets/css/Profile.module.css";
 // components
-function ProfileSideBar() {
+function ProfileSideBar({ signedIn, user }) {
   return (
     <section className={`${styles.ProfileSideBar}`}>
+      {!signedIn && <Navigate to="/" replace={true} />}
+
       <section className={`${styles.ProfileUserImageAndName}`}>
         <img
-          src={ProfilePicture}
+          src={user?.profile_pic?.url}
           alt="profile"
           className={`${styles.ProfilePicture}`}
         />
-        <h3 className={`${styles.UserName}`}>Esraa Ali</h3>
+        <h3 className={`${styles.UserName}`}>
+          {user?.firstname} {user?.lastname}
+        </h3>
       </section>
       <section className={`${styles.ProfileEditSection}`}>
         <ul className={`${styles.ProfileEditMenu}`}>
@@ -44,7 +47,7 @@ function ProfileSideBar() {
             </Link>
           </li>
         </ul>
-      </section>{" "}
+      </section>
     </section>
   );
 }

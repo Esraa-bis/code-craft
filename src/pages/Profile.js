@@ -5,10 +5,10 @@ import styles from "../assets/css/Profile.module.css";
 import EditProfileForm from "../components/MainProfile";
 import ProfileSideBar from "../components/ProfileSideBar";
 
-function Profile({ user, setUser }) {
+function Profile({ user, setUser, signedIn }) {
   return (
     <div className={`${styles.container} ${styles.profile}`}>
-      <ProfileSideBar />
+      <ProfileSideBar signedIn={signedIn} user={user} />
       <main className={styles.mainContent}>
         {/* edit profile form */}
         {/* <Routes>

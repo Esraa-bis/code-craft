@@ -4,14 +4,11 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, Navigate } from "react-router-dom";
 import "../assets/css/profileDropDown.css";
-import ProfilePicture from "../assets/images/pp.jpg";
 import { logOut } from "../services/auth";
 import { SessionTokenStorage } from "../services/local-storage";
 import { sweetAlert } from "../services/sweetalert";
 
-let ProfilePic = ProfilePicture;
-
-function ProfileDropDown({ setSignedIn }) {
+function ProfileDropDown({ setSignedIn, user }) {
   const { t } = useTranslation();
   const lng = cookies.get("i18next") || "en";
   const handleLogout = async (e) => {
@@ -46,7 +43,11 @@ function ProfileDropDown({ setSignedIn }) {
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        <img src={ProfilePic} alt="Profile" className="profile-icon" />
+        <img
+          src={user?.profile_pic?.url}
+          alt="Profile"
+          className="profile-icon"
+        />
       </div>
 
       <ul

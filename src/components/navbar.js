@@ -50,7 +50,7 @@ let keepStreak = false;
 // appears only when user added his pp &sign in
 
 ////////////////////
-function Navbar({ signedIn, setSignedIn }) {
+function Navbar({ signedIn, setSignedIn, user }) {
   // const { t } = useTranslation();
   const lng = cookies.get("i18next") || "en";
   useEffect(() => {
@@ -64,7 +64,11 @@ function Navbar({ signedIn, setSignedIn }) {
       <SearchBar />
       <DiscussionsLink />
       {signedIn ? (
-        <UserBasicsInNav signedIn={signedIn} setSignedIn={setSignedIn} />
+        <UserBasicsInNav
+          signedIn={signedIn}
+          setSignedIn={setSignedIn}
+          user={user}
+        />
       ) : (
         <SignInAndUp />
       )}
@@ -175,7 +179,7 @@ function SignInAndUp() {
     </div>
   );
 }
-function UserBasicsInNav({ setSignedIn }) {
+function UserBasicsInNav({ setSignedIn, user }) {
   return (
     <div className="profile-nav-info">
       <Link title="Streak">
@@ -201,7 +205,7 @@ function UserBasicsInNav({ setSignedIn }) {
           />
         </svg>
       </Link>
-      <ProfileDropDown setSignedIn={setSignedIn} />
+      <ProfileDropDown setSignedIn={setSignedIn} user={user} />
     </div>
   );
 }

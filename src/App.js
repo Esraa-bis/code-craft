@@ -50,7 +50,7 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar signedIn={signedIn} setSignedIn={setSignedIn} />
+      <Navbar signedIn={signedIn} setSignedIn={setSignedIn} user={user} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Cart" element={<Cart />} />
@@ -64,7 +64,9 @@ function App() {
         <Route path="/ResetPassword" element={<ResetPassword />} />
         <Route
           path="/Profile"
-          element={<Profile user={user} setUser={setUser} />}
+          element={
+            <Profile user={user} setUser={setUser} signedIn={signedIn} />
+          }
         />
         <Route path="/ChangePassword" element={<ChangePassword />} />
         <Route path="/DeleteAccount" element={<DeleteAccount />} />
