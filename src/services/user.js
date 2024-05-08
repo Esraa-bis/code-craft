@@ -115,10 +115,40 @@ export async function updateProfilePicture({ oldPublicId, file }) {
   const response = await fetch(`${BASE_URL}/User/update_profile_pic`, {
     method: "PATCH",
     headers: {
+      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+    },
+    body: formData,
+  });
+
+  return response.json();
+}
+
+// Update Photo
+export async function uploadProfilePicture({ file }) {
+  const formData = new FormData();
+  // formData.append("oldPublicId", oldPublicId);
+  formData.append("profile", file);
+  const response = await fetch(`${BASE_URL}/User/uploadProfilePic`, {
+    method: "POST",
+    headers: {
       // "Content-Type": "multipart/form-data; charset=UTF-8; boundary=&;",
       token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
     },
     body: formData,
+  });
+
+  return response.json();
+}
+
+// Delete Photo
+
+export async function deleteProfilePicture() {
+  const response = await fetch(`${BASE_URL}/User/remove_profile_pic`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+    },
   });
 
   return response.json();
