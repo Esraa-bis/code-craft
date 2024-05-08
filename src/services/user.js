@@ -106,3 +106,20 @@ export async function changePassword({
 
   return response.json();
 }
+
+// Update Photo
+export async function updateProfilePicture({ oldPublicId, file }) {
+  const formData = new FormData();
+  formData.append("oldPublicId", oldPublicId);
+  formData.append("profile", file);
+  const response = await fetch(`${BASE_URL}/User/update_profile_pic`, {
+    method: "PATCH",
+    headers: {
+      // "Content-Type": "multipart/form-data; charset=UTF-8; boundary=&;",
+      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+    },
+    body: formData,
+  });
+
+  return response.json();
+}

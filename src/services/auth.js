@@ -51,9 +51,10 @@ export async function logOut() {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+      token:`${BEARER_KEY}${SessionTokenStorage.getToken()}`,
     },
   });
 
   return response.json();
 }
+

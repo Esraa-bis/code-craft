@@ -78,7 +78,9 @@ function App() {
         />
         <Route
           path="/ChangePhoto"
-          element={<ChangePhoto signedIn={signedIn} user={user} />}
+          element={
+            <ChangePhoto signedIn={signedIn} user={user} setUser={setUser} />
+          }
         />
         <Route
           path="/PaymentMethods"

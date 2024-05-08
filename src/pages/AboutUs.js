@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "../assets/css/AboutUs.module.css";
 
 function AboutUs() {
