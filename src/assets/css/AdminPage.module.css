@@ -1,0 +1,432 @@
+/* AdminPage.module.css */
+/* Admin grid container styles */
+.AdminPage {
+  margin: 70px 30px;
+}
+.AdminPage .Title {
+  font-size: 30px;
+  margin: 30px auto;
+}
+.AdminPage .Title svg {
+  font-size: 30px;
+  color: #458bd0;
+}
+
+.AdminPage .sections {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.AdminPage .section {
+  cursor: pointer;
+  color: #275a8d;
+  background-color: white; /* Set default background color */
+  border: 2px solid #458bd0; /* Set default border color */
+  width: 95px;
+  height: 32px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.AdminPage .section:hover {
+  background-color: #5b9bdc;
+  color: white;
+}
+
+.AdminPage .Active {
+  background-color: #458bd0; /* Set active section background color */
+  color: white; /* Set active section text color */
+  border-color: #458bd0; /* Set active section border color */
+}
+
+/* All Courses section styles */
+.allCourses,
+.allCategories,
+.allUsers,
+.coupons {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  overflow: auto;
+}
+.analysis {
+  /* margin: 30px 50px; */
+}
+
+/* All Users section styles */
+.allUsers .analysis {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.analysis .usersAnalysis {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 200px;
+  height: 220px;
+  border-radius: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added box shadow */
+}
+
+.analysis .usersIcon {
+  font-size: 70px;
+}
+
+.usersAnalysis h3 {
+  margin-top: 17px;
+  margin-bottom: -5px;
+}
+
+.usersAnalysis p {
+  font-size: 30px;
+}
+
+.usersAnalysis {
+  color: white;
+}
+
+.usersAnalysis.all {
+  background-color: #458bd0;
+}
+
+.usersAnalysis.active {
+  color: #fff;
+  background-color: #45d071;
+}
+
+.usersAnalysis.Deactivated {
+  background-color: #d0d045;
+}
+
+.usersAnalysis.Blocked {
+  background-color: #d04563;
+}
+
+.userTable {
+  border-collapse: collapse;
+  margin: 50px auto;
+}
+
+.userTable th,
+.userTable td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.userTable th {
+  background-color: #f2f2f2;
+}
+.headerIcon {
+  color: blue;
+  margin-left: 5px;
+}
+
+.uploadedIcon {
+  color: green;
+  margin-left: 5px;
+}
+.userTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.userTable img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* user statues */
+/* Circle styles */
+.circle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.green {
+  background-color: #45d071;
+}
+
+.yellow {
+  background-color: #d0d045;
+}
+
+.red {
+  background-color: #d04563;
+}
+
+/* Text color styles */
+.active,
+.Approved {
+  color: #45d071;
+}
+
+.deactivated,
+.Pending {
+  color: #d0d045;
+}
+
+.blocked,
+.Disapproved {
+  color: #d04563;
+}
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 8px;
+}
+.view {
+  color: #fff;
+  background-color: #458bd0;
+  border: none;
+  padding: 7px 14px;
+  border-radius: 3px;
+}
+.block {
+  background-color: inherit;
+  border: none;
+  color: red;
+  font-size: 20px;
+  width: 50px;
+}
+.paginate {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* categories styles */
+.categoryTable {
+  border-collapse: collapse;
+  margin-top: auto;
+}
+
+.categoryTable th,
+.categoryTable td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+}
+
+.categoryTable th {
+  background-color: #f2f2f2;
+}
+
+
+.deleteBtn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 6px 12px;
+}
+
+.deleteBtn:hover {
+  background-color: inherit;
+  color: #f44336;
+}
+
+/* Course table styles */
+.courseTable {
+  border-collapse: collapse;
+  overflow: scroll;
+  margin: 50px auto;
+}
+
+.courseTable th,
+.courseTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.courseTable th {
+  background-color: #f2f2f2;
+}
+
+.courseTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+/* .rating{
+  display: flex;
+  justify-content: center;
+} */
+.rating svg{
+  color: #dede2b;
+  font-size: 18px;
+}
+.svg-container {
+  display: inline-block;
+  position: relative;
+}
+.approveBtn {
+  justify-self: flex-start;
+  background-color: #45d071;
+  grid-column: 1;
+}
+.disapproveBtn {
+  background-color: #d04563;
+  justify-self: flex-end;
+    grid-column: 2;
+
+
+}
+.approveBtn,
+.disapproveBtn {
+  width: 30px;
+  color: #fff;
+  border: none;
+  font-size: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Categories list styles */
+/* AdminPage.module.css */
+
+.categoryTable {
+  border-collapse: collapse;
+  margin: 50px auto;
+}
+
+.categoryTable th,
+.categoryTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.categoryTable th {
+  background-color: #f2f2f2;
+}
+
+.categoryTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+
+.addCategory {
+  margin: 50px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.addCategory input {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border: #9d9d9d solid 1px;
+}
+
+.addCategoryBtn:hover {
+  background-color: #0056b3;
+}
+
+/* Buttons and inputs styles */
+.addCategoryBtn,
+.addCouponBtn {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.addCategoryBtn:hover,
+.addCouponBtn:hover {
+  background-color: #0056b3;
+}
+
+.couponInput {
+  padding: 8px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+}
+
+/* coupons  */
+.coupons {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.coupons h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 26px;
+}
+
+.couponForm h2 {
+  margin-top: 20px;
+}
+.couponForm form input {
+  margin-bottom: 10px;
+}
+
+.couponInput {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.addCouponBtn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.addCouponBtn:hover {
+  background-color: #0056b3;
+}
+.couponTable {
+  margin-top: 20px;
+  min-width: 50%;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+

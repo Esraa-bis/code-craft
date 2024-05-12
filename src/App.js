@@ -26,6 +26,7 @@ import ViewCourse from "./pages/ViewCourse";
 import DeleteAccount from "./pages/deleteAccount";
 import { SessionTokenStorage } from "./services/local-storage";
 import { getUser, isUserLoaded, setIsUserLoaded } from "./services/user";
+import Admin from "./pages/Admin";
 
 function App() {
   const [signedIn, setSignedIn] = useState(SessionTokenStorage.hasToken());
@@ -95,6 +96,7 @@ function App() {
         <Route path="/Discussion" element={<Discussion />} />
         <Route path="/CourseVideos" element={<CourseVideos />} />
         <Route path="/UploadCourse" element={<UploadCourse />} />
+        <Route path="/Admin" element={<Admin />} />
       </Routes>
       <Footer />
     </div>
