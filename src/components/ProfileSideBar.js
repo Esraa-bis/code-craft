@@ -44,7 +44,7 @@ function ProfileSideBar({ signedIn, user }) {
           </li>
           <li className={`${styles.ProfileEditMenuItem}`}>
             <Link to="/DeleteAccount" className={`${styles.menuItemLink}`}>
-              Delete Account
+              Deactivate Account
             </Link>
           </li>
         </ul>

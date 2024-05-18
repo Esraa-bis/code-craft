@@ -2,14 +2,18 @@
 import styles from "../assets/css/Profile.module.css";
 
 // Other components
-import ProfileSideBar from "../components/ProfileSideBar";
 import DeleteProfile from "../components/DeleteProfile";
-function DeleteAccount({ signedIn, user }) {
+import ProfileSideBar from "../components/ProfileSideBar";
+function DeleteAccount({ signedIn, user, setSignedIn }) {
   return (
     <div className={styles.container}>
       <ProfileSideBar signedIn={signedIn} user={user} />
       <main className={styles.mainContent}>
-        <DeleteProfile />
+        <DeleteProfile
+          signedIn={signedIn}
+          user={user}
+          setSignedIn={setSignedIn}
+        />
       </main>
     </div>
   );

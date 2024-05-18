@@ -108,10 +108,10 @@ label {
 }
 
 /* Form input */
-input[type="text"],
-input[type="number"],
-input[type="url"],
-input[type="password"],
+.formContainer input[type="text"],
+.formContainer input[type="number"],
+ .formContainer input[type="url"],
+.formContainer input[type="password"],
 textarea {
   width: 80%;
   padding: 10px;

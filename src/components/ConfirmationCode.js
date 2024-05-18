@@ -1,21 +1,28 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import styles from "../assets/css/signForms.module.css";
-import { forgetCode } from "../services/auth";
+import { checkCode } from "../services/auth";
 import { sweetAlert } from "../services/sweetalert";
 
-function ForgotPassword() {
+function ConfirmationCode() {
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
+  const query = useQuery();
+  const email = query.get("email");
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({});
-  const [email, setEmail] = useState("");
+  const [formData, setFormData] = useState({ forgetCode: "" });
+  const [code, setCode] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
-    forgetCode(formData)
+
+    checkCode({ email, forgetCode: formData.forgetCode })
       .then((response) => {
         if (response.success) {
-          setEmail(encodeURIComponent(formData.email));
+          setCode(true);
+          encodeURIComponent(email);
         } else {
           sweetAlert({
             title: response.message,
@@ -34,31 +41,35 @@ function ForgotPassword() {
   function updateFormData(event, fieldname) {
     setFormData({ ...formData, [fieldname]: event.target.value });
   }
+
   return (
     <section className={`${styles.signFormSection}`}>
-      {email && (
-        <Navigate to={"/ConfirmationCode?email=" + email} replace={true} />
+      {code && (
+        <Navigate
+          to={"/ResetPassword?email=" + encodeURIComponent(email)}
+          replace={true}
+        />
       )}
       <div className={`${styles.container}`}>
-        <h2>Enter your email</h2>
-
+        <h2>Confirmation Code</h2>
         <form
           id="forgotPasswordForm"
           className={`${styles.signform}`}
           onSubmit={handleSubmit}
         >
           <div className={`${styles.formGroup}`}>
-            <label htmlFor="email">Email:</label>
+            <label htmlFor="Confirmation Code">Code</label>
             <input
-              type="email"
-              id="email"
-              name="email"
+              type="number"
+              id="Confirmation Code"
+              name="Confirmation Code"
               className={`${styles.input}`}
-              value={formData.email}
-              onChange={(event) => updateFormData(event, "email")}
+              value={formData.forgetCode}
+              onChange={(event) => updateFormData(event, "forgetCode")}
               required
             />
           </div>
+
           <button type="submit" disabled={loading}>
             Submit
           </button>
@@ -67,4 +78,5 @@ function ForgotPassword() {
     </section>
   );
 }
-export default ForgotPassword;
+
+export default ConfirmationCode;

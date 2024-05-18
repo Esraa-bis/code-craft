@@ -15,17 +15,18 @@ function ProfileDropDown({ setSignedIn, user }) {
     e.preventDefault();
     logOut()
       .then((response) => {
-        if (response.success) {
-          setSignedIn(false);
-          SessionTokenStorage.removeToken();
-        } else {
+        if (response.success !== true) {
           sweetAlert({
             title: response.message,
             icon: "error",
           });
         }
+        SessionTokenStorage.removeToken();
+        setSignedIn(false);
       })
       .catch((error) => {
+        SessionTokenStorage.removeToken();
+        setSignedIn(false);
         sweetAlert({ title: error.message, icon: "error" });
       });
   };
