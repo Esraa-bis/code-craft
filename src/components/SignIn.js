@@ -49,8 +49,6 @@ function SignIn({ signedIn, setSignedIn }) {
         <button type="button" className={`${styles.loginWithGoogleBtn}`}>
           Sign In with Google
         </button>
-        {/*  */}
-        <p></p>
         <form
           id="signInForm"
           className={`${styles.signform}`}

@@ -6,7 +6,7 @@ import CoursePhoto from "../assets/images/css.avif";
 import { Link } from "react-router-dom";
 
 function MyLearning() {
-  const [activeSection, setActiveSection] = useState("RecentlyViewed"); // Initialize with "RecentlyViewed"
+  const [activeSection, setActiveSection] = useState("RecentlyViewed"); 
 
   const handleSectionClick = (section) => {
     setActiveSection(section);

@@ -118,7 +118,7 @@ function Teach() {
         </p>
       </div>
       <div className="teach-button">
-        <Link to="/UploadCourse" className="upload-course-btn">
+        <Link to="/TeachOnCodeCraft" className="upload-course-btn">
           {t("Teach On Code Craft")}
         </Link>
       </div>
