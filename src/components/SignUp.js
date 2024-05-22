@@ -140,8 +140,8 @@ function SignUp({ signedIn }) {
               id="phonenumber"
               name="phonenumber"
               className={styles.input}
-              value={formData.phonenumber}
-              onChange={(event) => updateFormData(event, "phonenumber")}
+              value={formData.phoneNumber}
+              onChange={(event) => updateFormData(event, "phoneNumber")}
               required
             />
           </div>
