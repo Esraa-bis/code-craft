@@ -132,6 +132,10 @@ textarea {
   font-size: 15px;
   width: 200px;
 }
+.deletePhotoBtn{
+  border: none;
+  color: rgb(40, 39, 39);
+}
 .formContainer .submitButton:hover {
   background-color: #1e5d88;
 }
