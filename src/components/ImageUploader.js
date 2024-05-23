@@ -45,10 +45,11 @@ function ImageUploader({ user, setUser }) {
         setLoading(false);
       });
   };
+
   const handleUpload = (e) => {
     e.preventDefault();
     setLoading(true);
-    (user.profile_pic?.id ? updateProfilePicture : uploadProfilePicture)({
+    (user.profile_pic?.id =="Code-Craft/user/profilepics/defaults/Windows_10_Default_Profile_Picture.svg_ry6suu"? updateProfilePicture : uploadProfilePicture)({
       file,
       oldPublicId: user.profile_pic?.id,
     })
