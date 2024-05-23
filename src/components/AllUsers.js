@@ -37,7 +37,6 @@ function AllUsers() {
       });
   }, []);
   // Handle ban account
-  // Handle ban account
   const handleBanUser = async (user) => {
     try {
       const response = await banAccount(user.id);

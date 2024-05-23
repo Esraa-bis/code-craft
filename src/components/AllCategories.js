@@ -1,23 +1,26 @@
-import { useEffect, useState } from "react";
-import { sweetAlert } from "../services/sweetalert";
-import { addCategory, getAllCategories } from "../services/admin";
-import styles from "../assets/css/AdminPage.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
+import styles from "../assets/css/AdminPage.module.css";
+import { addCategory, getAllCategories } from "../services/admin";
+import { sweetAlert } from "../services/sweetalert";
 
 function AllCategories() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
-   const [categories, setCategories] = useState([]);
-   const [error, setError] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [error, setError] = useState(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
     addCategory(formData)
       .then((response) => {
+        sweetAlert({
+          title: response.message,
+          icon: response.success ? "success" : "error",
+        });
         if (response.success) {
-          // Fetch categories again to update the list
           getAllCategories()
             .then((response) => {
               if (response.success) {
@@ -48,21 +51,21 @@ function AllCategories() {
       });
   }
 
-   useEffect(() => {
-     getAllCategories()
-       .then((response) => {
-         if (response.success) {
-           setCategories(response.categories);
-         } else {
-           setError("Failed to fetch Categories");
-         }
-         setLoading(false);
-       })
-       .catch((err) => {
-         setError(err.message);
-         setLoading(false);
-       });
-   }, []);
+  useEffect(() => {
+    getAllCategories()
+      .then((response) => {
+        if (response.success) {
+          setCategories(response.categories);
+        } else {
+          setError("Failed to fetch Categories");
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
 
   function updateFormData(event, fieldname) {
     setFormData({ ...formData, [fieldname]: event.target.value });
