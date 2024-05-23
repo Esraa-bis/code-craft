@@ -109,7 +109,7 @@ function App() {
             <Admin signedIn={signedIn} setSignedIn={setSignedIn} user={user} />
           }
         />
-        <Route path="/AdminDashboard" element={<AdminDashboard />} />
+        <Route path="/AdminDashboard" element={user.role==="superAdmin"?<AdminDashboard />:<Home/>} />
         <Route path="/TeachOnCodeCraft" element={<TeachOnCodeCraft />} />
         <Route path="/UploadCourse" element={<UploadCourse />} />
       </Routes>
