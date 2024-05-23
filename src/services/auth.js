@@ -9,7 +9,7 @@ export async function signUp({
   confirmpassword,
   age,
   gender,
-  phonenumber,
+  phoneNumber,
 }) {
   const response = await fetch(`${BASE_URL}/Auth/signUp`, {
     method: "POST",
@@ -24,7 +24,7 @@ export async function signUp({
       confirmpassword,
       age,
       gender,
-      phonenumber,
+      phoneNumber,
     }),
   });
 
@@ -106,7 +106,7 @@ export async function resetPassword({ email, password, confirmpassword }) {
   return response.json();
 }
 
-// sign out
+// Delete Account
 export async function deleteAccount() {
   const response = await fetch(`${BASE_URL}/Auth/deleteAccount`, {
     method: "PUT",

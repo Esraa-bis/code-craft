@@ -18,7 +18,7 @@ export const isUserLoaded = () => USER_LOADED;
 export const setIsUserLoaded = (value) => {
   USER_LOADED = value;
 };
-
+// get user
 export async function getUser() {
   const response = await fetch(`${BASE_URL}/User/get_user_profile`, {
     method: "GET",
@@ -28,11 +28,9 @@ export async function getUser() {
     },
   });
 
-  // when the problem is fixed:
-
   return response.json();
 }
-
+// Edit Profile
 export async function editProfile({
   firstname,
   lastname,
@@ -63,7 +61,6 @@ export async function editProfile({
 }
 
 // change password
-
 export async function changePassword({
   oldPassword,
   newPassword,
@@ -101,15 +98,13 @@ export async function updateProfilePicture({ oldPublicId, file }) {
   return response.json();
 }
 
-// Update Photo
+//  Upload Photo
 export async function uploadProfilePicture({ file }) {
   const formData = new FormData();
-  // formData.append("oldPublicId", oldPublicId);
   formData.append("profile", file);
   const response = await fetch(`${BASE_URL}/User/uploadProfilePic`, {
     method: "POST",
     headers: {
-      // "Content-Type": "multipart/form-data; charset=UTF-8; boundary=&;",
       token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
     },
     body: formData,
