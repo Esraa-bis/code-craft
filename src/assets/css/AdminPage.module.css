@@ -37,9 +37,9 @@
 }
 
 .AdminPage .Active {
-  background-color: #458bd0; /* Set active section background color */
-  color: white; /* Set active section text color */
-  border-color: #458bd0; /* Set active section border color */
+  background-color: #458bd0; 
+  color: white; 
+  border-color: #458bd0; 
 }
 
 /* All Courses section styles */
@@ -94,11 +94,11 @@
   color: white;
 }
 
-.usersAnalysis.all {
+.usersAnalysis.All {
   background-color: #458bd0;
 }
 
-.usersAnalysis.active {
+.usersAnalysis.Active {
   color: #fff;
   background-color: #45d071;
 }
@@ -107,7 +107,7 @@
   background-color: #d0d045;
 }
 
-.usersAnalysis.Blocked {
+.usersAnalysis.banned {
   background-color: #d04563;
 }
 
@@ -169,17 +169,17 @@
 }
 
 /* Text color styles */
-.active,
+.userActive,
 .Approved {
   color: #45d071;
 }
 
-.deactivated,
+.userDeactivated,
 .Pending {
   color: #d0d045;
 }
 
-.blocked,
+.userBanned,
 .Disapproved {
   color: #d04563;
 }
@@ -188,19 +188,19 @@
   grid-template-columns: repeat(2,1fr);
   gap: 8px;
 }
-.view {
+.enable {
   color: #fff;
-  background-color: #458bd0;
+  background-color: #45d071;
   border: none;
   padding: 7px 14px;
   border-radius: 3px;
 }
-.block {
-  background-color: inherit;
+.Ban {
+   color: #fff;
+  background-color: #d04563;
   border: none;
-  color: red;
-  font-size: 20px;
-  width: 50px;
+  padding: 7px 14px;
+  border-radius: 3px;
 }
 .paginate {
   display: flex;
