@@ -61,6 +61,15 @@ function ProfileDropDown({ setSignedIn, user }) {
             {t("My Learning")}
           </Link>
         </li>
+        {user.coursesUploadedCount > 0 ? (
+          <li>
+            <Link className="dropdown-item" to="/MyCourses">
+              {t("My Courses")}
+            </Link>
+          </li>
+        ) : (
+          ""
+        )}
         <li>
           <Link className="dropdown-item" to="/Profile">
             {t("Profile")}
