@@ -65,6 +65,20 @@ export async function coursePreview(courseID) {
 
   return response.json();
 }
+// update recently viewed
+export async function updateRecentlyViewed(courseId) {
+  const response = await fetch(
+    `${BASE_URL}/get-courses/updateRecentlyViewed/`+ courseId,
+    {
+      method: "PATCH",
+      headers: {
+        token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+      },
+    }
+  );
+
+  return response.json();
+}
 
 // Add to cart
 export async function addToCart(courseId) {
