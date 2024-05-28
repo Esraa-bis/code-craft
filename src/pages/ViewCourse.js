@@ -1,86 +1,152 @@
 // link
 // images
-import CardImg1 from "../assets/images/css.avif";
 // styles
-import { Link } from "react-router-dom";
+import { faPlay, faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import styles from "../assets/css/ViewCourse.module.css";
+import { addToCart, coursePreview } from "../services/course";
+import { sweetAlert } from "../services/sweetalert";
 function ViewCourse() {
- 
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
+
+  const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const query = useQuery();
+  const courseId = query.get("courseId");
+
+  useEffect(() => {
+    setLoading(true);
+    coursePreview(courseId)
+      .then((response) => {
+        if (response.success) {
+          setCourse(response.course);
+        } else {
+          setError("Failed to fetch course preview");
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setLoading(false);
+      });
+  }, [courseId]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!course) {
+    return <div>No preview available for this course.</div>;
+  }
+  function convertDuration(duration) {
+    const hours = Math.floor(duration); // Extract hours
+    const minutes = Math.floor((duration - hours) * 60); // Extract minutes
+
+    return { hours, minutes };
+  }
+  const { hours, minutes } = convertDuration(course.courseDuration);
+
+  function formatIndex(index) {
+    return `#${index.toString().padStart(2, "0")}`;
+  }
+  // handle add to cart
+  async function handleAddToCart(courseID) {
+    try {
+      const response = await addToCart(courseID);
+
+      if (response && response.success) {
+        sweetAlert({
+          title: "Success!",
+          text: response.message,
+          icon: "success",
+        });
+      } else {
+        throw new Error(
+          response && response.message ? response.message : "Unknown error"
+        );
+      }
+    } catch (error) {
+      sweetAlert({
+        title: "Error!",
+        text: error.message || "An error occurred",
+        icon: "error",
+      });
+    }
+  }
   return (
     <>
       <section className={styles.CoursePreview}>
         <section className={styles.CourseDescription}>
           <div>
-            <h1 className={styles.Title}>Introduction to Web Development</h1>
-            <p className={styles.description}>
-              Learn the basics of HTML, CSS, and JavaScript to kickstart your
-              web development journeyLearn the basics of HTML, CSS, and
-              JavaScript to kickstart your web development journeyLearn the
-              basics of HTML, CSS, and JavaScript to kickstart your web
-              development journeyLearn the basics of HTML, CSS, and JavaScript
-              to kickstart your web development journey.
-            </p>
+            <h1 className={styles.Title}>{course.courseName}</h1>
+            <p className={styles.description}>{course.desc}</p>
             <div className={styles.details}>
               <div className={styles.detail}>
                 <p>
-                  Rating:4
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className={` icon rating-icon w-6 h-6`}
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                  Rating:{course.rating || "-"}
+                  <FontAwesomeIcon
+                    icon={faStar}
+                    className={` icon rating-icon `}
+                  />
                 </p>
               </div>
             </div>
             <div className={styles.detail}>
               <p>
-                Created by:<Link>Esraa Ali</Link>
+                Created by:
+                <Link>
+                  {course.addedBy.firstName} {course.addedBy.lastName}
+                </Link>
               </p>
             </div>
             <div className={styles.details}>
               <div className={styles.detail}>
-                <p>Last Update: <span>20/3/2024</span></p>
+                <p>
+                  Last Update:{" "}
+                  <span>{course.updateAt || course.createdAt}</span>
+                </p>
               </div>
 
               <div className={styles.detail}>
-                <p>Level: <span>Intermediate</span></p>
+                <p>
+                  Level: <span>{course.level}</span>
+                </p>
               </div>
               <div className={styles.detail}>
-                <p>Language:<span> Arabic</span></p>
-              </div>
-              <div className={styles.detail}>
-                <p>Category: <span>Front-End</span></p>
+                <p>
+                  Category: <span>{course.category}</span>
+                </p>
               </div>
             </div>
           </div>
           <div className={styles.CoursePreviewCard}>
             <Link to="/CourseVideos" className={styles.link}>
-              <img src={CardImg1} alt="course" className={styles.CoursesImg} />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-6 h-6"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"
-                  clipRule="evenodd"
-                />
-              </svg>
+              <img
+                src={course.image.url}
+                alt="course"
+                className={styles.CoursesImg}
+              />
+              <FontAwesomeIcon icon={faPlay} className={` icon `} />
             </Link>
-            <h6 className={styles.price}>Price: 1200 EGP</h6>
+            <h6 className={styles.price}>Price: {course.appliedPrice} EGP</h6>
             <div className={styles.allBtns}>
               <div className={styles.cartAndWishList}>
                 <div className={styles.innerDiv}>
-                  <button className={styles.AddToCartIcon}>Add to Cart</button>
+                  <button
+                    onClick={() => handleAddToCart(course?._id)}
+                    className={styles.AddToCartIcon}
+                  >
+                    Add to Cart
+                  </button>
                   <button className={styles.wishListIcon}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -115,54 +181,24 @@ function ViewCourse() {
         <section>
           <div className={styles.Prerequisite}>
             <h3>Prerequisite</h3>
-            <ul>
-              <li>basic Knowledge of HTML</li>
-              <li>basic Knowledge of CSS</li>
-            </ul>
+            <p> {course.prerequisites}</p>
           </div>
 
           <div></div>
         </section>
         <section className={styles.mainContent}>
           <h3>Content</h3>
-          <p>12 lectures • 4h 30m total length</p>
+          <p>
+            {course.numOfVideos} lectures •{`${hours}h, ${minutes}m  `}
+            total length
+          </p>
           <ul>
-            <li>
-              <span>#01 </span>Introduction and what i need to learn
-            </li>
-            <li>
-              <span>#02 </span>Elemants and browser
-            </li>
-            <li>
-              <span>#03 </span>first project and first page
-            </li>
-            <li>
-              <span>#04 </span>Head and nested elements
-            </li>
-            <li>
-              <span>#05 </span>Comments and use case
-            </li>
-            <li>
-              <span>#06 </span>Doctype and standards
-            </li>
-            <li>
-              <span>#07 </span>Introduction and what i need to learn
-            </li>
-            <li>
-              <span>#08 </span>Elemants and browser
-            </li>
-            <li>
-              <span>#09 </span>first project and first page
-            </li>
-            <li>
-              <span>#10 </span>Head and nested elements
-            </li>
-            <li>
-              <span>#11 </span>Comments and use case
-            </li>
-            <li>
-              <span>#12 </span>Doctype and standards
-            </li>
+            {course.vidoes.map((video, index) => (
+              <li key={video._id}>
+                <span>{formatIndex(index)} </span>
+                {video.title}
+              </li>
+            ))}
           </ul>
         </section>
       </section>

@@ -1,43 +1,54 @@
+import { useEffect, useState } from "react";
 import styles from "../assets/css/Cart.module.css";
-import CardImg from "../assets/images/css.avif";
 import CartCourseCard from "../components/CartCourseCard";
+import { userCart } from "../services/course";
 
 function Cart() {
-  const CartCourses = [
-    {
-      img: CardImg,
-      title: "Introduction to Web Development",
-      description:
-        "Learn the basics of HTML, CSS, and JavaScript to kickstart your web development journey.",
-      price: "49.99",
-    },
-    {
-      img: CardImg,
-      title: "Python Programming for Beginners",
-      description:
-        "Discover the power of Python programming language with hands-on projects and exercises.",
-      price: "59.99",
-    },
-  ];
-  console.log(CartCourses);
+  const [courses, setCourses] = useState([]);
+  const [error, setError] = useState(null);
+  const [loaded, setLoaded] = useState(() => false);
+  const [cart, setCart] = useState({});
 
-  const NumCartCourses = CartCourses.length;
+  let loading = false;
+  const setLoading = (value) => {
+    loading = value;
+  };
+  useEffect(() => {
+    if (loaded || loading) return;
+    setLoading(true);
+    userCart()
+      .then((response) => {
+        if (response.success) {
+          setCourses(response.Cart.courses);
+          setCart(response.Cart);
+          setLoaded(true);
+        } else {
+          setError("Failed to fetch courses");
+        }
+        setLoading(() => false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <div className={styles.Cart}>
       <h2 className={styles.CartTitle}>Shopping Cart</h2>
       <div className={styles.CartContainer}>
         <section>
-          <h3 className={styles.NumCourse}>{NumCartCourses} Courses in Cart</h3>
-          {NumCartCourses > 0 ? (
+          <h3 className={styles.NumCourse}>{courses.length} Courses in Cart</h3>
+          {courses.length > 0 ? (
             <ul className={styles.CourseList}>
-              {CartCourses.map((course, index) => (
+              {courses.map((course, index) => (
                 <li key={index}>
                   <CartCourseCard
-                    img={course.img}
-                    title={course.title}
-                    description={course.description}
-                    price={course.price}
+                    img={course.image?.url}
+                    title={course.courseName}
+                    description={course.desc}
+                    price={course.basePrice}
+                    _id={course.courseId}
                   />
                 </li>
               ))}
@@ -64,7 +75,8 @@ function Cart() {
               </div>
             </div>
             <h3>
-              Total: <span className={styles.TotalPrice}>1000 LE</span>
+              Total:{" "}
+              <span className={styles.TotalPrice}>{cart.subTotal} LE</span>
             </h3>
             <button className={styles.CheckOutButton}>Check Out</button>
           </div>

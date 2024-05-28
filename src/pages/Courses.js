@@ -1,76 +1,36 @@
-// image
-import CardImg2 from "../assets/images/css.avif";
-import CardImg1 from "../assets/images/js.avif";
-import CourseCard from "../components/CourseCard";
-// font awesome
 // styles
 import styles from "../assets/css/courses.module.css";
+import { useEffect, useState } from "react";
+import CourseCard from "../components/CourseCard";
+import { getCoursesFilters } from "../services/course";
+
 function Courses() {
-  const courses = [
-    {
-      img: CardImg1,
-      title: "Introduction to Web Development",
-      description:
-        "Learn the basics of HTML, CSS, and JavaScript to kickstart your web development journeyLearn the basics of HTML, CSS, and JavaScript to kickstart your web development journeyLearn the basics of HTML, CSS, and JavaScript to kickstart your web development journeyLearn the basics of HTML, CSS, and JavaScript to kickstart your web development journey. ",
-      price: "49.99",
-      time: "3",
-      rating: "3.9",
-    },
-    {
-      img: CardImg1,
-      title: "Introduction to Web Development",
-      description:
-        "Learn the basics of HTML, CSS, and JavaScript to kickstart your web development journeyLearn the basics of HTML, CSS, and JavaScript to kickstart your web development journeyLearn the basics of HTML, CSS, and JavaScript to kickstart your web development journeyLearn the basics of HTML, CSS, and JavaScript to kickstart your web development journey. ",
-      price: "49.99",
-      time: "3",
-      rating: "3.9",
-    },
-    {
-      img: CardImg1,
-      title: "Introduction to Web Development",
-      description:
-        "Learn the basics of HTML, CSS, and JavaScript to kickstart your web development journeyLearn the basics of HTML, CSS, and JavaScript to kickstart your web development journeyLearn the basics of HTML, CSS, and JavaScript to kickstart your web development journeyLearn the basics of HTML, CSS, and JavaScript to kickstart your web development journey. ",
-      price: "49.99",
-      time: "3",
-      rating: "3.9",
-    },
-    {
-      img: CardImg1,
-      title: "Introduction to Web Development",
-      description:
-        "Learn the basics of HTML, CSS, and JavaScript to kickstart your web development journeyLearn the basics of HTML, CSS, and JavaScript to kickstart your web development journeyLearn the basics of HTML, CSS, and JavaScript to kickstart your web development journeyLearn the basics of HTML, CSS, and JavaScript to kickstart your web development journey. ",
-      price: "49.99",
-      time: "3",
-      rating: "3.9",
-    },
-    {
-      img: CardImg2,
-      title: "Python Programming for Beginners",
-      description:
-        "Discover the power of Python programming language with hands-on projects and exercises.",
-      price: "59.99",
-      time: "2",
-      rating: "3.9",
-    },
-    {
-      img: CardImg1,
-      title: "Introduction to Web Development",
-      description:
-        "Learn the basics of HTML, CSS, and JavaScript to kickstart your web development journey.",
-      price: "49.99",
-      time: "3",
-      rating: "3.9",
-    },
-    {
-      img: CardImg1,
-      title: "Python Programming for Beginners",
-      description:
-        "Discover the power of Python programming language with hands-on projects and exercises.",
-      price: "59.99",
-      time: "2",
-      rating: "3.9",
-    },
-  ];
+  const [courses, setCourses] = useState([]);
+  const [error, setError] = useState(null);
+  const [loaded, setLoaded] = useState(() => false);
+  let loading = false;
+  const setLoading = (value) => {
+    loading = value;
+  };
+ useEffect(() => {
+   const filters = {
+     isApproved: true,
+   };
+
+   getCoursesFilters(filters)
+     .then((response) => {
+       if (response.success) {
+         setCourses(response.courses);
+       } else {
+         setError("Failed to fetch courses");
+       }
+       setLoading(false);
+     })
+     .catch((err) => {
+       setError(err.message);
+       setLoading(false);
+     });
+ }, []);
   return (
     <section className={styles.CoursesFilters}>
       {/* filter section */}
@@ -79,12 +39,14 @@ function Courses() {
         {courses.map((course, index) => (
           <CourseCard
             key={index}
-            img={course.img}
-            title={course.title}
-            description={course.description}
-            price={course.price}
-            time={course.time}
+            img={course.image.url}
+            title={course.courseName}
+            description={course.desc}
+            price={course.appliedPrice}
+            time={course.courseDuration.toFixed(1)}
             rating={course.rating}
+            slug={course.slug}
+            _id={course._id}
           />
         ))}
       </div>

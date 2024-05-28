@@ -1,81 +1,82 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "../assets/css/UploadCourse.module.css";
+import { uploadCourseVideo } from "../services/course";
+import { sweetAlert } from "../services/sweetalert";
 
-function UploadCourse  ()  {
-  const [files, setFiles] = useState([]);
+function UploadCourse() {
+  const [videos, setVideos] = useState([]);
   const [filesToDo, setFilesToDo] = useState(0);
   const [filesDone, setFilesDone] = useState(0);
-  const dropAreaRef = useRef(null);
-  const progressBarRef = useRef(null);
+  const [courseId, setCourseId] = useState(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get("id");
+  });
+  // const dropAreaRef = useRef(null);
+  // const progressBarRef = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({});
+  const [highlight, setHighlight] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
-  useEffect(() => {
-    const dropArea = dropAreaRef.current;
+  const setVideoName = (event, video) => {
+    video.name = event.target.value;
+    setVideos((videos) => [...videos]);
+  };
 
-    const preventDefaults = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-    };
+  const preventDefault = (event) => {
+    event.preventDefault();
+  };
 
-    ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
-      dropArea.addEventListener(eventName, preventDefaults, false);
-    });
+  const dragOn = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setHighlight(() => true);
+  };
 
-    const highlight = () => dropArea.classList.add(styles.highlight);
-    const unhighlight = () => dropArea.classList.remove(styles.highlight);
+  const dragOff = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setHighlight(() => false);
+  };
 
-    ["dragenter", "dragover"].forEach((eventName) => {
-      dropArea.addEventListener(eventName, highlight, false);
-    });
-
-    ["dragleave", "drop"].forEach((eventName) => {
-      dropArea.addEventListener(eventName, unhighlight, false);
-    });
-
-    const handleDrop = (e) => {
-      const dt = e.dataTransfer;
-      const files = dt.files;
-      handleFiles(files);
-    };
-
-    dropArea.addEventListener("drop", handleDrop, false);
-
-    return () => {
-      ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
-        dropArea.removeEventListener(eventName, preventDefaults, false);
-      });
-
-      ["dragenter", "dragover"].forEach((eventName) => {
-        dropArea.removeEventListener(eventName, highlight, false);
-      });
-
-      ["dragleave", "drop"].forEach((eventName) => {
-        dropArea.removeEventListener(eventName, unhighlight, false);
-      });
-
-      dropArea.removeEventListener("drop", handleDrop, false);
-    };
-  }, []);
+  const handleDrop = (e) => {
+    const dt = e.dataTransfer;
+    const files = dt.files;
+    handleFiles(files);
+  };
 
   const handleFiles = (fileList) => {
-    const newFiles = [...fileList];
-    setFiles(newFiles);
-    initializeProgress(newFiles.length);
-    newFiles.forEach(previewFile);
+    for (const file of fileList) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onloadend = () => {
+        const video = {
+          id: new Date().getTime(),
+          name: file.name.replace(/\.[A-Za-z0-9]{0,}$/, ""),
+          src: reader.result,
+          preload: "metadata",
+          duration: "0s",
+          file,
+        };
+        setVideos((videos) => [...videos, video]);
+      };
+    }
   };
 
-  const initializeProgress = (numFiles) => {
-    setFilesDone(0);
-    setFilesToDo(numFiles);
-    progressBarRef.current.value = 0;
-  };
+  // const initializeProgress = (numFiles) => {
+  //   setFilesDone(0);
+  //   setFilesToDo(numFiles);
+  //   // progressBarRef.current.value = 0;
+  // };
 
-  const progressDone = () => {
-    setFilesDone((prev) => {
-      const updatedFilesDone = prev + 1;
-      progressBarRef.current.value = (updatedFilesDone / filesToDo) * 100;
-      return updatedFilesDone;
-    });
-  };
+  // const progressDone = () => {
+  //   setFilesDone((prev) => {
+  //     const updatedFilesDone = prev + 1;
+  //     progressBarRef.current.value = (updatedFilesDone / filesToDo) * 100;
+  //     return updatedFilesDone;
+  //   });
+  // };
 
   const formatDuration = (durationInSeconds) => {
     const hours = Math.floor(durationInSeconds / 3600);
@@ -88,64 +89,69 @@ function UploadCourse  ()  {
 
     return formattedHours + formattedMinutes + formattedSeconds;
   };
-
-  const previewFile = (file, index) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onloadend = () => {
-      const group = document.createElement("div");
-      const label = document.createElement("label");
-      const input = document.createElement("input");
-      const video = document.createElement("video");
-      const duration = document.createElement("h5");
-      const del = document.createElement("button");
-      const actions = document.createElement("div");
-
-      group.className = styles.videoGroup;
-      actions.className = styles.actions;
-      duration.className = styles.duration;
-      del.className = styles.removeVideo;
-
-      del.innerText = "X";
-      del.onclick = () => {
-        const confirmed = window.confirm(
-          "Are you sure you want to remove this video?"
-        );
-        if (confirmed) {
-          setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
-          group.remove();
-        }
-      };
-
-      input.placeholder = "Video title...";
-      input.value = file.name.replace(/\.[A-Za-z0-9]{0,}$/, "");
-      input.id = `video${index}`;
-
-      label.setAttribute("for", `video${index}`);
-      video.src = reader.result;
-      video.preload = "metadata";
-      duration.innerText = "0s";
-
-      video.oncanplay = () => {
-        duration.innerText = formatDuration(video.duration || 0);
-      };
-
-      group.appendChild(label);
-      actions.append(duration);
-      actions.append(del);
-      label.appendChild(actions);
-      label.appendChild(video);
-      label.appendChild(input);
-      document.querySelector(`.${styles.videos}`).appendChild(group);
-    };
+  const handelRemove = (file) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to remove this video?"
+    );
+    if (confirmed) {
+      setVideos((videos) => videos.filter((f) => f !== file));
+    }
   };
+
+  const oncanplay = (event, video) => {
+    video.duration = formatDuration(event.target.duration || 0);
+    setVideos((videos) => [...videos]);
+  };
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setLoading(true);
+    for (let i = 0; i < videos.length; ++i) {
+      const video = videos[i];
+      try {
+        const response = await uploadCourseVideo({
+          courseID: courseId,
+          title: video.name,
+          video: video.file,
+        });
+        if (response.success) {
+          setUploading(true);
+          sweetAlert({
+            title: response.message,
+            icon: response.success ? "success" : "error",
+          });
+        }
+      } catch (error) {
+        sweetAlert({ title: error.message, icon: "error" });
+      }
+      if (i + 1 === videos.length) {
+        setLoading(false);
+      }
+    }
+  }
+
+  function updateFormData(event, fieldName) {
+    if (fieldName === "courseImage") {
+      setFormData({ ...formData, [fieldName]: event.target.files[0] });
+    } else {
+      setFormData({ ...formData, [fieldName]: event.target.value });
+    }
+  }
 
   return (
     <div className={styles.courseForm}>
       <h1>My Course Title Content</h1>
-      <div className={styles.dropArea} ref={dropAreaRef}>
-        <form className={styles.form}>
+      <div
+        className={styles.dropArea + " " + (highlight && styles.highlight)}
+        onDragEnter={dragOn}
+        onDragOver={dragOn}
+        onDragLeave={dragOff}
+        onDrop={(event) => {
+          dragOff(event);
+          handleDrop(event);
+        }}
+      >
+        <form className={styles.form} onSubmit={preventDefault}>
           <p>
             Upload multiple files with the file dialog or by dragging and
             dropping images onto the dashed region
@@ -156,25 +162,66 @@ function UploadCourse  ()  {
             id="fileInput"
             multiple
             accept="video/*"
-            onChange={(e) => handleFiles(e.target.files)}
+            value={formData.video || ""}
+            onChange={(event) => {
+              updateFormData(event, "video");
+              handleFiles(event.target.files);
+            }}
+            required
           />
+
           <label className={styles.button} htmlFor="fileInput">
             Select videos
           </label>
         </form>
-        <progress
+        {/* <progress
           id="progressBar"
           max="100"
           value="0"
-          ref={progressBarRef}
-        ></progress>
+          // ref={progressBarRef}
+        ></progress> */}
       </div>
-      <div className={styles.videos}></div>
-      <button type="button" className={styles.save}>
+      <div className={styles.videos}>
+        {videos.map((video) => (
+          <div key={video.id} className={styles.videoGroup}>
+            <label htmlFor={video.id}>
+              <div className={styles.actions}>
+                <h5 className={styles.duration}>{video.duration}</h5>
+                <button
+                  className={styles.removeVideo}
+                  onClick={() => handelRemove(video)}
+                >
+                  X
+                </button>
+              </div>
+              <video
+                preload="metadata"
+                src={video.src}
+                onCanPlay={(event) => oncanplay(event, video)}
+              ></video>
+              <input
+                placeholder="Video title..."
+                id={video.id}
+                value={video.name}
+                onChange={(event) => setVideoName(event, video)}
+              />
+              <p className={uploading ? styles.Uploaded : styles.Uploading}>
+                {uploading ? "Uploaded" : "Uploading..."}
+              </p>
+            </label>
+          </div>
+        ))}
+      </div>
+      <button
+        type="submit"
+        className={styles.save}
+        onClick={handleSubmit}
+        disabled={loading}
+      >
         Upload & Save
       </button>
     </div>
   );
-};
+}
 
 export default UploadCourse;

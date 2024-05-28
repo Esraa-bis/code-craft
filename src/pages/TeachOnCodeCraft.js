@@ -10,7 +10,8 @@ const TeachOnCodeCraft = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
-  const [submited, setSubmited] = useState({});
+  const [submited, setSubmited] = useState(false);
+  const [courseId, setCourseId] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -29,26 +30,35 @@ const TeachOnCodeCraft = () => {
       });
   }, []);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setLoading(true);
-    uploadCourseInfo(formData)
-      .then((response) => {
-        if (response.success) {
-          setSubmited(true);
-          sweetAlert({
-            title: response.message,
-            icon: response.success ? "success" : "error",
-          });
-        }
-      })
-      .catch((error) => {
-        sweetAlert({ title: error.message, icon: "error" });
-      })
-      .finally(() => {
-        setLoading(false);
+async function handleSubmit(e) {
+  e.preventDefault();
+  setLoading(true);
+  try {
+    const response = await uploadCourseInfo(formData);
+    if (response.success) {
+      setCourseId(encodeURIComponent(response.data.id));
+      setSubmited(true);
+      sweetAlert({
+        title: response.message,
+        icon: "success",
       });
+    } else {
+      sweetAlert({
+        title: response.message,
+        icon: "error",
+      });
+    }
+  } catch (error) {
+    sweetAlert({
+      title: "An error occurred",
+      text: error.message,
+      icon: "error",
+    });
+  } finally {
+    setLoading(false);
   }
+}
+
 
   function updateFormData(event, fieldname) {
     if (fieldname === "courseImage") {
@@ -60,9 +70,11 @@ const TeachOnCodeCraft = () => {
 
   return (
     <div className={styles.courseForm}>
-      {submited && <Navigate to="/UploadCourse" replace={true} />}
+      {submited && (
+        <Navigate to={"/UploadCourse?id=" + courseId } replace={true} />
+      )}
 
-      <h1>New / Edit Course</h1>
+      <h1>Upload new Course</h1>
       <form onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
           <label htmlFor="title">Title:</label>

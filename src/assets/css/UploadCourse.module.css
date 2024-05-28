@@ -151,3 +151,15 @@
     color: #fff;
     text-decoration: none;
 }
+.Uploaded{
+    color: green;
+    font-size: 12px;
+    margin: 0;
+}
+.Uploading{
+    color: red;
+        font-size: 12px;
+            margin: 0;
+
+
+}
