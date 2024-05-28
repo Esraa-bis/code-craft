@@ -110,7 +110,8 @@ label {
 /* Form input */
 .formContainer input[type="text"],
 .formContainer input[type="number"],
- .formContainer input[type="url"],
+.formContainer input[type="tel"],
+.formContainer input[type="url"],
 .formContainer input[type="password"],
 textarea {
   width: 80%;
@@ -123,7 +124,7 @@ textarea {
 .ChangePhotoForm .submitButton,
 .DeleteProfile .submitButton,
 .formContainer .submitButton {
-      padding: 9px;
+  padding: 9px;
   background-color: #154c84;
   color: #fff;
   border: none;
@@ -132,7 +133,7 @@ textarea {
   font-size: 15px;
   width: 200px;
 }
-.deletePhotoBtn{
+.deletePhotoBtn {
   border: none;
   color: rgb(40, 39, 39);
 }
@@ -184,7 +185,7 @@ textarea {
   font-size: 16px;
   /* Customize further as needed */
 }
-.CurrentProfilePicture svg{
+.CurrentProfilePicture svg {
   width: 30px;
   height: 30px;
   align-self: flex-start;
