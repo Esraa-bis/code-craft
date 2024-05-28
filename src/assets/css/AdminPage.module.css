@@ -184,9 +184,10 @@
   color: #d04563;
 }
 .actions {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 8px;
+display: flex;
+align-items: center;
+justify-content: center;
+border: none;
 }
 .enable {
   color: #fff;
@@ -194,6 +195,7 @@
   border: none;
   padding: 7px 14px;
   border-radius: 3px;
+  margin: 2px;
 }
 .Ban {
    color: #fff;
@@ -260,10 +262,18 @@
 .courseTable tr:nth-child(even) {
   background-color: #f2f2f2;
 }
-/* .rating{
-  display: flex;
-  justify-content: center;
-} */
+
+.courseTable td {
+  font-size: 15px;
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.rating{
+  text-align: center;
+}
 .rating svg{
   color: #dede2b;
   font-size: 18px;

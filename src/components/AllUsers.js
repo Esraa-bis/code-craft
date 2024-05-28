@@ -1,5 +1,4 @@
 import {
-  faBan,
   faFileUpload,
   faGraduationCap,
   faUser,
@@ -14,18 +13,25 @@ import Paginationn from "./Pagination";
 function AllUsers() {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState();
-  const [loading, setLoading] = useState(true); // Tracks the loading state
   const [error, setError] = useState(null); // Tracks any errors
   const [currentPage, setCurrentPage] = useState(1); // Tracks the current page for pagination
   const noPerPage = 10; // Number of users to display per page
   const [filter, setFilter] = useState("All"); // Tracks the selected filter option
+  const [loaded, setLoaded] = useState(false);
 
+  let loading = false;
+  const setLoading = (value) => {
+    loading = value;
+  };
   // Fetch users when the component mounts
   useEffect(() => {
+    if (loading || loaded) return;
+    setLoading(true);
     getAllUsers()
       .then((response) => {
         if (response.success) {
           setUsers(response.users);
+          setLoaded(true);
         } else {
           setError("Failed to fetch users");
         }
@@ -164,7 +170,7 @@ function AllUsers() {
         <option value="Uploaded courses">Uploaded courses</option>
       </select>
 
-      {/* User table */}
+      {/* Users table */}
       <table className={styles.userTable}>
         <thead>
           <tr>
@@ -241,7 +247,9 @@ function AllUsers() {
                   >
                     Enable
                   </button>
-                ) : user.role==='superAdmin'?"Super Admin":(
+                ) : user.role === "superAdmin" ? (
+                  "Super Admin"
+                ) : (
                   <button
                     onClick={() => {
                       handleBanUser(user);
@@ -272,5 +280,3 @@ function AllUsers() {
 }
 
 export default AllUsers;
-
-

@@ -4,10 +4,8 @@ import { useEffect, useState } from "react";
 import styles from "../assets/css/AdminPage.module.css";
 import { addCoupon, deleteCoupon, getAllCoupons } from "../services/admin";
 import { sweetAlert } from "../services/sweetalert";
-import Paginationn from "./Pagination";
 
 function AllCoupons() {
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [formData, setFormData] = useState({});
   const [coupons, setCoupons] = useState([]);
@@ -17,24 +15,23 @@ function AllCoupons() {
     setFormData({ ...formData, [fieldname]: event.target.value });
   };
 
- const handleDeleteCoupon = (coupon) => {
-   deleteCoupon(coupon._id)
-     .then((response) => {
-       sweetAlert({
-         title: response.message,
-         icon: response.success ? "success" : "error",
-       });
-       if (response.success) {
-         setCoupons((prevCoupons) =>
-           prevCoupons.filter((c) => c._id !== coupon._id)
-         );
-       }
-     })
-     .catch((error) => {
-       sweetAlert({ title: error.message, icon: "error" });
-     });
- };
-
+  const handleDeleteCoupon = (coupon) => {
+    deleteCoupon(coupon._id)
+      .then((response) => {
+        sweetAlert({
+          title: response.message,
+          icon: response.success ? "success" : "error",
+        });
+        if (response.success) {
+          setCoupons((prevCoupons) =>
+            prevCoupons.filter((c) => c._id !== coupon._id)
+          );
+        }
+      })
+      .catch((error) => {
+        sweetAlert({ title: error.message, icon: "error" });
+      });
+  };
 
   // handle adding submit
   async function handleSubmit(e) {
@@ -76,7 +73,16 @@ function AllCoupons() {
         setLoading(false);
       });
   }
+  const [loaded, setLoaded] = useState(false);
+
+  let loading = false;
+  const setLoading = (value) => {
+    loading = value;
+  };
+  // Fetch users when the component mounts
   useEffect(() => {
+    if (loading || loaded) return;
+    setLoading(true);
     getAllCoupons()
       .then((response) => {
         if (response.success) {
@@ -190,11 +196,9 @@ function AllCoupons() {
             ))}
           </tbody>
         </table>
-       
       </div>
     </div>
   );
 }
 
 export default AllCoupons;
-

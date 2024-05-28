@@ -6,10 +6,10 @@ import { addCategory, getAllCategories } from "../services/admin";
 import { sweetAlert } from "../services/sweetalert";
 
 function AllCategories() {
-  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
+  const [loaded, setLoaded] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -51,11 +51,19 @@ function AllCategories() {
       });
   }
 
+  let loading = false;
+  const setLoading = (value) => {
+    loading = value;
+  };
+
   useEffect(() => {
+    if (loading || loaded) return;
+    setLoading(true);
     getAllCategories()
       .then((response) => {
         if (response.success) {
           setCategories(response.categories);
+          setLoaded(true);
         } else {
           setError("Failed to fetch Categories");
         }

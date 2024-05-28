@@ -117,4 +117,41 @@ export async function deleteCoupon(couponId) {
   return response.json();
 }
 
-// filters
+// get All courses
+export async function getAllCourses() {
+  const response = await fetch(`${BASE_URL}/get-courses/getAllCourses`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+    },
+  });
+
+  return response.json();
+}
+
+// Approve Course
+export async function approvement(courseID) {
+  const response = await fetch(`${BASE_URL}/Admin/approvement/${courseID}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+    },
+  });
+
+  return response.json();
+}
+// Disapprove Course
+export async function disApprove(courseID) {
+  const response = await fetch(`${BASE_URL}/Admin/disApprove/${courseID}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+    },
+  });
+
+  return response.json();
+}
+
