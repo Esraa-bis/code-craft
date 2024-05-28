@@ -45,6 +45,7 @@ display: flex;
     border-radius: 8px;
     box-shadow: -2px -1px 12px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
+        justify-content: space-between;
     align-items: center;
 }
 
@@ -60,6 +61,8 @@ display: flex;
 
 .Content {
   padding: 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 .courseTitle {
@@ -97,6 +100,7 @@ height: 25px;
     border-left: 1px solid #eee;
     display: flex;
     justify-content: flex-end;
+    flex-direction: column;
 }
 
 .viewCourse {
@@ -113,3 +117,23 @@ height: 25px;
 .viewCourse:hover {
   color: #0056b3;
 }
+
+/* MyCourses */
+.MyCourses{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+}
+
+
+.courseStats{
+  display: flex;
+  gap: 30px;
+}
+
+
+.courseStats svg{
+color: #007bff;
+} 
