@@ -32,13 +32,13 @@ export async function getUser() {
 }
 // Edit Profile
 export async function editProfile({
-  firstname,
-  lastname,
-  phonenumber,
-  bio,
+  firstName,
+  lastName,
+  phoneNumber,
+  Bio,
   experience,
   education,
-  contactinfo,
+  contactInfo,
 }) {
   const response = await fetch(`${BASE_URL}/User/update_profile_date`, {
     method: "PUT",
@@ -47,13 +47,13 @@ export async function editProfile({
       token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
     },
     body: JSON.stringify({
-      firstname,
-      lastname,
-      phonenumber,
-      bio,
+      firstName,
+      lastName,
+      phoneNumber,
+      Bio,
       experience,
       education,
-      contactinfo,
+      contactInfo,
     }),
   });
 
