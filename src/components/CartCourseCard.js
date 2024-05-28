@@ -51,7 +51,7 @@ function CartCourseCard(course) {
         </div>
         <div className={styles.CardBtns}>
           <Link
-            to={`/ViewCourse?courseId=${course?.courseId}`}
+            to={`/ViewCourse?courseId=${course?._id}`}
             className={styles.ViewCourseBTN}
           >
             View Course
