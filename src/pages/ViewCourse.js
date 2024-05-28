@@ -92,7 +92,11 @@ const { hours, minutes } = convertDuration(course.courseDuration);
       });
     }
   }
-  // update recently viewed
+  //formate the data
+  function getFormattedDate(dateString) {
+    if (!dateString) return null;
+    return dateString.split("T")[0];
+  }
    
   return (
     <>
@@ -124,7 +128,11 @@ const { hours, minutes } = convertDuration(course.courseDuration);
               <div className={styles.detail}>
                 <p>
                   Last Update:{" "}
-                  <span>{course.updateAt || course.createdAt}</span>
+                  <span>
+                    {getFormattedDate(course.updatedAt) ||
+                      getFormattedDate(course.createdAt) ||
+                      "Date not available"}
+                  </span>
                 </p>
               </div>
 
@@ -135,7 +143,7 @@ const { hours, minutes } = convertDuration(course.courseDuration);
               </div>
               <div className={styles.detail}>
                 <p>
-                  Category: <span>{course.category}</span>
+                  Category: <span>{course.categoryId.name}</span>
                 </p>
               </div>
             </div>
@@ -179,15 +187,7 @@ const { hours, minutes } = convertDuration(course.courseDuration);
               </div>
               <button className={styles.buyNow}>Buy Now</button>
             </div>
-            <div className={styles.PromotionCode}>
-              <input
-                type="text"
-                name="Promotion"
-                className={styles.PromotionInput}
-                placeholder="Promotion.."
-              />
-              <button className={styles.Apply}>Apply</button>
-            </div>
+           
           </div>
         </section>
         <section>
