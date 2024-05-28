@@ -20,6 +20,7 @@ import ContactUs from "./pages/ContactUs";
 import CourseVideos from "./pages/CourseVideos";
 import Courses from "./pages/Courses";
 import Discussion from "./pages/Discussion";
+import MyCourses from "./pages/MyCourses";
 import MyLearning from "./pages/MyLearning";
 import PaymentMethods from "./pages/PaymentMethods";
 import Profile from "./pages/Profile";
@@ -103,13 +104,18 @@ function App() {
         <Route path="/MyLearning" element={<MyLearning />} />
         <Route path="/Discussion" element={<Discussion />} />
         <Route path="/CourseVideos" element={<CourseVideos />} />
+
+        <Route path="/MyCourses" element={<MyCourses user={user} />} />
         <Route
           path="/Admin"
           element={
             <Admin signedIn={signedIn} setSignedIn={setSignedIn} user={user} />
           }
         />
-        <Route path="/AdminDashboard" element={user.role==="superAdmin"?<AdminDashboard />:<Home/>} />
+        <Route
+          path="/AdminDashboard"
+          element={user.role === "superAdmin" ? <AdminDashboard /> : <Home />}
+        />
         <Route path="/TeachOnCodeCraft" element={<TeachOnCodeCraft />} />
         <Route path="/UploadCourse" element={<UploadCourse />} />
       </Routes>
