@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../assets/css/MyLearning.module.css";
 // course photo
 import CoursePhoto from "../assets/images/css.avif";
 // link
 import { Link } from "react-router-dom";
+import { recentlyViewed } from "../services/myLearning";
 
 function MyLearning() {
   const [activeSection, setActiveSection] = useState("RecentlyViewed"); 
@@ -53,54 +54,49 @@ function MyLearning() {
 export default MyLearning;
 
 function RecentlyViewed() {
+    const [courses, setCourses] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+
+      recentlyViewed()
+        .then((response) => {
+          if (response.success) {
+            setCourses(response.recentlyViewedCourses);
+          } else {
+            setError("Failed to fetch courses");
+          }
+          setLoading(false);
+        })
+        .catch((err) => {
+          setError(err.message);
+          setLoading(false);
+        });
+    }, []);
   return (
     <section className={styles.Section}>
-      <div className={`${styles.MyLearningCard}`}>
-        <img
-          src={CoursePhoto}
-          alt="course css"
-          className={`${styles.courseImg}`}
-        />
-        <div className={`${styles.Content}`}>
-          <h5 className={`${styles.courseTitle}`}>
-            Introduction to Web Development
-          </h5>
-          <p className={`${styles.courseDescription}`}>
-            Learn the basics of HTML, CSS, and JavaScript to kickstart your web
-            development journeyLearn the basics of HTML, CSS, and JavaScript to
-            kickstart your web development journeyLearn the basics of HTML, CSS,
-            and JavaScript to kickstart your web development journeyLearn the
-            basics of HTML, CSS, and JavaScript to kickstart your web
-            development journey.
-          </p>
+      {courses.map((course, index) => (
+        <div className={`${styles.MyLearningCard}`}>
+          <img
+            src={course.image.url}
+            alt={course.courseName}
+            className={`${styles.courseImg}`}
+          />
+          <div className={`${styles.Content}`}>
+            <h5 className={`${styles.courseTitle}`}>{course.courseName}</h5>
+            <p className={`${styles.courseDescription}`}>{course.desc}</p>
+          </div>
+          <div className={styles.ACtion}>
+            <Link
+              className={styles.viewCourse}
+              to={`/ViewCourse?courseId=${course?._id}`}
+            >
+              view course &#8594;
+            </Link>
+          </div>
         </div>
-        <div className={styles.ACtion}>
-          <Link className={styles.viewCourse}>view course &#8594;</Link>
-        </div>
-      </div>
-      <div className={`${styles.MyLearningCard}`}>
-        <img
-          src={CoursePhoto}
-          alt="course css"
-          className={`${styles.courseImg}`}
-        />
-        <div className={`${styles.Content}`}>
-          <h5 className={`${styles.courseTitle}`}>
-            Introduction to Web Development
-          </h5>
-          <p className={`${styles.courseDescription}`}>
-            Learn the basics of HTML, CSS, and JavaScript to kickstart your web
-            development journeyLearn the basics of HTML, CSS, and JavaScript to
-            kickstart your web development journeyLearn the basics of HTML, CSS,
-            and JavaScript to kickstart your web development journeyLearn the
-            basics of HTML, CSS, and JavaScript to kickstart your web
-            development journey.
-          </p>
-        </div>
-        <div className={styles.ACtion}>
-          <Link className={styles.viewCourse}>view course &#8594;</Link>
-        </div>
-      </div>
+      ))}
     </section>
   );
 }
