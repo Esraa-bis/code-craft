@@ -79,7 +79,7 @@ useEffect(() => {
   return (
     <section className={styles.Section}>
       {courses.map((course, index) => (
-        <div className={`${styles.MyLearningCard}`}>
+        <div className={`${styles.MyLearningCard}`} key={course.id}>
           <div className={` ${styles.MyCourses}`}>
             <img
               src={course.image.url}
