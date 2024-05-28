@@ -5,7 +5,6 @@ import { Link, Navigate } from "react-router-dom";
 import styles from "../assets/css/Profile.module.css";
 // components
 function ProfileSideBar({ signedIn, user }) {
-  console.log(signedIn);
   return (
     <section className={`${styles.ProfileSideBar}`}>
       {!signedIn && <Navigate to="/" replace={true} />}
@@ -17,7 +16,7 @@ function ProfileSideBar({ signedIn, user }) {
           className={`${styles.ProfilePicture}`}
         />
         <h3 className={`${styles.UserName}`}>
-          {user?.firstname} {user?.lastname}
+          {user?.firstName} {user?.lastName}
         </h3>
       </section>
       <section className={`${styles.ProfileEditSection}`}>

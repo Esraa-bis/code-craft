@@ -16,12 +16,12 @@ function EditProfileForm({ user, setUser }) {
   const [formData, setFormData] = useState(() => ({ ...user }));
 
   const [contactInfo, setContactInfo] = useState(
-    () => user.contactinfo || ["", "", ""]
+    () => user.contactInfo || ["", "", ""]
   );
 
   useEffect(() => {
-    setFormData({ ...user });
-    setContactInfo(user.contactinfo || ["", "", ""]);
+    setFormData((formData) => ({ ...formData, ...user }));
+    setContactInfo(user.contactInfo || ["", "", ""]);
   }, [user]);
 
   const updateContactInfo = (key, value) => {
@@ -35,7 +35,7 @@ function EditProfileForm({ user, setUser }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    editProfile({ ...formData, contactinfo: contactInfo })
+    editProfile({ ...formData, contactInfo: contactInfo })
       .then((response) => {
         if (response.success) setUser(response.user);
         sweetAlert({
@@ -52,7 +52,10 @@ function EditProfileForm({ user, setUser }) {
   };
 
   function updateFormData(event, fieldname) {
-    setFormData({ ...formData, [fieldname]: event.target.value });
+    setFormData((formData) => ({
+      ...formData,
+      [fieldname]: event.target.value,
+    }));
   }
 
   return (
@@ -71,8 +74,8 @@ function EditProfileForm({ user, setUser }) {
               id="firstname"
               name="firstname"
               className={styles.input}
-              value={formData.firstname}
-              onChange={(event) => updateFormData(event, "firstname")}
+              value={formData.firstName}
+              onChange={(event) => updateFormData(event, "firstName")}
               placeholder="First Name"
               required
             />
@@ -83,20 +86,20 @@ function EditProfileForm({ user, setUser }) {
               id="lastname"
               name="lastname"
               className={styles.input}
-              value={formData.lastname}
-              onChange={(event) => updateFormData(event, "lastname")}
+              value={formData.lastName}
+              onChange={(event) => updateFormData(event, "lastName")}
               placeholder="Last Name"
               required
             />
           </div>
           <div className={styles.formGroup}>
             <input
-              type="number"
+              type="tel"
               id="phonenumber"
               name="phonenumber"
               className={styles.input}
-              value={formData.phonenumber}
-              onChange={(event) => updateFormData(event, "phonenumber")}
+              value={formData.phoneNumber}
+              onChange={(event) => updateFormData(event, "phoneNumber")}
               placeholder="Phone Number"
               required
             />
@@ -111,8 +114,8 @@ function EditProfileForm({ user, setUser }) {
               id="bio"
               name="bio"
               className={styles.input}
-              value={formData.bio}
-              onChange={(event) => updateFormData(event, "bio")}
+              value={formData.Bio}
+              onChange={(event) => updateFormData(event, "Bio")}
               placeholder="Describe yourself in a few words..."
             ></textarea>
           </div>
