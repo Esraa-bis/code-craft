@@ -10,10 +10,6 @@ function Profile({ user, setUser, signedIn }) {
     <div className={`${styles.container} ${styles.profile}`}>
       <ProfileSideBar signedIn={signedIn} user={user} />
       <main className={styles.mainContent}>
-        {/* edit profile form */}
-        {/* <Routes>
-          <Route path="/Profile" element={<EditProfileForm/>}/>
-        </Routes> */}
         <EditProfileForm user={user} setUser={setUser} />
       </main>
     </div>
