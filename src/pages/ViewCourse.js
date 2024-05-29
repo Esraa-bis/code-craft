@@ -6,7 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "../assets/css/ViewCourse.module.css";
-import { addToCart, coursePreview, updateRecentlyViewed } from "../services/course";
+import {
+  addToCart,
+  coursePreview,
+  updateRecentlyViewed,
+} from "../services/course";
 import { sweetAlert } from "../services/sweetalert";
 function ViewCourse() {
   function useQuery() {
@@ -18,13 +22,12 @@ function ViewCourse() {
   const [error, setError] = useState(null);
   const query = useQuery();
   const courseId = query.get("courseId");
-   useEffect(() => {
-     updateRecentlyViewed(courseId)
-       .catch((error) => {
-         setError(error.message);
-         setLoading(false);
-       });
-   }, [courseId]);
+  useEffect(() => {
+    updateRecentlyViewed(courseId).catch((error) => {
+      setError(error.message);
+      setLoading(false);
+    });
+  }, [courseId]);
 
   useEffect(() => {
     setLoading(true);
@@ -54,16 +57,15 @@ function ViewCourse() {
   if (!course) {
     return <div>No preview available for this course.</div>;
   }
-  
-function convertDuration(duration) {
-  const hours = Math.floor(duration / 60); // Convert total minutes to hours
-  const minutes = duration % 60; // Get the remaining minutes
 
-  return { hours, minutes };
-}
+  function convertDuration(duration) {
+    const hours = Math.floor(duration / 60); // Convert total minutes to hours
+    const minutes = duration % 60; // Get the remaining minutes
 
-const { hours, minutes } = convertDuration(course.courseDuration);
+    return { hours, minutes };
+  }
 
+  const { hours, minutes } = convertDuration(course.courseDuration);
 
   function formatIndex(index) {
     return `#${index.toString().padStart(2, "0")}`;
@@ -97,7 +99,7 @@ const { hours, minutes } = convertDuration(course.courseDuration);
     if (!dateString) return null;
     return dateString.split("T")[0];
   }
-   
+
   return (
     <>
       <section className={styles.CoursePreview}>
@@ -185,9 +187,14 @@ const { hours, minutes } = convertDuration(course.courseDuration);
                   </button>
                 </div>
               </div>
-              <button className={styles.buyNow}>Buy Now</button>
+              <button className={styles.buyNow}>
+                <Link
+                  to={`/Checkout?courseId=${course?._id}`}
+                >
+                  Buy Now
+                </Link>
+              </button>
             </div>
-           
           </div>
         </section>
         <section>
