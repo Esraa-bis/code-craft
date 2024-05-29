@@ -30,6 +30,7 @@ import ViewCourse from "./pages/ViewCourse";
 import DeleteAccount from "./pages/deleteAccount";
 import { SessionTokenStorage } from "./services/local-storage";
 import { getUser, isUserLoaded, setIsUserLoaded } from "./services/user";
+import Checkout from "./pages/Checkout";
 
 function App() {
   const [signedIn, setSignedIn] = useState(SessionTokenStorage.hasToken());
@@ -118,7 +119,9 @@ function App() {
         />
         <Route path="/TeachOnCodeCraft" element={<TeachOnCodeCraft />} />
         <Route path="/UploadCourse" element={<UploadCourse />} />
+        <Route path="/Checkout" element={<Checkout />} />
       </Routes>
+
       <Footer />
     </div>
   );
