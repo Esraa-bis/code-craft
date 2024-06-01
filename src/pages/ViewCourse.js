@@ -101,7 +101,7 @@ function ViewCourse() {
     <>
       <section className={styles.CoursePreview}>
         <section className={styles.CourseDescription}>
-          <div>
+          <div className={styles.NameAndDescription}>
             <h1 className={styles.Title}>{course.courseName}</h1>
             <p className={styles.description}>{course.desc}</p>
             <div className={styles.details}>
