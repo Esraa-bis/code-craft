@@ -1,6 +1,6 @@
 // styles
-import styles from "../assets/css/courses.module.css";
 import { useEffect, useState } from "react";
+import styles from "../assets/css/courses.module.css";
 import CourseCard from "../components/CourseCard";
 import { getCoursesFilters } from "../services/course";
 
@@ -12,39 +12,39 @@ function Courses() {
   const setLoading = (value) => {
     loading = value;
   };
- useEffect(() => {
-   const filters = {
-     isApproved: true,
-   };
+  useEffect(() => {
+    const filters = {
+      isApproved: true,
+    };
 
-   getCoursesFilters(filters)
-     .then((response) => {
-       if (response.success) {
-         setCourses(response.courses);
-       } else {
-         setError("Failed to fetch courses");
-       }
-       setLoading(false);
-     })
-     .catch((err) => {
-       setError(err.message);
-       setLoading(false);
-     });
- }, []);
+    getCoursesFilters(filters)
+      .then((response) => {
+        if (response.success) {
+          setCourses(response.courses);
+        } else {
+          setError("Failed to fetch courses");
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
   return (
     <section className={styles.CoursesFilters}>
       {/* filter section */}
       <Filters />
       <div className={styles.Courses}>
-        {courses.map((course, index) => (
+        {courses?.map((course, index) => (
           <CourseCard
             key={index}
             img={course.image.url}
             title={course.courseName}
             description={course.desc}
-            price={course.appliedPrice}
+            price={course.basePrice}
             time={course.courseDuration.toFixed(1)}
-            rating={course.rating}
+            rating={course.rate}
             slug={course.slug}
             _id={course._id}
           />
