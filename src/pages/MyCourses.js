@@ -50,31 +50,30 @@ function Approved({ user }) {
   const [error, setError] = useState(null);
   const [userId, setUserId] = useState(() => null);
 
-useEffect(() => {
-  if (!user.id || userId === user.id) return;
+  useEffect(() => {
+    if (!user.id || userId === user.id) return;
 
-  setUserId(user.id);
+    setUserId(user.id);
 
-  const filters = {
-    addedBy: user.id,
-    isApproved:true,
-  };
+    const filters = {
+      addedBy: user.id,
+      isApproved: true,
+    };
 
-  getCoursesFilters(filters)
-    .then((response) => {
-      if (response.success) {
-        setCourses(response.courses);
-      } else {
-        setError("Failed to fetch courses");
-      }
-      setLoading(false);
-    })
-    .catch((err) => {
-      setError(err.message);
-      setLoading(false);
-    });
-}, [user]);
-
+    getCoursesFilters(filters)
+      .then((response) => {
+        if (response.success) {
+          setCourses(response.coursesWithEnrollment);
+        } else {
+          setError("Failed to fetch courses");
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [user]);
 
   return (
     <section className={styles.Section}>
@@ -104,7 +103,12 @@ useEffect(() => {
             </div>
           </div>
           <div className={styles.ACtion}>
-            <Link className={styles.viewCourse}>Edit course &#8594;</Link>
+            <Link
+              className={styles.viewCourse}
+              to={`editCourse?courseId=${course._id}`}
+            >
+              Edit course &#8594;
+            </Link>
             <Link
               className={styles.viewCourse}
               to={`/ViewCourse?courseId=${course._id}?${course.slug}`}
@@ -123,30 +127,30 @@ function Disapproved({ user }) {
   const [error, setError] = useState(null);
   const [userId, setUserId] = useState(() => null);
 
-useEffect(() => {
-  if (!user.id || userId === user.id) return;
+  useEffect(() => {
+    if (!user.id || userId === user.id) return;
 
-  setUserId(user.id);
+    setUserId(user.id);
 
-  const filters = {
-    addedBy: user.id,
-    isApproved: false,
-  };
+    const filters = {
+      addedBy: user.id,
+      isApproved: false,
+    };
 
-  getCoursesFilters(filters)
-    .then((response) => {
-      if (response.success) {
-        setCourses(response.courses);
-      } else {
-        setError("Failed to fetch courses");
-      }
-      setLoading(false);
-    })
-    .catch((err) => {
-      setError(err.message);
-      setLoading(false);
-    });
-}, [user]);
+    getCoursesFilters(filters)
+      .then((response) => {
+        if (response.success) {
+          setCourses(response.coursesWithEnrollment);
+        } else {
+          setError("Failed to fetch courses");
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [user]);
 
   return (
     <section className={styles.Section}>
@@ -176,7 +180,12 @@ useEffect(() => {
             </div>
           </div>
           <div className={styles.ACtion}>
-            <Link className={styles.viewCourse}>Edit course &#8594;</Link>
+            <Link
+              className={styles.viewCourse}
+              to={`editCourse?courseId=${course._id}`}
+            >
+              Edit course &#8594;
+            </Link>
           </div>
         </div>
       ))}

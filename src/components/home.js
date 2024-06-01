@@ -70,7 +70,7 @@ function Home() {
     getCoursesFilters(filters)
       .then((response) => {
         if (response.success) {
-          setRecentlyAdded(response.courses);
+          setRecentlyAdded(response.coursesWithEnrollment);
         } else {
           setError("Failed to fetch courses");
         }
@@ -91,7 +91,7 @@ function Home() {
     getCoursesFilters(filters)
       .then((response) => {
         if (response.success) {
-          setFreeCourses(response.courses);
+          setFreeCourses(response.coursesWithEnrollment);
         } else {
           setError("Failed to fetch courses");
         }
@@ -107,12 +107,12 @@ function Home() {
   useEffect(() => {
     const filters = {
       isApproved: true,
-      basePrice: 0,
+      sort: "enrolledUsers desc",
     };
     getCoursesFilters(filters)
       .then((response) => {
         if (response.success) {
-          setMostPopular(response.courses);
+          setMostPopular(response.coursesWithEnrollment);
         } else {
           setError("Failed to fetch courses");
         }
