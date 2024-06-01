@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "../assets/css/Cart.module.css";
 import CartCourseCard from "../components/CartCourseCard";
 import { userCart } from "../services/course";
+import { Link } from "react-router-dom";
 
 function Cart() {
   const [courses, setCourses] = useState([]);
@@ -78,7 +79,9 @@ function Cart() {
               Total:{" "}
               <span className={styles.TotalPrice}>{cart.subTotal} LE</span>
             </h3>
-            <button className={styles.CheckOutButton}>Check Out</button>
+            <button className={styles.CheckOutButton}>
+              <Link  to={`/Checkout?cartId=${cart?._id}`}>Check Out</Link>
+            </button>
           </div>
         </div>
       </div>
