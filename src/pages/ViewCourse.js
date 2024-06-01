@@ -8,6 +8,7 @@ import {
   coursePreview,
   updateRecentlyViewed,
 } from "../services/course";
+import { convertMinutes } from "../services/generalFunctions";
 import { sweetAlert } from "../services/sweetalert";
 function ViewCourse() {
   function useQuery() {
@@ -54,15 +55,6 @@ function ViewCourse() {
   if (!course) {
     return <div>No preview available for this course.</div>;
   }
-
-  function convertDuration(duration) {
-    const hours = Math.floor(duration / 60); // Convert total minutes to hours
-    const minutes = duration % 60; // Get the remaining minutes
-
-    return { hours, minutes };
-  }
-
-  const { hours, minutes } = convertDuration(course.courseDuration);
 
   function formatIndex(index) {
     return `#${index.toString().padStart(2, "0")}`;
@@ -201,8 +193,8 @@ function ViewCourse() {
         <section className={styles.mainContent}>
           <h3>Content</h3>
           <p>
-            {course.numOfVideos} lectures •{`${hours}h, ${minutes}m  `}
-            total length
+            {course.numOfVideos} lectures •
+            {convertMinutes(course.courseDuration)}
           </p>
           <ul>
             {course?.vidoes.map((video, index) => (

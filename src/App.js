@@ -105,8 +105,9 @@ function App() {
           <Route path="/MyLearning" element={<MyLearning />} />
           <Route path="/Discussion" element={<Discussion />} />
           <Route path="/CourseVideos" element={<CourseVideos />} />
-
           <Route path="/MyCourses" element={<MyCourses user={user} />} />
+          <Route path="/editCourse" element={<TeachOnCodeCraft />} />
+
           <Route
             path="/Admin"
             element={
