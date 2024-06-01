@@ -25,7 +25,7 @@ function AllCourses() {
     getAllCourses()
       .then((response) => {
         if (response.success) {
-          setCourses(response.courses);
+          setCourses(response.coursesWithEnrollment);
           setLoaded(true);
         } else {
           setError("Failed to fetch courses");
@@ -163,7 +163,7 @@ function AllCourses() {
               <td>{course.enrolledUsers || 0} User</td>
               <td>{course.completedUsers || 0} User</td>
               <td className={styles.rating}>
-                {course.rate? (
+                {course.rate ? (
                   <>
                     {course.rating} <FontAwesomeIcon icon={faStar} />
                   </>
