@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // for translate into arabic
 import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
@@ -11,6 +11,8 @@ import HomeCoursesSections from "./homeCoursesSections.js";
 
 // styles
 import "../assets/css/Home.css";
+import { getCoursesFilters } from "../services/course.js";
+import { recentlyViewed } from "../services/myLearning.js";
 i18n
   .use(LanguageDetector)
   .use(HttpApi)
@@ -35,6 +37,94 @@ i18n
   });
 
 function Home() {
+  const [recentlyViewedCourses, setRecentlyViewedCourses] = useState([]);
+  const [mostPopular, setMostPopular] = useState([]);
+  const [recentlyAdded, setRecentlyAdded] = useState([]);
+  const [freeCourses, setFreeCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  //  for recommended for you
+  useEffect(() => {
+    recentlyViewed()
+      .then((response) => {
+        if (response.success) {
+          setRecentlyViewedCourses(response.recentlyViewedCourses);
+        } else {
+          setError("Failed to fetch courses");
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  // for  recently added
+  useEffect(() => {
+    const filters = {
+      isApproved: true,
+      sort: "createdAt desc", // '-' indicates descending order
+    };
+
+    getCoursesFilters(filters)
+      .then((response) => {
+        if (response.success) {
+          setRecentlyAdded(response.courses);
+        } else {
+          setError("Failed to fetch courses");
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+  // for  free courses
+  useEffect(() => {
+    const filters = {
+      isApproved: true,
+      basePrice: 0,
+    };
+
+    getCoursesFilters(filters)
+      .then((response) => {
+        if (response.success) {
+          setFreeCourses(response.courses);
+        } else {
+          setError("Failed to fetch courses");
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  // for most popular
+  useEffect(() => {
+    const filters = {
+      isApproved: true,
+      basePrice: 0,
+    };
+    getCoursesFilters(filters)
+      .then((response) => {
+        if (response.success) {
+          setMostPopular(response.courses);
+        } else {
+          setError("Failed to fetch courses");
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  // for translation
   const { t } = useTranslation();
   const lng = cookies.get("i18next") || "en";
   useEffect(() => {
@@ -45,10 +135,22 @@ function Home() {
       <HeroSection />
       <h2 className="Explore-Courses-Text"> {t("Explore Courses")} </h2>
       <main className="main-container">
-        <HomeCoursesSections sectionTitle={t("Recommended for you ")} />
-        <HomeCoursesSections sectionTitle={t("Most Popular")} />
-        <HomeCoursesSections sectionTitle={t("Recently Added")} />
-        <HomeCoursesSections sectionTitle={t(" Start now with zero fees")} />
+        <HomeCoursesSections
+          sectionTitle={t("Recommended for you ")}
+          courses={recentlyViewedCourses}
+        />
+        <HomeCoursesSections
+          sectionTitle={t("Most Popular")}
+          courses={mostPopular}
+        />
+        <HomeCoursesSections
+          sectionTitle={t("Recently Added")}
+          courses={recentlyAdded}
+        />
+        <HomeCoursesSections
+          sectionTitle={t(" Start now with zero fees")}
+          courses={freeCourses}
+        />
       </main>
     </>
   );
