@@ -1,12 +1,8 @@
 .CoursesFilters {
   display: flex;
-    
-
 }
-.filters{
-    box-shadow: inset 2px -2px 15px rgba(0, 0, 0, 0.1);
-}
-.Courses {
+.filters {
+  box-shadow: inset 2px -2px 15px rgba(0, 0, 0, 0.1);
 }
 .CoursesFilters .filters {
   padding: 30px 20px;
@@ -20,11 +16,15 @@
 }
 .CoursesFilters .Courses {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  padding: 45px 20px;
-  gap: 25px;
+  width: 100%;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(var(--course-card-min-width), var(--course-card-max-width))
+  );
+  padding: 20px 0;
   align-items: center;
   justify-content: center;
+  gap: 20px;
 }
 .Filter .stars {
   display: flex;
@@ -34,7 +34,7 @@
 .star {
   width: 20px;
   height: 20px;
-  color: #ffbc15;
+  color: var(--gold-color);
 }
 .stars .AndUp {
   color: #797979;

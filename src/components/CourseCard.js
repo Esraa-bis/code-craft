@@ -1,17 +1,15 @@
-import "../assets/css/CourseCard.css";
-import { Link } from "react-router-dom";
-import coverBackup from "../assets/images/cover.jpg";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import HttpApi from "i18next-http-backend";
 import cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { initReactI18next, useTranslation } from "react-i18next";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import "../assets/css/CourseCard.css";
 import { addToCart } from "../services/course";
 import { sweetAlert } from "../services/sweetalert";
-
 
 i18n
   .use(LanguageDetector)
@@ -47,75 +45,81 @@ export default function CourseCard(course) {
   }, [lng]);
   // for add to cart api calling
   // handle add to cart
- async function handleAddToCart(courseId) {
-   try {
-     const response = await addToCart(courseId);
+  async function handleAddToCart(courseId) {
+    try {
+      const response = await addToCart(courseId);
 
-     if (response && response.success) {
-       sweetAlert({
-         title: "Success!",
-         text: response.message,
-         icon: "success",
-       });
-     } else {
-       throw new Error(
-         response && response.message ? response.message : "Unknown error"
-       );
-     }
-   } catch (error) {
-     sweetAlert({
-       title: "Error!",
-       text: error.message || "An error occurred",
-     });
-   }
- }
+      if (response && response.success) {
+        sweetAlert({
+          title: "Success!",
+          text: response.message,
+          icon: "success",
+        });
+      } else {
+        throw new Error(
+          response && response.message ? response.message : "Unknown error"
+        );
+      }
+    } catch (error) {
+      sweetAlert({
+        title: "Error!",
+        text: error.message || "An error occurred",
+      });
+    }
+  }
 
   return (
     <>
-      <div className="course-card ">
+      <div className="course-card">
         <img src={course.img} alt={course.title} />
-        <h2>{course.title}</h2>
-        <p>{course.description}</p>
-        <div className="details">
-          <div className="detail">
-            <FontAwesomeIcon icon={faStar} className="icon rating-icon " />
+        <div className="course-content">
+          <h2>{course.title}</h2>
+          <p>{course.description}</p>
+          <div className="details">
+            <div className="detail">
+              <FontAwesomeIcon icon={faStar} className="icon rating-icon " />
 
-            <p>{course.rating}</p>
-          </div>
-          <div className="detail">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className=" time-icon icon w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            <p>{course.time}</p>
-          </div>
-          <div className="detail">
-            <p className="price">{course.price}EGP</p>
-          </div>
+              <p>{course.rating}</p>
+            </div>
+            <div className="detail">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className=" time-icon icon w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+              &nbsp;&nbsp;
+              <p>{course.time}</p>
+            </div>
+            <div className="detail">
+              <p>
+                <span className="price">{course.price}</span>
+                <span className="currency">EGP</span>
+              </p>
+            </div>
 
-          <div className="CardBTN">
-            <Link
-              to={`/ViewCourse?courseId=${course?._id}?${course.slug}`}
-              className="ViewCourseBTN"
-            >
-              View Course
-            </Link>
-            <button
-              className="AddToCartBTN"
-              onClick={() => handleAddToCart(course?._id)}
-            >
-              {t("Add to Cart")}
-            </button>
+            <div className="CardBTN">
+              <Link
+                to={`/ViewCourse?courseId=${course?._id}?${course.slug}`}
+                className="ViewCourseBTN"
+              >
+                View Course
+              </Link>
+              <button
+                className="AddToCartBTN"
+                onClick={() => handleAddToCart(course?._id)}
+              >
+                {t("Add to Cart")}
+              </button>
+            </div>
           </div>
         </div>
       </div>
