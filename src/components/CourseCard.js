@@ -100,7 +100,9 @@ export default function CourseCard(course) {
             <p>{course.time}</p>
           </div>
           <div className="detail">
-            <p className="price">{course.price}EGP</p>
+            <p className="price">
+              {course.price === 0 ? "Free" : `${course.price} EGP`}
+            </p>
           </div>
 
           <div className="CardBTN">
