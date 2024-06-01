@@ -1,6 +1,3 @@
-// link
-// images
-// styles
 import { faPlay, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
@@ -188,11 +185,7 @@ function ViewCourse() {
                 </div>
               </div>
               <button className={styles.buyNow}>
-                <Link
-                  to={`/Checkout?courseId=${course?._id}`}
-                >
-                  Buy Now
-                </Link>
+                <Link to={`/Checkout?courseId=${course?._id}`}>Buy Now</Link>
               </button>
             </div>
           </div>

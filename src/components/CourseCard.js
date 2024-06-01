@@ -114,7 +114,7 @@ export default function CourseCard(course) {
 
             <div className="CardBTN">
               <Link
-                to={`/ViewCourse?courseId=${course?._id}?${course.slug}`}
+                to={`/ViewCourse?courseId=${course?._id}&slug=${course.slug}`}
                 className="ViewCourseBTN"
               >
                 View Course
