@@ -154,7 +154,7 @@ function AllCourses() {
           </tr>
         </thead>
         <tbody>
-          {courses.map((course, index) => (
+          {courses?.map((course, index) => (
             <tr key={course._id}>
               <td>{index + 1}</td>
               <td title={course._id}>{course._id}</td>
@@ -163,7 +163,7 @@ function AllCourses() {
               <td>{course.enrolledUsers || 0} User</td>
               <td>{course.completedUsers || 0} User</td>
               <td className={styles.rating}>
-                {course.rating ? (
+                {course.rate? (
                   <>
                     {course.rating} <FontAwesomeIcon icon={faStar} />
                   </>

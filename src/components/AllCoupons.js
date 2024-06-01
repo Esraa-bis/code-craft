@@ -176,7 +176,7 @@ function AllCoupons() {
             </tr>
           </thead>
           <tbody>
-            {coupons.map((coupon, index) => (
+            {coupons?.map((coupon, index) => (
               <tr key={coupon.id}>
                 <td>{index + 1}</td>
                 <td>{coupon.couponCode}</td>

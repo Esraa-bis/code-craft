@@ -110,7 +110,7 @@ function ViewCourse() {
             <div className={styles.details}>
               <div className={styles.detail}>
                 <p>
-                  Rating:{course.rating || "-"}
+                  Rating:{course.rate || "-"}
                   <FontAwesomeIcon
                     icon={faStar}
                     className={` icon rating-icon `}
@@ -212,7 +212,7 @@ function ViewCourse() {
             total length
           </p>
           <ul>
-            {course.vidoes.map((video, index) => (
+            {course?.vidoes.map((video, index) => (
               <li key={video._id}>
                 <span>{formatIndex(index)} </span>
                 {video.title}

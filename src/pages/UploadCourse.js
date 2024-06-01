@@ -182,7 +182,7 @@ function UploadCourse() {
         ></progress> */}
       </div>
       <div className={styles.videos}>
-        {videos.map((video) => (
+        {videos?.map((video) => (
           <div key={video.id} className={styles.videoGroup}>
             <label htmlFor={video.id}>
               <div className={styles.actions}>

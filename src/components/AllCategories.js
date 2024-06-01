@@ -80,7 +80,7 @@ function AllCategories() {
   }
   return (
     <div className={styles.allCategories}>
-      <h2>All Categories {categories.length}</h2>
+      <h2>All Categories {categories?.length ?? 0}</h2>
       <table className={styles.categoryTable}>
         <thead>
           <tr>
@@ -90,10 +90,10 @@ function AllCategories() {
           </tr>
         </thead>
         <tbody>
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <tr key={category.id}>
               <td>{category.name}</td>
-              <td>{category.courses.length} courses</td>
+              <td>{category?.courses?.length ?? 0} courses</td>
               <td>
                 <button className={styles.deleteBtn}>
                   <FontAwesomeIcon icon={faTrash} />

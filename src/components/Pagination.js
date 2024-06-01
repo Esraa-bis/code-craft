@@ -29,7 +29,7 @@ function Paginationn({ noPerPage, total, paginate, currentPage }) {
           </a>
         </li>
         {/* Page numbers */}
-        {pageNumbers.map((number) => (
+        {pageNumbers?.map((number) => (
           <li
             key={number}
             className={`page-item ${currentPage === number ? "active" : ""}`}

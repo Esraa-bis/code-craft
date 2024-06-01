@@ -113,7 +113,7 @@ async function handleSubmit(e) {
             <option value="" disabled selected>
               Choose Category
             </option>
-            {categories.map((category, index) => (
+            {categories?.map((category, index) => (
               <option key={index} value={category._id}>
                 {category.name}
               </option>

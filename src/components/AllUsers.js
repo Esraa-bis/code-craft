@@ -49,7 +49,7 @@ function AllUsers() {
 
       if (response.success) {
         setUsers((prevUsers) =>
-          prevUsers.map((u) =>
+          prevUsers?.map((u) =>
             u.id === user.id
               ? {
                   ...u,
@@ -77,7 +77,7 @@ function AllUsers() {
 
       if (response.success) {
         setUsers((prevUsers) =>
-          prevUsers.map((u) =>
+          prevUsers?.map((u) =>
             u.id === user.id
               ? {
                   ...u,

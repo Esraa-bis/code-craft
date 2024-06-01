@@ -42,7 +42,7 @@ function Cart() {
           <h3 className={styles.NumCourse}>{courses.length} Courses in Cart</h3>
           {courses.length > 0 ? (
             <ul className={styles.CourseList}>
-              {courses.map((course, index) => (
+              {courses?.map((course, index) => (
                 <li key={index}>
                   <CartCourseCard
                     img={course.image?.url}

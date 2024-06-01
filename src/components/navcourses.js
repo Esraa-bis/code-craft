@@ -35,7 +35,7 @@ function CoursesDropDownNavMenu() {
         {t("Courses")}
       </button>
       <ul className="dropdown-menu">
-        {programs.map((program, index) => (
+        {programs?.map((program, index) => (
           <li key={index}>
             <Link className="dropdown-item" to={program.route}>
               {program.name}

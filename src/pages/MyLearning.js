@@ -76,7 +76,7 @@ function RecentlyViewed() {
     }, []);
   return (
     <section className={styles.Section}>
-      {courses.map((course, index) => (
+      {courses?.map((course, index) => (
         <div className={`${styles.MyLearningCard}`}>
           <img
             src={course.image.url}
