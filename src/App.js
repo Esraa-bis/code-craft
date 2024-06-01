@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import "./assets/css/general.css";
 import ConfirmationCode from "./components/ConfirmationCode";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
@@ -16,6 +15,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import Cart from "./pages/Cart";
 import ChangePassword from "./pages/ChangePassword";
 import ChangePhoto from "./pages/ChangePhoto";
+import Checkout from "./pages/Checkout";
 import ContactUs from "./pages/ContactUs";
 import CourseVideos from "./pages/CourseVideos";
 import Courses from "./pages/Courses";
@@ -30,7 +30,6 @@ import ViewCourse from "./pages/ViewCourse";
 import DeleteAccount from "./pages/deleteAccount";
 import { SessionTokenStorage } from "./services/local-storage";
 import { getUser, isUserLoaded, setIsUserLoaded } from "./services/user";
-import Checkout from "./pages/Checkout";
 
 function App() {
   const [signedIn, setSignedIn] = useState(SessionTokenStorage.hasToken());
@@ -56,73 +55,79 @@ function App() {
   return (
     <div className="App">
       <Navbar signedIn={signedIn} setSignedIn={setSignedIn} user={user} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/Cart" element={<Cart />} />
-        <Route
-          path="/SignIn"
-          element={<SignIn signedIn={signedIn} setSignedIn={setSignedIn} />}
-        />
-        <Route path="/SignUp" element={<SignUp signedIn={signedIn} />} />
-        <Route path="/ForgotPassword" element={<ForgotPassword />} />
-        <Route path="/ConfirmationCode" element={<ConfirmationCode />} />
-        <Route path="/ResetPassword" element={<ResetPassword />} />
-        <Route
-          path="/Profile"
-          element={
-            <Profile user={user} setUser={setUser} signedIn={signedIn} />
-          }
-        />
-        <Route
-          path="/ChangePassword"
-          element={<ChangePassword signedIn={signedIn} user={user} />}
-        />
-        <Route
-          path="/DeleteAccount"
-          element={
-            <DeleteAccount
-              signedIn={signedIn}
-              user={user}
-              setSignedIn={setSignedIn}
-            />
-          }
-        />
-        <Route
-          path="/ChangePhoto"
-          element={
-            <ChangePhoto signedIn={signedIn} user={user} setUser={setUser} />
-          }
-        />
-        <Route
-          path="/PaymentMethods"
-          element={<PaymentMethods signedIn={signedIn} user={user} />}
-        />
-        <Route path="/Cart" element={<Cart />} />
-        <Route path="/ContactUs" element={<ContactUs />} />
-        <Route path="/AboutUs" element={<AboutUs />} />
-        <Route path="/Courses" element={<Courses />} />
-        <Route path="/ViewCourse" element={<ViewCourse />} />
-        <Route path="/MyLearning" element={<MyLearning />} />
-        <Route path="/Discussion" element={<Discussion />} />
-        <Route path="/CourseVideos" element={<CourseVideos />} />
+      <div className="Content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/Cart" element={<Cart />} />
+          <Route
+            path="/SignIn"
+            element={<SignIn signedIn={signedIn} setSignedIn={setSignedIn} />}
+          />
+          <Route path="/SignUp" element={<SignUp signedIn={signedIn} />} />
+          <Route path="/ForgotPassword" element={<ForgotPassword />} />
+          <Route path="/ConfirmationCode" element={<ConfirmationCode />} />
+          <Route path="/ResetPassword" element={<ResetPassword />} />
+          <Route
+            path="/Profile"
+            element={
+              <Profile user={user} setUser={setUser} signedIn={signedIn} />
+            }
+          />
+          <Route
+            path="/ChangePassword"
+            element={<ChangePassword signedIn={signedIn} user={user} />}
+          />
+          <Route
+            path="/DeleteAccount"
+            element={
+              <DeleteAccount
+                signedIn={signedIn}
+                user={user}
+                setSignedIn={setSignedIn}
+              />
+            }
+          />
+          <Route
+            path="/ChangePhoto"
+            element={
+              <ChangePhoto signedIn={signedIn} user={user} setUser={setUser} />
+            }
+          />
+          <Route
+            path="/PaymentMethods"
+            element={<PaymentMethods signedIn={signedIn} user={user} />}
+          />
+          <Route path="/Cart" element={<Cart />} />
+          <Route path="/ContactUs" element={<ContactUs />} />
+          <Route path="/AboutUs" element={<AboutUs />} />
+          <Route path="/Courses" element={<Courses />} />
+          <Route path="/ViewCourse" element={<ViewCourse />} />
+          <Route path="/MyLearning" element={<MyLearning />} />
+          <Route path="/Discussion" element={<Discussion />} />
+          <Route path="/CourseVideos" element={<CourseVideos />} />
 
-        <Route path="/MyCourses" element={<MyCourses user={user} />} />
-        <Route
-          path="/Admin"
-          element={
-            <Admin signedIn={signedIn} setSignedIn={setSignedIn} user={user} />
-          }
-        />
-        <Route
-          path="/AdminDashboard"
-          element={user.role === "superAdmin" ? <AdminDashboard /> : <Home />}
-        />
-        <Route path="/TeachOnCodeCraft" element={<TeachOnCodeCraft />} />
-        <Route path="/UploadCourse" element={<UploadCourse />} />
-        <Route path="/Checkout" element={<Checkout />} />
-      </Routes>
+          <Route path="/MyCourses" element={<MyCourses user={user} />} />
+          <Route
+            path="/Admin"
+            element={
+              <Admin
+                signedIn={signedIn}
+                setSignedIn={setSignedIn}
+                user={user}
+              />
+            }
+          />
+          <Route
+            path="/AdminDashboard"
+            element={user.role === "superAdmin" ? <AdminDashboard /> : <Home />}
+          />
+          <Route path="/TeachOnCodeCraft" element={<TeachOnCodeCraft />} />
+          <Route path="/UploadCourse" element={<UploadCourse />} />
+          <Route path="/Checkout" element={<Checkout />} />
+        </Routes>
 
-      <Footer />
+        <Footer />
+      </div>
     </div>
   );
 }

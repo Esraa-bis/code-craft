@@ -7,7 +7,6 @@ import StreakOff from "../assets/images/streak-off.png";
 import StreakOn from "../assets/images/streak-on.png";
 
 // for styles
-import "../assets/css/general.css";
 import "../assets/css/navbar.css";
 
 // for translate into arabicP
