@@ -4,7 +4,7 @@
   background-color: #f9f9f9;
   min-width: var(--course-card-min-width);
   max-width: var(--course-card-max-width);
-  height: 400px;
+  height: 430px;
   justify-self: center;
   overflow: hidden;
 }
@@ -91,6 +91,7 @@
   width: 100%;
   display: flex;
   gap: 20px;
+  margin-top: 20px;
 }
 .CardBtns {
   width: 100%;
