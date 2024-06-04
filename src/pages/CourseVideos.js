@@ -1,328 +1,176 @@
+import { useEffect, useState } from "react";
 import styles from "../assets/css/CourseVideos.module.css";
-import courseImg from "../assets/images/css.avif";
-import Video from "../assets/videos/009 Section Intro.mp4";
 // Link
-import { Link } from "react-router-dom";
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link, useLocation } from "react-router-dom";
+import { courseVideos } from "../services/course";
+import { updateProgress } from "../services/myLearning";
 
 function CourseVideos() {
+  // function to format index
+  function formatOrder(order) {
+    return String(order + 1).padStart(2, "0");
+  }
+  function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
+  const query = useQuery();
+  const courseId = query.get("courseId");
+  const [videos, setVideos] = useState([]);
+  const [error, setError] = useState(null);
+  const [loaded, setLoaded] = useState(() => false);
+  const [selectedVideo, setSelectedVideo] = useState(null);
+
+  let loading = false;
+  const setLoading = (value) => {
+    loading = value;
+  };
+
+  useEffect(() => {
+    if (loaded || loading) return;
+    setLoading(true);
+    courseVideos(courseId)
+      .then((response) => {
+        if (response.success) {
+          setVideos(response.videos);
+          setLoaded(true);
+        } else {
+          setError("Failed to fetch videos");
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [loaded, loading, courseId]);
+
+  const handleVideoClick = (video) => {
+    setSelectedVideo(video);
+  };
+
+  useEffect(() => {
+    // Set the selected video to the first video in the array when the component mounts
+    if (videos && videos.length > 0) {
+      setSelectedVideo(videos[0]);
+    }
+  }, [videos]); // Run this effect whenever the `videos` array changes
+
+  // navigate through vedios
+  const handleNextVideo = () => {
+    const currentIndex = videos.findIndex((video) => video === selectedVideo);
+    const nextIndex = (currentIndex + 1) % videos.length;
+    setSelectedVideo(videos[nextIndex]);
+  };
+
+  const handlePreviousVideo = () => {
+    const currentIndex = videos.findIndex((video) => video === selectedVideo);
+    const previousIndex = (currentIndex - 1 + videos.length) % videos.length;
+    setSelectedVideo(videos[previousIndex]);
+  };
+  // update progress
+  const handleUpdateProgress = async (videoId) => {
+    try {
+      const result = await updateProgress(courseId, videoId);
+      console.log(result);
+      // Handle the result as needed
+    } catch (error) {
+      console.error("Error updating progress:", error);
+    }
+  };
+
   return (
     <section className={styles.CourseVideos}>
       <div className={styles.CourseContent}>
         <div className={styles.description}>
-          <img src={courseImg} alt="courseImg" className={styles.courseImg} />
+          <img
+            src={videos[0]?.course?.image.url}
+            alt="courseImg"
+            className={styles.courseImg}
+          />
           <div>
             <h6>
-              <Link to="/ViewCourse" className={styles.title}>
-                HTML & CSS Course
+              <Link
+                to={`/ViewCourse?courseId=${courseId}`}
+                className={styles.title}
+              >
+                {videos[0]?.course?.courseName}
               </Link>
             </h6>
-            <div>
-              <p className={styles.Progress}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className={`${styles.ProgressIcon}w-6 h-6`}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                  />
-                </svg>
-                3/12 Completed
-              </p>
-            </div>
           </div>
         </div>
-        <ul>
-          <li className={styles.done}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
+        {videos?.map((video) => (
+          <ul key={video.video.id}>
+            <li
+              className={`${styles.done} ${
+                selectedVideo === video ? styles.active : ""
+              }`}
+              onClick={() => handleVideoClick(video)}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            <p>
-              <span>01 </span>Introduction and what i need to learn
-            </p>
-          </li>
-          <li className={styles.done}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            <p>
-              <span>02 </span>Elemants and browser
-            </p>
-          </li>
-          <li className={styles.done}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            <p>
-              <span>03 </span>first project and first page
-            </p>
-          </li>
-          <li>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            <p>
-              <span>04 </span>Head and nested elements
-            </p>
-          </li>
-          <li>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            <p>
-              <span>05 </span>Comments and use case
-            </p>
-          </li>
-          <li>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            <p>
-              <span>06 </span>Doctype and standards
-            </p>
-          </li>
-          <li>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            <p>
-              <span>07 </span>Introduction and what i need to learn
-            </p>
-          </li>
-          <li>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            <p>
-              <span>08 </span>Elemants and browser
-            </p>
-          </li>
-          <li>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            <p>
-              <span>09 </span>first project and first page
-            </p>
-          </li>
-          <li>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            <p>
-              <span>10 </span>Head and nested elements
-            </p>
-          </li>
-          <li>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            <p>
-              <span>11 </span>Comments and use case
-            </p>
-          </li>
-          <li>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-            <p>
-              <span>12 </span>Doctype and standards
-            </p>
-          </li>
-        </ul>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+              <button
+                type="button"
+                onClick={() => setSelectedVideo(() => video)}
+              >
+                <span>{formatOrder(video.order)} </span>
+                {video.title}
+              </button>
+            </li>
+          </ul>
+        ))}
       </div>
       <div>
-        <div className={styles.CourseVideosPlayer}>
-          <div>
-            <h2 className={styles.videoName}>
-              Introduction and what i need to learn
-            </h2>
-            <video controls className={styles.video}>
-              <source src={Video} type="video/mp4" />
-              <source src="movie.ogg" type="video/ogg" />
-              Your browser does not support the video tag.
-            </video>
-            <div className={styles.Arrows}>
-              <button>
-                <label>
-                  <input type="checkbox" />
-                  Completed
-                </label>
-              </button>
-              <div>
+        {selectedVideo && (
+          <div className={styles.CourseVideosPlayer}>
+            <div>
+              <h2 className={styles.videoName}>{selectedVideo.title}</h2>
+              <video
+                controls
+                className={styles.video}
+                preload="auto"
+                src={selectedVideo.video.url}
+                onEnded={() => handleUpdateProgress(selectedVideo._id)}
+              >
+                <source src={selectedVideo.video.url} type="video/mp4" />
+                <source src={selectedVideo.video.url} type="video/ogg" />
+                Your browser does not support the video tag.
+              </video>
+              <div className={styles.Arrows}>
                 <button>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
-                    />
-                  </svg>
+                  <label>
+                    <input type="checkbox" />
+                    Completed
+                  </label>
                 </button>
-                <button>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-                    />
-                  </svg>
-                </button>
+                <div>
+                  <button onClick={handlePreviousVideo}>
+                    <FontAwesomeIcon icon={faChevronLeft} />
+                  </button>
+                  <button onClick={handleNextVideo}>
+                    <FontAwesomeIcon icon={faChevronRight} />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

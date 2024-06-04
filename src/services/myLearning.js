@@ -46,3 +46,18 @@ export async function userCoursesFilters(filters) {
 
   return response.json();
 }
+// update progress
+export async function updateProgress(courseId, videoId) {
+  const response = await fetch(
+    `${BASE_URL}/Enroll/${courseId}/${videoId}/updateProgress`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+      },
+    }
+  );
+
+  return response.json();
+}
