@@ -106,8 +106,10 @@ function App() {
           <Route path="/Discussion" element={<Discussion />} />
           <Route path="/CourseVideos" element={<CourseVideos />} />
           <Route path="/MyCourses" element={<MyCourses user={user} />} />
-          <Route path="/editCourse" element={<TeachOnCodeCraft />} />
-
+          <Route
+            path="/editCourseInfo"
+            element={<TeachOnCodeCraft edit={true} />}
+          />
           <Route
             path="/Admin"
             element={
@@ -124,6 +126,10 @@ function App() {
           />
           <Route path="/TeachOnCodeCraft" element={<TeachOnCodeCraft />} />
           <Route path="/UploadCourse" element={<UploadCourse />} />
+          <Route
+            path="/editCourseVideos"
+            element={<UploadCourse edit={true} />}
+          />
           <Route path="/Checkout" element={<Checkout />} />
         </Routes>
 
