@@ -134,7 +134,7 @@ function ViewCourse() {
               </div>
               <div className={styles.detail}>
                 <p>
-                  Category: <span>{course.categoryId.name}</span>
+                  Category: <span>{course.categoryId?.name}</span>
                 </p>
               </div>
             </div>
