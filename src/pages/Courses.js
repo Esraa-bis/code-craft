@@ -4,6 +4,7 @@ import styles from "../assets/css/courses.module.css";
 import CourseCard from "../components/CourseCard";
 import { getAllCategories } from "../services/admin";
 import { getCoursesFilters } from "../services/course";
+import { convertMinutes } from "../services/generalFunctions.js";
 
 function Courses() {
   const [courses, setCourses] = useState([]);
@@ -43,7 +44,7 @@ function Courses() {
             title={course.courseName}
             description={course.desc}
             price={course.basePrice}
-            time={course.courseDuration.toFixed(1)}
+            time={convertMinutes(course.courseDuration)}
             rating={course.rate}
             slug={course.slug}
             _id={course._id}
