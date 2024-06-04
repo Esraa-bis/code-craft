@@ -1,100 +1,94 @@
-.CourseVideos{
-    width: 90%;
-    min-height: 650px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-    margin: 50px auto;
+.CourseVideos {
+  width: 90%;
+  min-height: 650px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin: 50px auto;
 }
 
-.CourseContent{
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    border-right: 1px solid #b3b3b3;
-
+.CourseContent {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-right: 1px solid #b3b3b3;
 }
 
-.description .title{
-    text-decoration: none;
-    color: rgb(43, 43, 43);
+.description .title {
+  text-decoration: none;
+  color: rgb(48, 48, 48);
 }
-.description .title:hover{
-    text-decoration: underline;
-    color: rgb(83, 83, 83);
+.description .title:hover {
+  text-decoration: underline;
+  color: rgb(83, 83, 83);
 }
 .description {
-    display: flex;
-    align-items: center;
-    gap:10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-.description .courseImg{
-    width: 80px;
-    height: 80px;
-    border-radius: 10px;
+.description .courseImg {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
 }
-.Progress{
-    color: #007bff;
-font-size: 15px;
-
+.Progress {
+  color: #007bff;
+  font-size: 15px;
 }
-.done{
-    color: #007bff;
-
+.done {
+  color: #007bff;
 }
 .Progress svg {
-    width: 25px;
-    height: 100%;
+  width: 25px;
+  height: 100%;
 }
-.CourseContent ul{
-    list-style-type: none;
-    padding-left: 0px;
+.CourseContent ul {
+  list-style-type: none;
+  padding-left: 0px;
 }
 .CourseContent ul li {
-   display: flex;
-   align-items: flex-start;
+  display: flex;
+  align-items: flex-start;
 }
-.CourseContent ul li svg{
-    width: 25px;
-    margin-right: 3px;
+.CourseContent ul li svg {
+  width: 25px;
+  margin-right: 3px;
 }
 .Arrows {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-    width: 90%;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  width: 90%;
 }
-.Arrows label{
-    font-size: 13px;
-    display: flex;
-    gap: 3px;
-    align-items: center;
-    justify-content: center;
+.Arrows label {
+  font-size: 13px;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
 }
-.Arrows button{
-     color: #0054ad;
-    background-color: white;
-    border: 1px solid rgb(187, 187, 187);
-    border-radius: 5px;
-    padding: 6px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+.Arrows button {
+  color: #0054ad;
+  background-color: white;
+  border: 1px solid rgb(187, 187, 187);
+  border-radius: 5px;
+  padding: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.Arrows div{
-    display: flex;
-    gap: 3px;
-
+.Arrows div {
+  display: flex;
+  gap: 3px;
 }
 
-.video{
-    width: 90%;
+.video {
+  width: 90%;
 }
 
 .Arrows svg {
-    width: 25px;    
+  width: 25px;
 }
-
