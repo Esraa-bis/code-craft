@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "../assets/css/ViewCourse.module.css";
+import pp from "../assets/images/pp.jpg";
+import ReviewsAndRating from "../components/reviewsAndRatings";
 import {
   addToCart,
   coursePreview,
@@ -88,6 +90,29 @@ function ViewCourse() {
     if (!dateString) return null;
     return dateString.split("T")[0];
   }
+  // mock data
+  const reviews = [
+    {
+      userName: "John Doe",
+      userProfilePicture: pp,
+      rating: 4,
+      reviewText: "Great product! It exceeded my expectations.",
+    },
+    {
+      userName: "Jane Smith",
+      userProfilePicture: pp,
+      rating: 5,
+      reviewText:
+        "This is the best product I've ever purchased. Highly recommended!",
+    },
+    {
+      userName: "Alice Johnson",
+      userProfilePicture: pp,
+      rating: 3,
+      reviewText:
+        "It's good, but could be better. I had some minor issues with it.",
+    },
+  ];
 
   return (
     <>
@@ -118,7 +143,7 @@ function ViewCourse() {
             <div className={styles.details}>
               <div className={styles.detail}>
                 <p>
-                  Last Update:{" "}
+                  Last Update:
                   <span>
                     {getFormattedDate(course.updatedAt) ||
                       getFormattedDate(course.createdAt) ||
@@ -140,7 +165,10 @@ function ViewCourse() {
             </div>
           </div>
           <div className={styles.CoursePreviewCard}>
-            <Link to="/CourseVideos" className={styles.link}>
+            <Link
+              to={`/CourseVideos?courseId=${course?._id}`}
+              className={styles.link}
+            >
               <img
                 src={course.image.url}
                 alt="course"
@@ -205,7 +233,10 @@ function ViewCourse() {
             ))}
           </ul>
         </section>
+        <ReviewsAndRating reviews={reviews} />
       </section>
+
+      <section></section>
     </>
   );
 }

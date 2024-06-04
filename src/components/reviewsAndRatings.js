@@ -46,12 +46,12 @@ const ReviewsAndRating = ({ currentUser, reviews }) => {
 
   return (
     <div className={styles.reviewsAndRating}>
+      <h3>Reviews</h3>
       <form onSubmit={handleSubmit}>
         <div>
           <StarRating rating={rating} onRatingChange={handleRatingChange} />
         </div>
         <div>
-          <label>Review:</label>
           <textarea
             value={reviewText}
             rows="4"
@@ -68,16 +68,17 @@ const ReviewsAndRating = ({ currentUser, reviews }) => {
         {userReviews.map((review, index) => (
           <div key={index} className={styles.reviewItem}>
             <div className={styles.ratingAndProfileInfo}>
-              <div className={styles.profileInfo}>
-                <img
-                  src={review.userProfilePicture}
-                  alt={`${review.userName}'s profile`}
-                  className={styles.profilePicture}
-                />
-                <h4>{review.userName}</h4>
+              <div className={styles.profileInfoAndRating}>
+                <div className={styles.profileInfo}>
+                  <img
+                    src={review.userProfilePicture}
+                    alt={`${review.userName}'s profile`}
+                    className={styles.profilePicture}
+                  />
+                  <h5>{review.userName}</h5>
+                </div>
+                <StarRating rating={review.rating} />
               </div>
-
-              <StarRating rating={review.rating} />
             </div>
             <div>
               <p>{review.reviewText}</p>
