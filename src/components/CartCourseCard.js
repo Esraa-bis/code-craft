@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "../assets/css/Cart.module.css";
-import { sweetAlert } from "../services/sweetalert";
 import { removeFromCart } from "../services/course";
+import { sweetAlert } from "../services/sweetalert";
 function CartCourseCard(course) {
   async function handleRemoveFromCart(courseId) {
     try {
@@ -47,7 +47,17 @@ function CartCourseCard(course) {
               d="M14.121 7.629A3 3 0 0 0 9.017 9.43c-.023.212-.002.425.028.636l.506 3.541a4.5 4.5 0 0 1-.43 2.65L9 16.5l1.539-.513a2.25 2.25 0 0 1 1.422 0l.655.218a2.25 2.25 0 0 0 1.718-.122L15 15.75M8.25 12H12m9 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
             />
           </svg>
-          <p className={styles.Price}>{course.price} EGP</p>
+          <p className={styles.Price}>
+            {" "}
+            {course.price === 0 ? (
+              "Free"
+            ) : (
+              <>
+                <span className="price">{course.price}</span>
+                <span className="currency">EGP</span>
+              </>
+            )}
+          </p>
         </div>
         <div className={styles.CardBtns}>
           <Link
