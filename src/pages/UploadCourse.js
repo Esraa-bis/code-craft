@@ -1,24 +1,62 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../assets/css/UploadCourse.module.css";
-import { uploadCourseVideo } from "../services/course";
+import {
+  courseVideos,
+  deleteSpceficVideo,
+  updateCourseVideos,
+  uploadCourseVideo,
+} from "../services/course";
 import { sweetAlert } from "../services/sweetalert";
-
+let loadingContent = false;
+const setLoadingContent = (val) => {
+  loadingContent = val;
+};
 function UploadCourse() {
-  const [videos, setVideos] = useState([]);
-  const [filesToDo, setFilesToDo] = useState(0);
-  const [filesDone, setFilesDone] = useState(0);
-  const [courseId, setCourseId] = useState(() => {
+  const [videos, setVideos] = useState(() => []);
+  const [error, setError] = useState(null);
+  const [loaded, setLoaded] = useState(() => false);
+  const [courseId] = useState(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("id");
+    return urlParams.get("id") || urlParams.get("courseId");
   });
-  // const dropAreaRef = useRef(null);
-  // const progressBarRef = useRef(null);
-  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({});
   const [highlight, setHighlight] = useState(false);
-  const [uploading, setUploading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState("");
+  const [videosToRemove, setVideosToRemove] = useState(() => []);
+
+  useEffect(() => {
+    if (loaded || loadingContent) return;
+    setLoadingContent(true);
+    courseVideos(courseId)
+      .then((response) => {
+        if (response.success) {
+          setVideos((videos) => [
+            ...videos,
+            ...response.videos.map((video) => ({
+              id: video._id,
+              name: video.title,
+              src: video.video.url,
+              preload: "metadata",
+              duration: video.duration,
+              uploaded: true,
+            })),
+          ]);
+          setLoaded(true);
+        } else {
+          setError("Failed to fetch videos");
+        }
+        setLoadingContent(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoadingContent(false);
+      });
+  }, [courseId]);
 
   const setVideoName = (event, video) => {
+    video.title_changed = event.target.value !== video.name;
     video.name = event.target.value;
     setVideos((videos) => [...videos]);
   };
@@ -58,6 +96,7 @@ function UploadCourse() {
           preload: "metadata",
           duration: "0s",
           file,
+          uploaded: false,
         };
         setVideos((videos) => [...videos, video]);
       };
@@ -94,7 +133,8 @@ function UploadCourse() {
       "Are you sure you want to remove this video?"
     );
     if (confirmed) {
-      setVideos((videos) => videos.filter((f) => f !== file));
+      setVideosToRemove((videos) => [...videos, file]);
+      setVideos((videos) => videos.filter((video) => video !== file));
     }
   };
 
@@ -103,38 +143,84 @@ function UploadCourse() {
     setVideos((videos) => [...videos]);
   };
 
+  const uploadVideo = async (video) => {
+    try {
+      const response = await uploadCourseVideo({
+        courseID: courseId,
+        title: video.name,
+        video: video.file,
+      });
+      if (response.success) {
+        video.uploaded = true;
+        setUploading("Uploaded");
+        sweetAlert({
+          title: response.message,
+          icon: response.success ? "success" : "error",
+        });
+      } else {
+        sweetAlert({ title: response.message, icon: "error" });
+      }
+    } catch (error) {
+      sweetAlert({ title: error.message, icon: "error" });
+    }
+  };
+
+  const updateVideo = async (video) => {
+    try {
+      const response = await updateCourseVideos(courseId, video.id, video.name);
+      if (!response.success) {
+        sweetAlert({ title: response.message, icon: "error" });
+      }
+    } catch (error) {
+      sweetAlert({ title: error.message, icon: "error" });
+    }
+  };
+
+  const removeVideo = async (video) => {
+    try {
+      await deleteSpceficVideo(courseId, video.id);
+    } catch (error) {
+      sweetAlert({ title: error.message, icon: "error" });
+    }
+  };
+
   async function handleSubmit(e) {
     e.preventDefault();
+    setUploading("uploading...");
+
     setLoading(true);
     for (let i = 0; i < videos.length; ++i) {
       const video = videos[i];
-      try {
-        const response = await uploadCourseVideo({
-          courseID: courseId,
-          title: video.name,
-          video: video.file,
-        });
-        if (response.success) {
-          setUploading(true);
-          sweetAlert({
-            title: response.message,
-            icon: response.success ? "success" : "error",
-          });
-        }
-      } catch (error) {
-        sweetAlert({ title: error.message, icon: "error" });
-      }
-      if (i + 1 === videos.length) {
-        setLoading(false);
+      if (!video.uploaded) {
+        await uploadVideo(video);
+      } else if (video.title_changed) {
+        await updateVideo(video);
       }
     }
+
+    for (let i = 0; i < videosToRemove.length; ++i) {
+      const video = videosToRemove[i];
+      await removeVideo(video);
+      if (i === videosToRemove.length - 1) {
+        setVideosToRemove(() => []);
+      }
+    }
+
+    setLoading(false);
+    setUploading("");
   }
 
   function updateFormData(event, fieldName) {
     if (fieldName === "courseImage") {
-      setFormData({ ...formData, [fieldName]: event.target.files[0] });
+      setFormData((formData) => ({
+        ...formData,
+        [fieldName]: event.target.files[0],
+      }));
     } else {
-      setFormData({ ...formData, [fieldName]: event.target.value });
+      setFormData((formData) => ({
+        ...formData,
+        [fieldName]: event.target.value,
+      }));
     }
   }
 
@@ -205,8 +291,14 @@ function UploadCourse() {
                 value={video.name}
                 onChange={(event) => setVideoName(event, video)}
               />
-              <p className={uploading ? styles.Uploaded : styles.Uploading}>
-                {uploading ? "Uploaded" : "Uploading..."}
+              <p
+                className={
+                  uploading === "uploading..."
+                    ? styles.Uploading
+                    : styles.Uploaded
+                }
+              >
+                {uploading}
               </p>
             </label>
           </div>
