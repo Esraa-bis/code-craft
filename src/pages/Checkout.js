@@ -10,8 +10,12 @@ import Vodafone from "../assets/images/vodafone.png";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation } from "react-router-dom";
-import { coursePreview } from "../services/course";
-import { createOrder, payWithStripe } from "../services/order";
+import { coursePreview, userCart } from "../services/course";
+import {
+  convertFromCartToOrder,
+  createOrder,
+  payWithStripe,
+} from "../services/order";
 import { sweetAlert } from "../services/sweetalert";
 
 function completeCheckout() {
@@ -24,18 +28,35 @@ function Checkout() {
     return new URLSearchParams(useLocation().search);
   }
   const [formData, setFormData] = useState({});
-  const [res, setRes] = useState({});
   const [course, setCourse] = useState(null);
-  const [cart, setCartId] = useState(null);
   const [loading, setLoading] = useState(true);
-    const [stripeLink, setStripeLink] = useState(true);
-
+  const [cart, setCart] = useState({});
+  const [courses, setCourses] = useState([]);
   const [error, setError] = useState(null);
   const query = useQuery();
   const courseId = query.get("courseId");
   const cartId = query.get("cartId");
 
   useEffect(() => {
+    if (!cartId) return;
+    setLoading(true);
+    userCart()
+      .then((response) => {
+        if (response.success) {
+          setCourses(response.Cart.courses);
+          setCart(response.Cart);
+        } else {
+          setError("Failed to fetch courses");
+        }
+        setLoading(() => false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+  useEffect(() => {
+    if (cartId) return;
     setLoading(true);
     coursePreview(courseId)
       .then((response) => {
@@ -60,14 +81,15 @@ function Checkout() {
     return <div>Error: {error}</div>;
   }
 
-  if (!course) {
-    return <div>No preview available for this course.</div>;
-  }
+  // if (!course) {
+  //   return <div>No preview available for this course.</div>;
+  // }
+
   // handle create order
   const updateFormData = (event, fieldname) => {
     setFormData({ ...formData, [fieldname]: event.target.value });
   };
-  async function handleSubmit(e) {
+  async function handleCreateOrder(e) {
     e.preventDefault();
     setLoading(true);
     createOrder({
@@ -77,9 +99,10 @@ function Checkout() {
     })
       .then((response) => {
         if (response.success) {
-          payWithStripe(response.order._id).then((response) =>
-          {
-            if (response.success) {  window.location.href = response.checkOutSession.url ;}
+          payWithStripe(response.order._id).then((response) => {
+            if (response.success) {
+              window.location.href = response.checkOutSession.url;
+            }
           });
         } else {
           sweetAlert({
@@ -95,12 +118,39 @@ function Checkout() {
         setLoading(false);
       });
   }
-
+  async function handleConvertFromCartToOrder(e) {
+    e.preventDefault();
+    setLoading(true);
+    convertFromCartToOrder({
+      couponCode: formData.couponCode,
+      paymentMethod: formData.paymentMethod,
+    })
+      .then((response) => {
+        if (response.success) {
+          payWithStripe(response.order._id).then((response) => {
+            if (response.success) {
+              window.location.href = response.checkOutSession.url;
+            }
+          });
+        } else {
+          sweetAlert({
+            title: response.message,
+            icon: "error",
+          });
+        }
+      })
+      .catch((error) => {
+        sweetAlert({ title: error.message, icon: "error" });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
   return (
     <section className={styles.CheckoutPage}>
       <section className={styles.OrderDetails}>
         <h2>Order details</h2>
-        <div>
+        {/* <div>
           <div className={styles.item}>
             <img
               src={course.image.url}
@@ -115,11 +165,50 @@ function Checkout() {
               <p className={styles.price}>{course.basePrice} LE</p>
             </div>
           </div>
-        </div>
+        </div> */}
+        {cartId ? (
+          courses?.map((course, index) => (
+            <div key={index}>
+              <div className={styles.item}>
+                <img
+                  src={course.image.url}
+                  alt="course"
+                  className={styles.courseImg}
+                />
+                <div className={styles.Content}>
+                  <h5 className={styles.courseTitle}>{course.courseName}</h5>
+                  <p className={styles.courseDescription} title={course.desc}>
+                    {course.desc}
+                  </p>
+                  <p className={styles.price}>{course.basePrice} LE</p>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div>
+            <div className={styles.item}>
+              <img
+                src={course.image.url}
+                alt="course"
+                className={styles.courseImg}
+              />
+              <div className={styles.Content}>
+                <h5 className={styles.courseTitle}>{course.courseName}</h5>
+                <p className={styles.courseDescription} title={course.desc}>
+                  {course.desc}
+                </p>
+                <p className={styles.price}>{course.basePrice} LE</p>
+              </div>
+            </div>
+          </div>
+        )}
       </section>
       <section className={styles.CheckoutContainer}>
         <h1 className={styles.Title}>Checkout</h1>
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={cartId ? handleConvertFromCartToOrder : handleCreateOrder}
+        >
           <div className={styles.PaymentSection}>
             <div className={styles.PaymentHeader}>
               <h2>Payment Methods</h2>
