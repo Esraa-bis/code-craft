@@ -31,6 +31,33 @@ export async function uploadCourseInfo({
 
   return response.json();
 }
+// update course info
+export async function updateCourseInfo(
+  { name, desc, level, prerequisites, basePrice, oldPublicId, courseImage },
+  editCourseId
+) {
+  const formData = new FormData();
+  formData.append("courseImage", courseImage);
+  formData.append("oldPublicId", oldPublicId);
+  formData.append("name", name);
+  formData.append("desc", desc);
+  formData.append("level", level);
+  formData.append("prerequisites", prerequisites);
+  formData.append("basePrice", basePrice);
+
+  const response = await fetch(
+    `${BASE_URL}/Course/updateCourseInfo/${editCourseId}`,
+    {
+      method: "PUT",
+      headers: {
+        token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+      },
+      body: formData,
+    }
+  );
+
+  return response.json();
+}
 // upload course video
 export async function uploadCourseVideo({ courseID, title, video }) {
   const formData = new FormData();
@@ -54,7 +81,7 @@ export async function uploadCourseVideo({ courseID, title, video }) {
 // get Course
 export async function coursePreview(courseID) {
   const response = await fetch(
-    `${BASE_URL}/get-courses/coursePreview/`+courseID,
+    `${BASE_URL}/get-courses/coursePreview/` + courseID,
     {
       method: "GET",
       headers: {
@@ -68,7 +95,7 @@ export async function coursePreview(courseID) {
 // update recently viewed
 export async function updateRecentlyViewed(courseId) {
   const response = await fetch(
-    `${BASE_URL}/get-courses/updateRecentlyViewed/`+ courseId,
+    `${BASE_URL}/get-courses/updateRecentlyViewed/` + courseId,
     {
       method: "PATCH",
       headers: {
@@ -85,17 +112,17 @@ export async function addToCart(courseId) {
   const response = await fetch(`${BASE_URL}/Cart/addToCart`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json", 
-      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`, 
+      "Content-Type": "application/json",
+      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
     },
-    body: JSON.stringify( {courseId} ),
+    body: JSON.stringify({ courseId }),
   });
 
   return response.json();
 }
-// Remove from cart 
+// Remove from cart
 export async function removeFromCart(courseId) {
-  const response = await fetch(`${BASE_URL}/Cart/removeFromCart/`+courseId, {
+  const response = await fetch(`${BASE_URL}/Cart/removeFromCart/` + courseId, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -130,6 +157,49 @@ export async function getCoursesFilters(filters) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+      },
+    }
+  );
+
+  return response.json();
+}
+//CourseVideos
+export async function courseVideos(courseId) {
+  const response = await fetch(`${BASE_URL}/Course/${courseId}/Videos/`, {
+    method: "GET",
+    headers: {
+      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+    },
+  });
+
+  return response.json();
+}
+
+export async function updateCourseVideos(courseId, videoId, title) {
+  const formData = new FormData();
+  formData.append("title", title);
+  const response = await fetch(
+    `${BASE_URL}/Course-Content/updateCourseVideos/${courseId}/${videoId}`,
+    {
+      method: "PUT",
+      headers: {
+        token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+      },
+      body: formData,
+    }
+  );
+
+  return response.json();
+}
+
+// delete specific video
+export async function deleteSpceficVideo(courseId, videoId) {
+  const response = await fetch(
+    `${BASE_URL}/Course-Content/deleteSpceficVideo/${courseId}/${videoId}`,
+    {
+      method: "DELETE",
+      headers: {
         token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
       },
     }
