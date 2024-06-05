@@ -57,14 +57,6 @@
 .time-icon {
   color: #4a4a4a;
 }
-.course-card .price {
-  padding: 0 3px;
-  min-width: 30px;
-  display: inline-block;
-}
-.price-icon {
-  color: #002f61f1;
-}
 .course-card .detail p {
   margin: 0;
   font-weight: bold;
@@ -81,7 +73,7 @@
   border: none;
   width: 50%;
   text-align: center;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 .course-card .ViewCourseBTN:hover {
@@ -98,16 +90,39 @@
   display: flex;
   gap: 10px;
 }
-
 .AddToCartBTN {
   width: 50%;
   color: #333;
   background-color: #fff;
   border: 1px solid var(--gold-color);
+  border-radius: 8px;
 }
 .removeBTN:hover {
   background-color: #ececec;
 }
 .course-card .AddToCartBTN:hover {
   background-color: #ffffff;
+}
+.currency {
+  vertical-align: top;
+  font-size: 8px;
+}
+.course-card .price {
+  padding: 2px 3px;
+  min-width: 20px;
+  display: inline-block;
+  font-size: 15px;
+}
+.price .priceValue {
+  color: #1d60a1;
+  font-size: 18px;
+  border-radius: 10px;
+  padding: 1px 8px;
+}
+.price .free {
+  color: green;
+  font-size: 15px;
+  border: 1px solid green;
+  border-radius: 10px;
+  padding: 1px 14px;
 }

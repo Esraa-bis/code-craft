@@ -90,49 +90,60 @@ function SignUp({ signedIn }) {
             />
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="password">Password:</label>
-            <input
-              type={passwordVisible ? "text" : "password"}
-              id="password"
-              name="password"
-              className={styles.input}
-              value={formData.password}
-              onChange={(event) => updateFormData(event, "password")}
-              required
-            />
-            <button
-              type="button"
-              onClick={() => setPasswordVisible(!passwordVisible)}
-            >
-              {passwordVisible ? (
-                <FontAwesomeIcon icon={faEye} />
-              ) : (
-                <FontAwesomeIcon icon={faEyeSlash} />
-              )}
-            </button>
+            <label htmlFor="password">
+              Password:
+              <div className={styles.passwordContainer}>
+                <input
+                  type={passwordVisible ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  className={styles.input}
+                  value={formData.password}
+                  onChange={(event) => updateFormData(event, "password")}
+                  required
+                />
+                <button
+                  className={styles.showPassIcon}
+                  type="button"
+                  onClick={() => setPasswordVisible(!passwordVisible)}
+                >
+                  {passwordVisible ? (
+                    <FontAwesomeIcon icon={faEye} />
+                  ) : (
+                    <FontAwesomeIcon icon={faEyeSlash} />
+                  )}
+                </button>
+              </div>
+            </label>
           </div>
           <div className={styles.formGroup}>
-            <label htmlFor="confirmPassword">Confirm Password:</label>
-            <input
-              type={passwordVisible ? "text" : "password"}
-              id="confirmPassword"
-              name="confirmPassword"
-              className={styles.input}
-              value={formData.confirmpassword}
-              onChange={(event) => updateFormData(event, "confirmpassword")}
-              required
-            />
-            <button
-              type="button"
-              onClick={() => setPasswordVisible(!passwordVisible)}
-            >
-              {passwordVisible ? (
-                <FontAwesomeIcon icon={faEye} />
-              ) : (
-                <FontAwesomeIcon icon={faEyeSlash} />
-              )}
-            </button>
+            <label htmlFor="confirmPassword">
+              Confirm Password:
+              <div className={styles.passwordContainer}>
+                <input
+                  type={passwordVisible ? "text" : "password"}
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  className={styles.input}
+                  value={formData.confirmpassword}
+                  onChange={(event) => updateFormData(event, "confirmpassword")}
+                  required
+                />
+                <button
+                  className={styles.showPassIcon}
+                  type="button"
+                  onClick={() => setPasswordVisible(!passwordVisible)}
+                >
+                  {passwordVisible ? (
+                    <FontAwesomeIcon icon={faEye} />
+                  ) : (
+                    <FontAwesomeIcon icon={faEyeSlash} />
+                  )}
+                </button>
+              </div>
+            </label>
           </div>
+
           <div className={styles.formGroup}>
             <label htmlFor="phonenumber">Phone Number:</label>
             <input
@@ -167,7 +178,7 @@ function SignUp({ signedIn }) {
                 onChange={(event) => updateFormData(event, "gender")}
                 checked={formData.gender === "male"}
               />
-              Male
+              &nbsp;Male
             </label>
             <label htmlFor="female">
               <input
@@ -178,7 +189,7 @@ function SignUp({ signedIn }) {
                 onChange={(event) => updateFormData(event, "gender")}
                 checked={formData.gender === "female"}
               />
-              Female
+              &nbsp;Female
             </label>
           </div>
           <button type="submit" disabled={loading}>
@@ -188,7 +199,7 @@ function SignUp({ signedIn }) {
             <p>
               Already have an account? Please
               <Link to="/SignIn" className={styles.link}>
-                Sign in.
+                &nbsp;Sign in.
               </Link>
             </p>
           </div>

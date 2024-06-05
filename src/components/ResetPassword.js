@@ -1,3 +1,5 @@
+import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import styles from "../assets/css/signForms.module.css";
@@ -13,7 +15,7 @@ function ResetPassword() {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({ forgetCode: "" });
   const [resetSuccess, setResetSuccess] = useState(false);
-
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [code, setCode] = useState(false);
 
   async function handleSubmit(e) {
@@ -58,28 +60,60 @@ function ResetPassword() {
             onSubmit={handleSubmit}
           >
             <div className={styles.formGroup}>
-              <label htmlFor="password">Password:</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                className={styles.input}
-                value={formData.password}
-                onChange={(event) => updateFormData(event, "password")}
-                required
-              />
+              <label htmlFor="password">
+                New Password:
+                <div className={styles.passwordContainer}>
+                  <input
+                    type={passwordVisible ? "text" : "password"}
+                    id="password"
+                    name="password"
+                    className={styles.input}
+                    value={formData.password}
+                    onChange={(event) => updateFormData(event, "password")}
+                    required
+                  />
+                  <button
+                    className={styles.showPassIcon}
+                    type="button"
+                    onClick={() => setPasswordVisible(!passwordVisible)}
+                  >
+                    {passwordVisible ? (
+                      <FontAwesomeIcon icon={faEye} />
+                    ) : (
+                      <FontAwesomeIcon icon={faEyeSlash} />
+                    )}
+                  </button>
+                </div>
+              </label>
             </div>
             <div className={styles.formGroup}>
-              <label htmlFor="confirmPassword">Confirm Password:</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                className={styles.input}
-                value={formData.confirmpassword}
-                onChange={(event) => updateFormData(event, "confirmpassword")}
-                required
-              />
+              <label htmlFor="confirmPassword">
+                Confirm New Password:
+                <div className={styles.passwordContainer}>
+                  <input
+                    type={passwordVisible ? "text" : "password"}
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    className={styles.input}
+                    value={formData.confirmpassword}
+                    onChange={(event) =>
+                      updateFormData(event, "confirmpassword")
+                    }
+                    required
+                  />
+                  <button
+                    className={styles.showPassIcon}
+                    type="button"
+                    onClick={() => setPasswordVisible(!passwordVisible)}
+                  >
+                    {passwordVisible ? (
+                      <FontAwesomeIcon icon={faEye} />
+                    ) : (
+                      <FontAwesomeIcon icon={faEyeSlash} />
+                    )}
+                  </button>
+                </div>
+              </label>
             </div>
 
             <button type="submit" disabled={loading}>

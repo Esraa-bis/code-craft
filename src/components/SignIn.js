@@ -66,27 +66,32 @@ function SignIn({ signedIn, setSignedIn }) {
               required
             />
           </div>
-          <div className={`${styles.formGroup}`}>
-            <label htmlFor="password">Password:</label>
-            <input
-              type={passwordVisible ? "text" : "password"}
-              id="password"
-              name="password"
-              className={`${styles.input}`}
-              value={formData.password}
-              onChange={(event) => updateFormData(event, "password")}
-              required
-            />
-            <button
-              type="button"
-              onClick={() => setPasswordVisible(!passwordVisible)}
-            >
-              {passwordVisible ? (
-                <FontAwesomeIcon icon={faEye} />
-              ) : (
-                <FontAwesomeIcon icon={faEyeSlash} />
-              )}
-            </button>
+          <div className={styles.formGroup}>
+            <label htmlFor="password">
+              Password:
+              <div className={styles.passwordContainer}>
+                <input
+                  type={passwordVisible ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  className={styles.input}
+                  value={formData.password}
+                  onChange={(event) => updateFormData(event, "password")}
+                  required
+                />
+                <button
+                  className={styles.showPassIcon}
+                  type="button"
+                  onClick={() => setPasswordVisible(!passwordVisible)}
+                >
+                  {passwordVisible ? (
+                    <FontAwesomeIcon icon={faEye} />
+                  ) : (
+                    <FontAwesomeIcon icon={faEyeSlash} />
+                  )}
+                </button>
+              </div>
+            </label>
           </div>
           <button type="submit" disabled={loading}>
             Sign In
@@ -100,7 +105,7 @@ function SignIn({ signedIn, setSignedIn }) {
             <p>
               If you don't have an account please
               <Link to="/SignUp" className={`${styles.link}`}>
-                Sign-Up.
+                &nbsp;Sign-Up.
               </Link>
             </p>
           </div>

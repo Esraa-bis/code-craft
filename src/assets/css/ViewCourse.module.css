@@ -219,3 +219,7 @@
   font-weight: bold; /* Make span text bold */
   color: #154c84; /* Main color for span text */
 }
+buyNowLink {
+  text-decoration: none;
+  color: #154c84;
+}

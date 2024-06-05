@@ -100,14 +100,15 @@ export default function CourseCard({ course, signedIn }) {
               &nbsp;&nbsp;
               <p>{course.time}</p>
             </div>
-            <div className="detail">
-              <p>
+            <div className="detail price">
+              <p className={course.price === 0 ? "free" : "priceValue"}>
                 {course.price === 0 ? (
                   "Free"
                 ) : (
                   <>
-                    <span className="price">{course.price}</span>
                     <span className="currency">EGP</span>
+
+                    <span className="value">{course.price}</span>
                   </>
                 )}
               </p>

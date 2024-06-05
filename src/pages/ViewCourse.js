@@ -213,7 +213,7 @@ function ViewCourse() {
                 <button className={styles.buyNow}>
                   <Link
                     to={`/Checkout?courseId=${course?._id}`}
-                    className={buyNowLink}
+                    className={styles.buyNowLink}
                   >
                     Buy Now
                   </Link>
