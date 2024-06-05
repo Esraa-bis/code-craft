@@ -101,7 +101,7 @@ const breakpoints = {
   },
 };
 
-function HomeCoursesSections(props) {
+function HomeCoursesSections({ sectionTitle, courses, signedIn }) {
   // const { t } = useTranslation();
   const lng = cookies.get("i18next") || "en";
   useEffect(() => {
@@ -109,23 +109,26 @@ function HomeCoursesSections(props) {
   }, [lng]);
   return (
     <section className="HomeCoursesSections">
-      <h2 className="section-title">{props.sectionTitle}</h2>
+      <h2 className="section-title">{sectionTitle}</h2>
       <Swiper
         navigation={true}
         modules={[Navigation]}
         slidesPerView={4}
         breakpoints={breakpoints}
       >
-        {props?.courses?.map((course, index) => (
+        {courses?.map((course, index) => (
           <SwiperSlide key={index}>
             <CourseCard
-              img={course.image.url}
-              title={course.courseName}
-              description={course.desc}
-              price={course.basePrice}
-              time={convertMinutes(course.courseDuration)}
-              rating={course.rate}
-              _id={course._id}
+              course={{
+                img: course.image.url,
+                title: course.courseName,
+                description: course.desc,
+                price: course.basePrice,
+                time: convertMinutes(course.courseDuration),
+                rating: course.rate,
+                _id: course._id,
+              }}
+              signedIn={signedIn}
             />
           </SwiperSlide>
         ))}

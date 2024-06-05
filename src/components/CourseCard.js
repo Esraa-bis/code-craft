@@ -9,6 +9,7 @@ import { initReactI18next, useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import "../assets/css/CourseCard.css";
 import { addToCart } from "../services/course";
+import { checkLogin } from "../services/generalFunctions";
 import { sweetAlert } from "../services/sweetalert";
 
 i18n
@@ -34,7 +35,7 @@ i18n
     },
   });
 
-export default function CourseCard(course) {
+export default function CourseCard({ course, signedIn }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(() => false);
   // for arabic language
@@ -121,7 +122,11 @@ export default function CourseCard(course) {
               </Link>
               <button
                 className="AddToCartBTN"
-                onClick={() => handleAddToCart(course?._id)}
+                onClick={() => {
+                  if (checkLogin(signedIn)) {
+                    handleAddToCart(course?._id);
+                  }
+                }}
               >
                 {t("Add to Cart")}
               </button>

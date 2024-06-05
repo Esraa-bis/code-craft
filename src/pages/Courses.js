@@ -6,7 +6,7 @@ import { getAllCategories } from "../services/admin";
 import { getCoursesFilters } from "../services/course";
 import { convertMinutes } from "../services/generalFunctions.js";
 
-function Courses() {
+function Courses({ signedIn }) {
   const [courses, setCourses] = useState([]);
   const [error, setError] = useState(null);
   const [loaded, setLoaded] = useState(() => false);
@@ -40,14 +40,17 @@ function Courses() {
         {courses?.map((course, index) => (
           <CourseCard
             key={index}
-            img={course.image.url}
-            title={course.courseName}
-            description={course.desc}
-            price={course.basePrice}
-            time={convertMinutes(course.courseDuration)}
-            rating={course.rate}
-            slug={course.slug}
-            _id={course._id}
+            course={{
+              img: course.image.url,
+              title: course.courseName,
+              description: course.desc,
+              price: course.basePrice,
+              time: convertMinutes(course.courseDuration),
+              rating: course.rate,
+              slug: course.slug,
+              _id: course._id,
+            }}
+            signedIn={signedIn}
           />
         ))}
       </div>

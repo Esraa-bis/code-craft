@@ -36,7 +36,7 @@ i18n
     },
   });
 
-function Home() {
+function Home({ signedIn }) {
   const [recentlyViewedCourses, setRecentlyViewedCourses] = useState([]);
   const [mostPopular, setMostPopular] = useState([]);
   const [recentlyAdded, setRecentlyAdded] = useState([]);
@@ -138,18 +138,22 @@ function Home() {
         <HomeCoursesSections
           sectionTitle={t("Recommended for you ")}
           courses={recentlyViewedCourses}
+          signedIn={signedIn}
         />
         <HomeCoursesSections
           sectionTitle={t("Most Popular")}
           courses={mostPopular}
+          signedIn={signedIn}
         />
         <HomeCoursesSections
           sectionTitle={t("Recently Added")}
           courses={recentlyAdded}
+          signedIn={signedIn}
         />
         <HomeCoursesSections
           sectionTitle={t(" Start now with zero fees")}
           courses={freeCourses}
+          signedIn={signedIn}
         />
       </main>
     </>
