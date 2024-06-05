@@ -56,13 +56,17 @@
 .courseImg {
   width: 90px;
   height: 90px;
+  min-width: 10%;
   border-radius: 8px;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .Content {
   padding: 16px;
   display: flex;
   flex-direction: column;
+  min-width: 77%;
 }
 
 .courseTitle {

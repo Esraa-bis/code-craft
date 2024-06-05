@@ -4,6 +4,7 @@
   gap: 10px;
   padding: 10px;
   box-shadow: var(--main-box-shadow);
+  justify-content: space-around;
 }
 
 .logo {

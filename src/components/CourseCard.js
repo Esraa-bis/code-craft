@@ -129,7 +129,7 @@ export default function CourseCard({ course, signedIn }) {
                   }
                 }}
               >
-                {t("Add to Cart")}
+                {course.price !== 0 ? t("Add to Cart") : "Enroll Now"}
               </button>
             </div>
           </div>

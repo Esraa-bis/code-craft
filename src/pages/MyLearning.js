@@ -152,7 +152,12 @@ function Enrollments() {
             <p className={styles.NotCompletedProgress}>{course.status}</p>
           </div>
           <div className={styles.ACtion}>
-            <Link className={styles.viewCourse}>Continue &#8594;</Link>
+            <Link
+              to={`/ViewCourse?courseId=${course?._id}`}
+              className={styles.viewCourse}
+            >
+              Continue &#8594;
+            </Link>
           </div>
         </div>
       ))}
