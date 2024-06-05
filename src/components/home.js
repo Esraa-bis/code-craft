@@ -139,7 +139,7 @@ function Home({ signedIn }) {
       <main className="main-container">
         <HomeCoursesSections
           sectionTitle={t("Recommended for you ")}
-          courses={recentlyViewedCourses}
+          courses={recommendedForYou}
           signedIn={signedIn}
         />
         <HomeCoursesSections
