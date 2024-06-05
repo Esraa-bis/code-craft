@@ -57,8 +57,7 @@ function App() {
       <Navbar signedIn={signedIn} setSignedIn={setSignedIn} user={user} />
       <div className="Content">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Cart" element={<Cart />} />
+          <Route path="/" element={<Home signedIn={signedIn} />} />
           <Route
             path="/SignIn"
             element={<SignIn signedIn={signedIn} setSignedIn={setSignedIn} />}
@@ -95,20 +94,77 @@ function App() {
           />
           <Route
             path="/PaymentMethods"
-            element={<PaymentMethods signedIn={signedIn} user={user} />}
+            element={
+              signedIn ? (
+                <PaymentMethods signedIn={signedIn} user={user} />
+              ) : (
+                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+              )
+            }
           />
-          <Route path="/Cart" element={<Cart />} />
-          <Route path="/ContactUs" element={<ContactUs />} />
+          <Route
+            path="/Cart"
+            element={
+              signedIn ? (
+                <Cart signedIn={signedIn} />
+              ) : (
+                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+              )
+            }
+          />
+          <Route
+            path="/ContactUs"
+            element={
+              signedIn ? (
+                <ContactUs />
+              ) : (
+                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+              )
+            }
+          />
           <Route path="/AboutUs" element={<AboutUs />} />
           <Route path="/Courses" element={<Courses />} />
           <Route path="/ViewCourse" element={<ViewCourse />} />
-          <Route path="/MyLearning" element={<MyLearning />} />
+          <Route
+            path="/MyLearning"
+            element={
+              signedIn ? (
+                <MyLearning />
+              ) : (
+                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+              )
+            }
+          />
           <Route path="/Discussion" element={<Discussion />} />
-          <Route path="/CourseVideos" element={<CourseVideos />} />
-          <Route path="/MyCourses" element={<MyCourses user={user} />} />
+          <Route
+            path="/CourseVideos"
+            element={
+              signedIn ? (
+                <CourseVideos />
+              ) : (
+                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+              )
+            }
+          />
+          <Route
+            path="/MyCourses"
+            element={
+              signedIn ? (
+                <MyCourses user={user} />
+              ) : (
+                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+              )
+            }
+          />
           <Route
             path="/editCourseInfo"
-            element={<TeachOnCodeCraft edit={true} />}
+            element={
+              signedIn ? (
+                <TeachOnCodeCraft edit={true} />
+              ) : (
+                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+              )
+            }
           />
           <Route
             path="/Admin"
@@ -122,13 +178,43 @@ function App() {
           />
           <Route
             path="/AdminDashboard"
-            element={user.role === "superAdmin" ? <AdminDashboard /> : <Home />}
+            element={
+              user.role === "superAdmin" ? (
+                <AdminDashboard />
+              ) : (
+                <Home signedIn={signedIn} />
+              )
+            }
           />
-          <Route path="/TeachOnCodeCraft" element={<TeachOnCodeCraft />} />
-          <Route path="/UploadCourse" element={<UploadCourse />} />
+          <Route
+            path="/TeachOnCodeCraft"
+            element={
+              signedIn ? (
+                <TeachOnCodeCraft />
+              ) : (
+                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+              )
+            }
+          />
+          <Route
+            path="/UploadCourse"
+            element={
+              signedIn ? (
+                <UploadCourse />
+              ) : (
+                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+              )
+            }
+          />
           <Route
             path="/editCourseVideos"
-            element={<UploadCourse edit={true} />}
+            element={
+              signedIn ? (
+                <UploadCourse edit={true} />
+              ) : (
+                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+              )
+            }
           />
           <Route path="/Checkout" element={<Checkout />} />
         </Routes>
