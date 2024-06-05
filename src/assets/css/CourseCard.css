@@ -117,11 +117,11 @@
   color: #1d60a1;
   font-size: 18px;
   border-radius: 10px;
-  padding: 1px 8px;
+  padding: 0px 8px;
 }
 .price .free {
   color: green;
   font-size: 18px;
   border-radius: 10px;
-  padding: 1px 14px;
+  padding: 0px 8px;
 }

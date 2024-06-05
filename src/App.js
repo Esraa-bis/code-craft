@@ -124,7 +124,16 @@ function App() {
           />
           <Route path="/AboutUs" element={<AboutUs />} />
           <Route path="/Courses" element={<Courses />} />
-          <Route path="/ViewCourse" element={<ViewCourse />} />
+          <Route
+            path="/ViewCourse"
+            element={
+              signedIn ? (
+                <ViewCourse />
+              ) : (
+                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+              )
+            }
+          />
           <Route
             path="/MyLearning"
             element={

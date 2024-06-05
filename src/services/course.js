@@ -31,19 +31,21 @@ export async function uploadCourseInfo({
 
   return response.json();
 }
+const isNotNil = (v) => v !== null && v !== undefined;
+
 // update course info
 export async function updateCourseInfo(
   { name, desc, level, prerequisites, basePrice, oldPublicId, courseImage },
   editCourseId
 ) {
   const formData = new FormData();
-  formData.append("courseImage", courseImage);
-  formData.append("oldPublicId", oldPublicId);
-  formData.append("name", name);
-  formData.append("desc", desc);
-  formData.append("level", level);
-  formData.append("prerequisites", prerequisites);
-  formData.append("basePrice", basePrice);
+  if (isNotNil(courseImage)) formData.append("courseImage", courseImage);
+  if (isNotNil(oldPublicId)) formData.append("oldPublicId", oldPublicId);
+  if (isNotNil(name)) formData.append("name", name);
+  if (isNotNil(desc)) formData.append("desc", desc);
+  if (isNotNil(level)) formData.append("level", level);
+  if (isNotNil(prerequisites)) formData.append("prerequisites", prerequisites);
+  if (isNotNil(basePrice)) formData.append("basePrice", basePrice);
 
   const response = await fetch(
     `${BASE_URL}/Course/updateCourseInfo/${editCourseId}`,

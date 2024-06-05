@@ -121,16 +121,20 @@ export default function CourseCard({ course, signedIn }) {
               >
                 View Course
               </Link>
-              <button
-                className="AddToCartBTN"
-                onClick={() => {
-                  if (checkLogin(signedIn)) {
-                    handleAddToCart(course?._id);
-                  }
-                }}
-              >
-                {course.price !== 0 ? t("Add to Cart") : "Enroll Now"}
-              </button>
+              {course.price !== 0 ? (
+                <button
+                  className="AddToCartBTN"
+                  onClick={() => {
+                    if (checkLogin(signedIn)) {
+                      handleAddToCart(course?._id);
+                    }
+                  }}
+                >
+                  {t("Add to Cart")}
+                </button>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>

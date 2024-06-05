@@ -121,27 +121,27 @@ function Filters() {
         <div className={`${styles.checkboxList} ${styles.categories}`}>
           <h6 className={`${styles.FilterName}`}>Price</h6>
           <label>
-            <input type="checkbox" name="All" />
+            <input type="radio" name="price" value="0:999" />
             Up to 999 EGP
           </label>
           <label>
-            <input type="checkbox" name="All" />
+            <input type="radio" name="price" value="1000:1999" />
             1000 to 1999 EGP
           </label>
           <label>
-            <input type="checkbox" name="Beginner" />
+            <input type="radio" name="price" value="2000:2999" />
             2000 to 2999 EGP
           </label>
           <label>
-            <input type="checkbox" name="Intermediate" />
+            <input type="radio" name="price" value="3000:4999" />
             3000 to 4999 EGP
           </label>
           <label>
-            <input type="checkbox" name="Expert" />
+            <input type="radio" name="price" value="5000:7999" />
             5000 to 7999 EGP
           </label>
           <label>
-            <input type="checkbox" name="Expert" />
+            <input type="radio" name="price" value="8000" />
             8000 & above EGP
           </label>
         </div>
@@ -169,7 +169,7 @@ function Filters() {
         <h6 className={`${styles.FilterName}`}>Ratings</h6>
         <label>
           <div className={styles.stars}>
-            <input type="checkbox" name="stars5" />
+            <input type="radio" name="stars5" />
 
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -235,7 +235,7 @@ function Filters() {
         </label>
         <label>
           <div className={styles.stars}>
-            <input type="checkbox" name="stars4" />
+            <input type="radio" name="stars4" />
 
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -304,7 +304,7 @@ function Filters() {
         </label>
         <label>
           <div className={styles.stars}>
-            <input type="checkbox" name="stars3" />
+            <input type="radio" name="stars3" />
 
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -375,7 +375,7 @@ function Filters() {
         </label>
         <label>
           <div className={styles.stars}>
-            <input type="checkbox" name="stars2" />
+            <input type="radio" name="stars2" />
 
             <svg
               xmlns="http://www.w3.org/2000/svg"

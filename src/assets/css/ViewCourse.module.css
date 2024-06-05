@@ -225,3 +225,222 @@
   font-weight: 600;
   letter-spacing: 1px;
 }
+/* reviews and rating */
+.reviewsAndRating {
+  padding: 20px;
+}
+
+.reviewsAndRating h3 {
+  color: #154c84;
+}
+.reviewsAndRating {
+  max-width: 800px;
+  margin: 0;
+  padding: 20px;
+}
+.reviewsAndRating .button {
+  background-color: #334c84;
+  color: white;
+  border: none;
+  padding: 2px 10px;
+  cursor: pointer;
+  border-radius: 6px;
+  margin: 0 0 18px 0;
+}
+.formContainer {
+  margin-bottom: 20px;
+}
+
+.starRating {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.star {
+  font-size: 24px;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.filled {
+  color: #ffce09;
+}
+
+.textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  resize: vertical;
+}
+
+.button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.reviewsList {
+  display: grid;
+  gap: 20px;
+}
+
+.reviewItem {
+  border: 1px solid #ccc;
+  padding: 15px;
+}
+.profileInfoAndRating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.profileInfo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profilePicture {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.reviewItem h4 {
+  margin: 0;
+}
+
+.reviewItem p {
+  margin-bottom: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .reviewsAndRating {
+    padding: 10px;
+  }
+
+  .reviewsList {
+    grid-template-columns: 1fr;
+  }
+
+  .reviewItem {
+    padding: 10px;
+  }
+}
+/* new form  */
+.reviewForm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 600px;
+  box-sizing: border-box;
+}
+
+.starRating {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+
+.starLabel {
+  cursor: pointer;
+}
+
+.starInput {
+  display: none;
+}
+
+.star {
+  font-size: 2em;
+  color: #ccc;
+  transition: color 0.3s;
+}
+
+.star.filled {
+  color: #ffcc00;
+}
+
+.commentContainer {
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.commentLabel {
+  display: block;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+}
+
+.commentTextarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.submitButton {
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submitButton:hover {
+  background-color: #0056b3;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .reviewForm {
+    padding: 15px;
+  }
+
+  .star {
+    font-size: 1.5em;
+  }
+
+  .commentTextarea {
+    font-size: 0.9em;
+  }
+
+  .submitButton {
+    padding: 8px 16px;
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .reviewForm {
+    padding: 10px;
+  }
+
+  .star {
+    font-size: 1.2em;
+  }
+
+  .commentTextarea {
+    font-size: 0.8em;
+  }
+
+  .submitButton {
+    padding: 6px 12px;
+    font-size: 0.8em;
+  }
+}

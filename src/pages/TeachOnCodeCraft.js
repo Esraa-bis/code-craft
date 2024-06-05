@@ -73,6 +73,20 @@ const TeachOnCodeCraft = ({ edit }) => {
       setLoading(false);
     }
   }
+  // function to compare form data to course
+  function getChangedValues(formData, course) {
+    return Object.keys(formData).reduce(
+      (acc, key) => {
+        if (formData[key] !== course[key]) {
+          acc.changed = true;
+          acc.value[key] = formData[key];
+        }
+        return acc;
+      },
+      { changed: false, value: {} }
+    );
+  }
+
   // to get data when edit course
   useEffect(() => {
     setLoading(true);
@@ -80,14 +94,16 @@ const TeachOnCodeCraft = ({ edit }) => {
       .then((response) => {
         if (response.success) {
           const { course } = response;
-          setFormData(() => ({
+          const data = {
             name: course.courseName,
             desc: course.desc,
             basePrice: course.basePrice,
             categoryId: course.categoryId?.name,
             level: course.level,
             prerequisites: course.prerequisites,
-          }));
+          };
+          setFormData(() => ({ ...data }));
+          setCourse(() => ({ ...data }));
         } else {
           setError("Failed to fetch course preview");
         }
@@ -101,9 +117,13 @@ const TeachOnCodeCraft = ({ edit }) => {
   // for edit course
   async function handleUpdateCourseInfo(e) {
     e.preventDefault();
+    const changes = getChangedValues(formData, course);
+    if (changes.changed !== true) {
+      return;
+    }
     setLoading(true);
     try {
-      const response = await updateCourseInfo(formData, editCourseId);
+      const response = await updateCourseInfo(changes.value, editCourseId);
       if (response.success) {
         setCourseId(encodeURIComponent(response.data.id));
         setSubmited(true);

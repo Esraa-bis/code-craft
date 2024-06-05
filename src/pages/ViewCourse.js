@@ -1,37 +1,51 @@
 import { faPlay, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "../assets/css/ViewCourse.module.css";
-import pp from "../assets/images/pp.jpg";
-import ReviewsAndRating from "../components/reviewsAndRatings";
 import {
   addToCart,
   coursePreview,
   updateRecentlyViewed,
 } from "../services/course";
 import { convertMinutes } from "../services/generalFunctions";
-import { sweetAlert } from "../services/sweetalert";
-function ViewCourse() {
-  function useQuery() {
-    return new URLSearchParams(useLocation().search);
-  }
+import { addReview, courseReview } from "../services/reviews";
 
+import { sweetAlert } from "../services/sweetalert";
+
+let courseLoading = false;
+let reviewsLoading = false;
+let pageVisited = false;
+
+function ViewCourse() {
+  const [userReviews, setUserReviews] = useState([]);
   const [course, setCourse] = useState(null);
   const [isEnrolled, setIsEnrolled] = useState(null);
-
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const query = useQuery();
-  const courseId = query.get("courseId");
+  const [reviewRate, setReviewRate] = useState(0);
+  const [reviewComment, setReviewComment] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [courseId] = useState(() => {
+    return new URLSearchParams(window.location.search).get("courseId");
+  });
+
   useEffect(() => {
-    updateRecentlyViewed(courseId).catch((error) => {
-      setError(error.message);
-      setLoading(false);
-    });
+    if (loading || pageVisited) return;
+    pageVisited = true;
+    updateRecentlyViewed(courseId)
+      .catch((error) => {
+        setError(error.message);
+        setLoading(false);
+      })
+      .finally(() => {
+        pageVisited = false;
+      });
   }, [courseId]);
 
   useEffect(() => {
+    if (loading || courseLoading) return;
+    courseLoading = true;
     setLoading(true);
     coursePreview(courseId)
       .then((response) => {
@@ -46,21 +60,36 @@ function ViewCourse() {
       .catch((error) => {
         setError(error.message);
         setLoading(false);
+      })
+      .finally(() => {
+        courseLoading = false;
       });
   }, [courseId]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  // get old reviews
+  useEffect(() => {
+    if (loading || reviewsLoading) return;
+    reviewsLoading = true;
+    setLoading(true);
+    courseReview(courseId)
+      .then((response) => {
+        if (response.success) {
+          setUserReviews(response);
+        } else {
+          setError("Failed to fetch Categories");
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      })
+      .finally(() => {
+        reviewsLoading = false;
+      });
+  }, [courseId]);
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  if (!course) {
-    return <div>No preview available for this course.</div>;
-  }
-
+  // to format the index
   function formatIndex(index) {
     return `#${index.toString().padStart(2, "0")}`;
   }
@@ -93,41 +122,40 @@ function ViewCourse() {
     if (!dateString) return null;
     return dateString.split("T")[0];
   }
-  // mock data
-  const reviews = [
-    {
-      userName: "John Doe",
-      userProfilePicture: pp,
-      rating: 4,
-      reviewText: "Great product! It exceeded my expectations.",
-    },
-    {
-      userName: "Jane Smith",
-      userProfilePicture: pp,
-      rating: 5,
-      reviewText:
-        "This is the best product I've ever purchased. Highly recommended!",
-    },
-    {
-      userName: "Alice Johnson",
-      userProfilePicture: pp,
-      rating: 3,
-      reviewText:
-        "It's good, but could be better. I had some minor issues with it.",
-    },
-  ];
+  // rating and reviews
+  // handle add rating
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+    setSuccess(false);
+
+    try {
+      const result = await addReview(courseId, reviewRate, reviewComment);
+      console.log("Review added:", result);
+      setSuccess(true);
+      setReviewRate(0);
+      setReviewComment("");
+    } catch (err) {
+      console.error("Error adding review:", err);
+      setError("Error adding review. Please try again.");
+    }
+  };
+
+  const handleStarClick = (rate) => {
+    setReviewRate(rate);
+  };
 
   return (
     <>
       <section className={styles.CoursePreview}>
         <section className={styles.CourseDescription}>
           <div className={styles.NameAndDescription}>
-            <h1 className={styles.Title}>{course.courseName}</h1>
-            <p className={styles.description}>{course.desc}</p>
+            <h1 className={styles.Title}>{course?.courseName}</h1>
+            <p className={styles.description}>{course?.desc}</p>
             <div className={styles.details}>
               <div className={styles.detail}>
                 <p>
-                  Rating:{course.rate || "-"}
+                  Rating:{course?.rate || "-"}
                   <FontAwesomeIcon
                     icon={faStar}
                     className={` icon rating-icon `}
@@ -139,7 +167,7 @@ function ViewCourse() {
               <p>
                 Created by:
                 <Link>
-                  {course.addedBy.firstName} {course.addedBy.lastName}
+                  {course?.addedBy.firstName} {course?.addedBy.lastName}
                 </Link>
               </p>
             </div>
@@ -148,8 +176,8 @@ function ViewCourse() {
                 <p>
                   Last Update:
                   <span>
-                    {getFormattedDate(course.updatedAt) ||
-                      getFormattedDate(course.createdAt) ||
+                    {getFormattedDate(course?.updatedAt) ||
+                      getFormattedDate(course?.createdAt) ||
                       "Date not available"}
                   </span>
                 </p>
@@ -157,35 +185,45 @@ function ViewCourse() {
 
               <div className={styles.detail}>
                 <p>
-                  Level: <span>{course.level}</span>
+                  Level: <span>{course?.level}</span>
                 </p>
               </div>
               <div className={styles.detail}>
                 <p>
-                  Category: <span>{course.categoryId?.name}</span>
+                  Category: <span>{course?.categoryId?.name}</span>
                 </p>
               </div>
             </div>
           </div>
           <div className={styles.CoursePreviewCard}>
             <Link
-              to={`/CourseVideos?courseId=${course?._id}`}
+              to={
+                isEnrolled
+                  ? `/CourseVideos?courseId=${course?._id}`
+                  : `/ViewCourse?courseId=${course?._id}`
+              }
               className={styles.link}
             >
               <img
-                src={course.image.url}
+                src={course?.image.url}
                 alt="course"
                 className={styles.CoursesImg}
               />
-              <FontAwesomeIcon icon={faPlay} className={` icon `} />
+              {isEnrolled ? (
+                <FontAwesomeIcon icon={faPlay} className={` icon `} />
+              ) : (
+                ""
+              )}
             </Link>
-            {isEnrolled ? null : course.appliedPrice === 0 ? null : (
-              <h6 className={styles.price}>Price: {course.appliedPrice} EGP</h6>
+            {isEnrolled ? null : course?.appliedPrice === 0 ? null : (
+              <h6 className={styles.price}>
+                Price: {course?.appliedPrice} EGP
+              </h6>
             )}
             {isEnrolled ? null : (
               <div className={styles.allBtns}>
                 <div className={styles.cartAndWishList}>
-                  {course.appliedPrice !== 0 && (
+                  {course?.appliedPrice !== 0 && (
                     <div className={styles.innerDiv}>
                       <button
                         onClick={() => handleAddToCart(course?._id)}
@@ -217,7 +255,7 @@ function ViewCourse() {
                     to={`/Checkout?courseId=${course?._id}`}
                     className={styles.buyNowLink}
                   >
-                    {course.appliedPrice ? " Buy Now" : "Enroll for free"}{" "}
+                    {course?.appliedPrice ? " Buy Now" : "Enroll for free"}{" "}
                   </Link>
                 </button>
               </div>
@@ -227,7 +265,7 @@ function ViewCourse() {
         <section>
           <div className={styles.Prerequisite}>
             <h3>Prerequisite</h3>
-            <p> {course.prerequisites}</p>
+            <p> {course?.prerequisites}</p>
           </div>
 
           <div></div>
@@ -235,8 +273,8 @@ function ViewCourse() {
         <section className={styles.mainContent}>
           <h3>Content</h3>
           <p>
-            {course.numOfVideos} lectures •
-            {convertMinutes(course.courseDuration)}
+            {course?.numOfVideos} lectures •
+            {convertMinutes(course?.courseDuration)}
           </p>
           <ul>
             {course?.vidoes.map((video, index) => (
@@ -247,11 +285,108 @@ function ViewCourse() {
             ))}
           </ul>
         </section>
-        <ReviewsAndRating reviews={reviews} />
-      </section>
+        <div className={styles.reviewsAndRating}>
+          <h3>Reviews</h3>
+          {isEnrolled ? (
+            // <form>
+            //   <div>
+            //     <StarRating rating={rating} onRatingChange={handleSubmit} />
+            //   </div>
+            //   <div>
+            //     <textarea
+            //       rows="4"
+            //       className={styles.textarea}
+            //       placeholder="Write your review......."
+            //       value={formData.reviewComment}
+            //       onChange={(event) => updateFormData(event, "reviewComment")}
+            //     />
+            //   </div>
+            //   <button type="submit" className={styles.button}>
+            //     Add Review
+            //   </button>
+            // </form>
+            <form onSubmit={handleSubmit} className={styles.reviewForm}>
+              <div className={styles.starRating}>
+                {[...Array(5)].map((star, index) => {
+                  const ratingValue = index + 1;
+                  return (
+                    <label key={index} className={styles.starLabel}>
+                      <input
+                        type="radio"
+                        name="rating"
+                        value={ratingValue}
+                        onClick={() => handleStarClick(ratingValue)}
+                        className={styles.starInput}
+                      />
+                      <span
+                        className={`${styles.star} ${
+                          ratingValue <= reviewRate ? styles.filled : ""
+                        }`}
+                        role="img"
+                        aria-label={`${ratingValue} stars`}
+                      >
+                        ★
+                      </span>
+                    </label>
+                  );
+                })}
+              </div>
+              <div className={styles.commentContainer}>
+                <textarea
+                  className={styles.commentTextarea}
+                  value={reviewComment}
+                  onChange={(e) => setReviewComment(e.target.value)}
+                  placeholder="Please add your review here...."
+                  required
+                />
+              </div>
+              <button type="submit" className={styles.submitButton}>
+                Add Review
+              </button>
+            </form>
+          ) : null}
 
-      <section></section>
+          <div className={styles.reviewsList}>
+            {userReviews?.map((review, index) => (
+              <div key={index} className={styles.reviewItem}>
+                <div className={styles.ratingAndProfileInfo}>
+                  <div className={styles.profileInfoAndRating}>
+                    <div className={styles.profileInfo}>
+                      <img
+                        src={review.userProfilePicture}
+                        alt={`${review.userName}'s profile`}
+                        className={styles.profilePicture}
+                      />
+                      <h5>{review.userName}</h5>
+                    </div>
+                    <StarRating rating={review.rating} />
+                  </div>
+                </div>
+                <div>
+                  <p>{review.reviewText}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </>
   );
 }
 export default ViewCourse;
+
+const StarRating = ({ rating, onRatingChange }) => {
+  return (
+    <div className={styles.starRating}>
+      {[1, 2, 3, 4, 5].map((star) => (
+        <span
+          key={star}
+          className={`${styles.star} ${star <= rating ? styles.filled : ""}`}
+          onClick={() => onRatingChange(star)}
+        >
+          ★
+        </span>
+      ))}
+    </div>
+  );
+};
