@@ -81,7 +81,7 @@ function LogoAndArabicBtn() {
             </button>
           </div>
         </div>
-        <div className="dropdown">
+        {/* <div className="dropdown">
           <button
             className="btn btn-secondary dropdown-toggle lang-btn"
             type="button"
@@ -122,7 +122,7 @@ function LogoAndArabicBtn() {
               </button>
             </li>
           </ul>
-        </div>
+        </div> */}
       </section>
     </>
   );
