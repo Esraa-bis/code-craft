@@ -159,7 +159,6 @@ const TeachOnCodeCraft = ({ edit }) => {
             id="title"
             value={formData.name}
             onChange={(event) => updateFormData(event, "name")}
-            required
           />
         </div>
         <div className={styles.formGroup}>
@@ -172,7 +171,6 @@ const TeachOnCodeCraft = ({ edit }) => {
             id="price"
             value={formData.basePrice}
             onChange={(event) => updateFormData(event, "basePrice")}
-            required
           />
         </div>
         <div className={styles.formGroup}>
@@ -199,7 +197,6 @@ const TeachOnCodeCraft = ({ edit }) => {
           <select
             id="level"
             name="level"
-            required
             value={formData.level}
             onChange={(event) => updateFormData(event, "level")}
           >
@@ -220,7 +217,6 @@ const TeachOnCodeCraft = ({ edit }) => {
             id="description"
             value={formData.desc}
             onChange={(event) => updateFormData(event, "desc")}
-            required
           ></textarea>
         </div>
         <div className={styles.formGroup}>
@@ -231,7 +227,6 @@ const TeachOnCodeCraft = ({ edit }) => {
             id="prerequisites"
             value={formData.prerequisites}
             onChange={(event) => updateFormData(event, "prerequisites")}
-            required
           ></textarea>
         </div>
         <div className={styles.formGroup}>
