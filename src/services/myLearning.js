@@ -53,7 +53,20 @@ export async function updateProgress(courseId, videoId) {
     {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json",
+        token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+      },
+    }
+  );
+
+  return response.json();
+}
+
+export async function courseProgress(courseId, videoId) {
+  const response = await fetch(
+    `${BASE_URL}/Enroll/${courseId}/courseProgress`,
+    {
+      method: "GET",
+      headers: {
         token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
       },
     }

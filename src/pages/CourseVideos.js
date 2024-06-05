@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useLocation } from "react-router-dom";
 import { courseVideos } from "../services/course";
-import { updateProgress } from "../services/myLearning";
+import { courseProgress, updateProgress } from "../services/myLearning";
 
 function CourseVideos() {
   // function to format index
@@ -21,6 +21,7 @@ function CourseVideos() {
   const query = useQuery();
   const courseId = query.get("courseId");
   const [videos, setVideos] = useState([]);
+  const [progress, setProgress] = useState({});
   const [error, setError] = useState(null);
   const [loaded, setLoaded] = useState(() => false);
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -36,7 +37,7 @@ function CourseVideos() {
     courseVideos(courseId)
       .then((response) => {
         if (response.success) {
-          setVideos(response.videos);
+          setVideos(() => response.videos);
           setLoaded(true);
         } else {
           setError("Failed to fetch videos");
@@ -47,7 +48,21 @@ function CourseVideos() {
         setError(err.message);
         setLoading(false);
       });
-  }, [loaded, loading, courseId]);
+    courseProgress(courseId)
+      .then((response) => {
+        if (response.success) {
+          setProgress(() => response.courseEnrolled);
+          setLoaded(true);
+        } else {
+          setError("Failed to fetch videos");
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, [courseId]);
 
   const handleVideoClick = (video) => {
     setSelectedVideo(video);
@@ -74,6 +89,7 @@ function CourseVideos() {
   };
   // update progress
   const handleUpdateProgress = async (videoId) => {
+    if (courseCompleted(videoId)) return;
     try {
       const result = await updateProgress(courseId, videoId);
       console.log(result);
@@ -82,6 +98,8 @@ function CourseVideos() {
       console.error("Error updating progress:", error);
     }
   };
+
+  const courseCompleted = (videoId) => progress?.lessons.indexOf(videoId) >= 0;
 
   return (
     <section className={styles.CourseVideos}>
@@ -116,7 +134,9 @@ function CourseVideos() {
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
-                stroke="currentColor"
+                stroke={
+                  courseCompleted(selectedVideo?._id) ? "#32de84" : "#d3d3d3"
+                }
                 className="w-6 h-6"
               >
                 <path
@@ -155,7 +175,10 @@ function CourseVideos() {
               <div className={styles.Arrows}>
                 <button>
                   <label>
-                    <input type="checkbox" />
+                    <input
+                      type="checkbox"
+                      checked={courseCompleted(selectedVideo._id)}
+                    />
                     Completed
                   </label>
                 </button>
