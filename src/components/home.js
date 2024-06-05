@@ -137,26 +137,34 @@ function Home({ signedIn }) {
       <HeroSection />
       <h2 className="Explore-Courses-Text"> {t("Explore Courses")} </h2>
       <main className="main-container">
-        <HomeCoursesSections
-          sectionTitle={t("Recommended for you ")}
-          courses={recommendedForYou}
-          signedIn={signedIn}
-        />
-        <HomeCoursesSections
-          sectionTitle={t("Most Popular")}
-          courses={mostPopular}
-          signedIn={signedIn}
-        />
-        <HomeCoursesSections
-          sectionTitle={t("Recently Added")}
-          courses={recentlyAdded}
-          signedIn={signedIn}
-        />
-        <HomeCoursesSections
-          sectionTitle={t(" Start now with zero fees")}
-          courses={freeCourses}
-          signedIn={signedIn}
-        />
+        {recommendedForYou && recommendedForYou.length > 0 ? (
+          <HomeCoursesSections
+            sectionTitle={t("Recommended for you ")}
+            courses={recommendedForYou}
+            signedIn={signedIn}
+          />
+        ) : null}
+        {mostPopular && mostPopular.length > 0 ? (
+          <HomeCoursesSections
+            sectionTitle={t("Most Popular")}
+            courses={mostPopular}
+            signedIn={signedIn}
+          />
+        ) : null}
+        {recentlyAdded && recentlyAdded.length > 0 ? (
+          <HomeCoursesSections
+            sectionTitle={t("Recently Added")}
+            courses={recentlyAdded}
+            signedIn={signedIn}
+          />
+        ) : null}
+        {freeCourses && freeCourses.length > 0 ? (
+          <HomeCoursesSections
+            sectionTitle={t(" Start now with zero fees")}
+            courses={freeCourses}
+            signedIn={signedIn}
+          />
+        ) : null}
       </main>
     </>
   );
