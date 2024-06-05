@@ -12,7 +12,7 @@ import HomeCoursesSections from "./homeCoursesSections.js";
 // styles
 import "../assets/css/Home.css";
 import { getCoursesFilters } from "../services/course.js";
-import { recentlyViewed } from "../services/myLearning.js";
+import { inProgress } from "../services/myLearning.js";
 i18n
   .use(LanguageDetector)
   .use(HttpApi)
@@ -37,7 +37,7 @@ i18n
   });
 
 function Home({ signedIn }) {
-  const [recentlyViewedCourses, setRecentlyViewedCourses] = useState([]);
+  const [recommendedForYou, setRecommendedForYou] = useState([]);
   const [mostPopular, setMostPopular] = useState([]);
   const [recentlyAdded, setRecentlyAdded] = useState([]);
   const [freeCourses, setFreeCourses] = useState([]);
@@ -45,10 +45,10 @@ function Home({ signedIn }) {
   const [error, setError] = useState(null);
   //  for recommended for you
   useEffect(() => {
-    recentlyViewed()
+    inProgress()
       .then((response) => {
         if (response.success) {
-          setRecentlyViewedCourses(response.recentlyViewedCourses);
+          setRecommendedForYou(response.top10UniqueRecommendedCourses);
         } else {
           setError("Failed to fetch courses");
         }
@@ -64,7 +64,8 @@ function Home({ signedIn }) {
   useEffect(() => {
     const filters = {
       isApproved: true,
-      sort: "createdAt desc", // '-' indicates descending order
+      sort: "createdAt desc",
+      fields: "-vidoes",
     };
 
     getCoursesFilters(filters)
@@ -86,6 +87,7 @@ function Home({ signedIn }) {
     const filters = {
       isApproved: true,
       basePrice: 0,
+      fields: "-vidoes",
     };
 
     getCoursesFilters(filters)
@@ -107,12 +109,12 @@ function Home({ signedIn }) {
   useEffect(() => {
     const filters = {
       isApproved: true,
-      sort: "enrolledUsers desc",
+      fields: "-vidoes",
     };
     getCoursesFilters(filters)
       .then((response) => {
         if (response.success) {
-          setMostPopular(response.coursesWithEnrollment);
+          setMostPopular(response.top10Courses);
         } else {
           setError("Failed to fetch courses");
         }
@@ -137,7 +139,7 @@ function Home({ signedIn }) {
       <main className="main-container">
         <HomeCoursesSections
           sectionTitle={t("Recommended for you ")}
-          courses={recentlyViewedCourses}
+          courses={recommendedForYou}
           signedIn={signedIn}
         />
         <HomeCoursesSections
