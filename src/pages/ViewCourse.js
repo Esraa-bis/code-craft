@@ -18,7 +18,7 @@ let reviewsLoading = false;
 let pageVisited = false;
 
 function ViewCourse() {
-  const [userReviews, setUserReviews] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [course, setCourse] = useState(null);
   const [isEnrolled, setIsEnrolled] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -64,17 +64,13 @@ function ViewCourse() {
       .finally(() => {
         courseLoading = false;
       });
-  }, [courseId]);
-
-  // get old reviews
-  useEffect(() => {
-    if (loading || reviewsLoading) return;
+    if (reviewsLoading) return;
     reviewsLoading = true;
     setLoading(true);
     courseReview(courseId)
       .then((response) => {
         if (response.success) {
-          setUserReviews(response);
+          setReviews(response.reviews);
         } else {
           setError("Failed to fetch Categories");
         }
@@ -288,23 +284,6 @@ function ViewCourse() {
         <div className={styles.reviewsAndRating}>
           <h3>Reviews</h3>
           {isEnrolled ? (
-            // <form>
-            //   <div>
-            //     <StarRating rating={rating} onRatingChange={handleSubmit} />
-            //   </div>
-            //   <div>
-            //     <textarea
-            //       rows="4"
-            //       className={styles.textarea}
-            //       placeholder="Write your review......."
-            //       value={formData.reviewComment}
-            //       onChange={(event) => updateFormData(event, "reviewComment")}
-            //     />
-            //   </div>
-            //   <button type="submit" className={styles.button}>
-            //     Add Review
-            //   </button>
-            // </form>
             <form onSubmit={handleSubmit} className={styles.reviewForm}>
               <div className={styles.starRating}>
                 {[...Array(5)].map((star, index) => {
@@ -345,25 +324,26 @@ function ViewCourse() {
               </button>
             </form>
           ) : null}
-
           <div className={styles.reviewsList}>
-            {userReviews?.map((review, index) => (
-              <div key={index} className={styles.reviewItem}>
+            {reviews?.map((review) => (
+              <div key={review._id} className={styles.reviewItem}>
                 <div className={styles.ratingAndProfileInfo}>
                   <div className={styles.profileInfoAndRating}>
                     <div className={styles.profileInfo}>
                       <img
-                        src={review.userProfilePicture}
-                        alt={`${review.userName}'s profile`}
+                        src={review.userId.profile_pic.url}
+                        alt={`${review.userId.firstName} ${review.userId.lastName}'s profile`}
                         className={styles.profilePicture}
                       />
-                      <h5>{review.userName}</h5>
+                      <h5>
+                        {review.userId.firstName} {review.userId.lastName}
+                      </h5>
                     </div>
-                    <StarRating rating={review.rating} />
+                    <StarRating rating={review.reviewRate} />
                   </div>
                 </div>
                 <div>
-                  <p>{review.reviewText}</p>
+                  <p>{review.reviewComment}</p>
                 </div>
               </div>
             ))}
