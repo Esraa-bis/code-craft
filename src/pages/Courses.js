@@ -6,7 +6,7 @@ import { getCoursesFilters } from "../services/course";
 import { convertMinutes } from "../services/generalFunctions.js";
 import CourseFilters from "./CourseFilters.js";
 
-function Courses({ signedIn }) {
+function Courses({ signedIn, keyword }) {
   const [courses, setCourses] = useState([]);
   const [error, setError] = useState(null);
   const [filters, setFilters] = useState(() => ({
@@ -22,7 +22,7 @@ function Courses({ signedIn }) {
   useEffect(() => {
     if (loading) return;
     setLoading(() => true);
-    getCoursesFilters(filters)
+    getCoursesFilters({ ...filters, keyword })
       .then((response) => {
         if (response.success) {
           setCourses(response.coursesWithEnrollment);
@@ -35,7 +35,7 @@ function Courses({ signedIn }) {
         setError(err.message);
         setLoading(() => false);
       });
-  }, [filters]);
+  }, [filters, keyword]);
 
   return (
     <section className={styles.CoursesFilters}>

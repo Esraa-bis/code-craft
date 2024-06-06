@@ -34,6 +34,7 @@ import { getUser, isUserLoaded, setIsUserLoaded } from "./services/user";
 function App() {
   const [signedIn, setSignedIn] = useState(SessionTokenStorage.hasToken());
   const [user, setUser] = useState(() => ({}));
+  const [keyword, setKeyword] = useState(() => "");
 
   useEffect(() => {
     if (signedIn && isUserLoaded() === false) {
@@ -54,7 +55,13 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar signedIn={signedIn} setSignedIn={setSignedIn} user={user} />
+      <Navbar
+        signedIn={signedIn}
+        setSignedIn={setSignedIn}
+        user={user}
+        keyword={keyword}
+        setKeyword={setKeyword}
+      />
       <div className="Content">
         <Routes>
           <Route path="/" element={<Home signedIn={signedIn} />} />
@@ -123,7 +130,10 @@ function App() {
             }
           />
           <Route path="/AboutUs" element={<AboutUs />} />
-          <Route path="/Courses" element={<Courses />} />
+          <Route
+            path="/Courses"
+            element={<Courses keyword={keyword} setKeyword={setKeyword} />}
+          />
           <Route
             path="/ViewCourse"
             element={
