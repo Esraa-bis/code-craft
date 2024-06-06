@@ -7,11 +7,11 @@
   margin-bottom: 20px;
 }
 .CartContainer {
- min-height: 550px;
-    padding: 39px;
-    border: 1px solid rgba(128, 128, 128, 0.393);
-    border-radius: 5px;
-    display: flex;
+  min-height: 550px;
+  padding: 39px;
+  border: 1px solid rgba(128, 128, 128, 0.393);
+  border-radius: 5px;
+  display: flex;
 }
 .CartContainer section {
   width: 80%;
@@ -31,17 +31,16 @@
 .PromotionCode {
   display: flex;
 }
-.Apply{
-    border: 1px solid #154c84;
-    background-color: #7c7c7c;
-    color: white;
-    font-size: 13px;
-    padding: 0 14px;
-    padding: 6px;
-    border: 0px solid #ccc;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-
+.Apply {
+  border: 1px solid #154c84;
+  background-color: #7c7c7c;
+  color: white;
+  font-size: 13px;
+  padding: 0 14px;
+  padding: 6px;
+  border: 0px solid #ccc;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 .CheckOutButton {
   width: 90%;
@@ -64,12 +63,10 @@
   width: 80%;
   padding: 6px;
   border: 0px solid #ccc;
-  border-top-left-radius: 5px; 
-  border-bottom-left-radius: 5px; 
-    border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px; 
-
-
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 .NumCourse {
   font-size: 15px;
@@ -91,17 +88,18 @@
   max-width: 260px;
 }
 .CartCard .img {
-  width: 240px;
   border-radius: 8px;
   margin-bottom: 10px;
+  width: 100%;
+  height: 160px;
 }
 .CartCard .title {
-  color: #333;
-  font-size: 12px;
-  margin-bottom: 10px;
+  margin: 10px 0;
+  font-size: 16px;
   font-weight: bolder;
-  -webkit-line-clamp: 1;
-  margin-bottom: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .CartCard .description {
   color: #666;

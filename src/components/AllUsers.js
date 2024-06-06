@@ -161,14 +161,14 @@ function AllUsers() {
       </div>
 
       {/* Filter dropdown */}
-      <select value={filter}>
+      {/* <select value={filter}>
         <option value="All">All</option>
         <option value="banned user">banned user</option>
         <option value="Unpinned">Unpinned</option>
         <option value="Deactivated">Deactivated</option>
         <option value="Enrolled in courses">Enrolled in courses</option>
         <option value="Uploaded courses">Uploaded courses</option>
-      </select>
+      </select> */}
 
       {/* Users table */}
       <table className={styles.userTable}>

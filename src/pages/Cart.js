@@ -46,7 +46,7 @@ function Cart() {
                 <li key={index}>
                   <CartCourseCard
                     img={course.image?.url}
-                    title={course.courseName}
+                    title={course.title}
                     description={course.desc}
                     price={course.basePrice}
                     _id={course.courseId}

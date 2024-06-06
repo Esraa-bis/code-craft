@@ -124,7 +124,6 @@ function ViewCourse() {
     e.preventDefault();
     setError(null);
     setSuccess(false);
-
     try {
       const result = await addReview(courseId, reviewRate, reviewComment);
       console.log("Review added:", result);
@@ -273,10 +272,20 @@ function ViewCourse() {
             {convertMinutes(course?.courseDuration)}
           </p>
           <ul>
-            {course?.vidoes.map((video, index) => (
+            {/* {course?.vidoes.map((video, index) => (
               <li key={video._id}>
                 <span>{formatIndex(index)} </span>
                 {video.title}
+              </li>
+            ))} */}
+            {course?.vidoes.map((video, index) => (
+              <li key={video._id}>
+                <span>{formatIndex(index)} </span>
+                {index === 0 ? (
+                  <Link to={video.url}>{video.title}</Link>
+                ) : (
+                  video.title
+                )}
               </li>
             ))}
           </ul>
@@ -316,7 +325,6 @@ function ViewCourse() {
                   value={reviewComment}
                   onChange={(e) => setReviewComment(e.target.value)}
                   placeholder="Please add your review here...."
-                  required
                 />
               </div>
               <button type="submit" className={styles.submitButton}>
