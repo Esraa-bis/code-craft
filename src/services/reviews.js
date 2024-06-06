@@ -10,6 +10,7 @@ export async function addReview(courseId, reviewRate, reviewComment) {
     },
     body: JSON.stringify({ reviewRate, reviewComment }),
   });
+  return response.json();
 }
 // get reviews
 export async function courseReview(courseId) {
@@ -20,4 +21,5 @@ export async function courseReview(courseId) {
       token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
     },
   });
+  return response.json();
 }

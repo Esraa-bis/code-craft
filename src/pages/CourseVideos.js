@@ -99,7 +99,7 @@ function CourseVideos() {
     }
   };
 
-  const courseCompleted = (videoId) => progress?.lessons.indexOf(videoId) >= 0;
+  const courseCompleted = (videoId) => progress?.lessons?.indexOf(videoId) >= 0;
 
   return (
     <section className={styles.CourseVideos}>

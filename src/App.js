@@ -132,7 +132,13 @@ function App() {
           <Route path="/AboutUs" element={<AboutUs />} />
           <Route
             path="/Courses"
-            element={<Courses keyword={keyword} setKeyword={setKeyword} />}
+            element={
+              <Courses
+                keyword={keyword}
+                setKeyword={setKeyword}
+                signedIn={signedIn}
+              />
+            }
           />
           <Route
             path="/ViewCourse"

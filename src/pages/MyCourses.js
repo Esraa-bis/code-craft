@@ -188,9 +188,15 @@ function Disapproved({ user }) {
           <div className={styles.ACtion}>
             <Link
               className={styles.viewCourse}
-              to={`editCourse?courseId=${course._id}`}
+              to={`/editCourseInfo?courseId=${course._id}`}
             >
-              Edit course &#8594;
+              Edit Info &#8594;
+            </Link>
+            <Link
+              className={styles.viewCourse}
+              to={`/editCourseVideos?courseId=${course._id}`}
+            >
+              Edit Videos &#8594;
             </Link>
           </div>
         </div>

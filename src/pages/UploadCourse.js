@@ -226,7 +226,7 @@ function UploadCourse() {
 
   return (
     <div className={styles.courseForm}>
-      <h1>My Course Title Content</h1>
+      {/* <h1>My Course Title Content</h1> */}
       <div
         className={styles.dropArea + " " + (highlight && styles.highlight)}
         onDragEnter={dragOn}
