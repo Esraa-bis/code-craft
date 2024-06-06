@@ -99,7 +99,10 @@ function CourseVideos() {
     }
   };
 
-  const courseCompleted = (videoId) => progress?.lessons?.indexOf(videoId) >= 0;
+  const courseCompleted = (videoId) => {
+    console.log(videoId, progress?.lessons?.indexOf(videoId) >= 0);
+    return progress?.lessons?.indexOf(videoId) >= 0;
+  };
 
   return (
     <section className={styles.CourseVideos}>
@@ -121,40 +124,41 @@ function CourseVideos() {
             </h6>
           </div>
         </div>
-        {videos?.map((video) => (
-          <ul key={video.video.id}>
-            <li
-              className={`${styles.done} ${
-                selectedVideo === video ? styles.active : ""
-              }`}
-              onClick={() => handleVideoClick(video)}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke={
-                  courseCompleted(selectedVideo?._id) ? "#32de84" : "#d3d3d3"
-                }
-                className="w-6 h-6"
+        <div>
+          {videos?.map((video) => (
+            <ul key={video.video.id}>
+              <li
+                className={`${styles.done} ${
+                  selectedVideo === video ? styles.active : ""
+                }`}
+                onClick={() => handleVideoClick(video)}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
-              <button
-                type="button"
-                onClick={() => setSelectedVideo(() => video)}
-              >
-                <span>{formatOrder(video.order)} </span>
-                {video.title}
-              </button>
-            </li>
-          </ul>
-        ))}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke={courseCompleted(video?._id) ? "#0054ad" : "#333"}
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  />
+                </svg>
+                <button
+                  className={styles.videoTitle}
+                  type="button"
+                  onClick={() => setSelectedVideo(() => video)}
+                >
+                  <span className={styles.videoOrder}>00{video.order} </span>
+                  {video.title}
+                </button>
+              </li>
+            </ul>
+          ))}
+        </div>
       </div>
       <div>
         {selectedVideo && (
@@ -173,7 +177,7 @@ function CourseVideos() {
                 Your browser does not support the video tag.
               </video>
               <div className={styles.Arrows}>
-                <button>
+                {/* <button>
                   <label>
                     <input
                       type="checkbox"
@@ -181,7 +185,7 @@ function CourseVideos() {
                     />
                     Completed
                   </label>
-                </button>
+                </button> */}
                 <div>
                   <button onClick={handlePreviousVideo}>
                     <FontAwesomeIcon icon={faChevronLeft} />

@@ -121,14 +121,14 @@ function AllCourses() {
   return (
     <div className={styles.allCourses}>
       {/* Filter dropdown */}
-      <select>
+      {/* <select>
         <option value="All">All</option>
         <option value="Approved">Approved</option>
         <option value="Disapproved">Disapproved</option>
         <option value="banned">banned</option>
         <option value="User Enrolled">User Enrolled</option>
         <option value="Enrolled in courses">Users Completed</option>
-      </select>
+      </select> */}
       <table className={styles.courseTable}>
         <thead>
           <tr>
@@ -165,7 +165,7 @@ function AllCourses() {
               <td className={styles.rating}>
                 {course.rate ? (
                   <>
-                    {course.rating} <FontAwesomeIcon icon={faStar} />
+                    {course.rate} <FontAwesomeIcon icon={faStar} />
                   </>
                 ) : (
                   "None"

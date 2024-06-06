@@ -157,12 +157,12 @@ function AllCoupons() {
       </div>
       <div className={styles.couponTable}>
         <h2>Existing Coupons</h2>
-        <select>
+        {/* <select>
           <option value="All">All</option>
           <option value="Approved">Date</option>
           <option value="Disapproved">Max usage</option>
           <option value="banned">Value</option>
-        </select>
+        </select> */}
         <table>
           <thead>
             <tr>

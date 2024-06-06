@@ -135,15 +135,16 @@
 }
 
 .courseImg {
-    width: 90px;
-    height: 90px;
-    border-radius: 8px;
+  width: 90px;
+  height: 90px;
+  border-radius: 8px;
 }
 
 .Content {
   padding: 6px;
   display: flex;
   flex-direction: column;
+  width: 87%;
 }
 
 .courseTitle {
@@ -161,12 +162,12 @@
   text-overflow: ellipsis;
 }
 
-.item p{
+.item p {
   margin: 0;
 }
-.item .price{
+.item .price {
   color: #166ec4;
 }
-.phoneNumber{
-  color:rgb(79, 79, 79);
+.phoneNumber {
+  color: rgb(79, 79, 79);
 }

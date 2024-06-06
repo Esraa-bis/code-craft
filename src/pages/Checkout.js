@@ -9,7 +9,7 @@ import Vodafone from "../assets/images/vodafone.png";
 
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { coursePreview, userCart } from "../services/course";
 import {
   convertFromCartToOrder,
@@ -180,7 +180,7 @@ function Checkout() {
                   <p className={styles.courseDescription} title={course.desc}>
                     {course.desc}
                   </p>
-                  <p className={styles.price}>{course.basePrice} LE</p>
+                  <p className={styles.price}>{course?.basePrice} LE</p>
                 </div>
               </div>
             </div>
@@ -198,7 +198,7 @@ function Checkout() {
                 <p className={styles.courseDescription} title={course.desc}>
                   {course.desc}
                 </p>
-                <p className={styles.price}>{course.basePrice} LE</p>
+                <p className={styles.price}>{course?.basePrice} LE</p>
               </div>
             </div>
           </div>
@@ -256,9 +256,7 @@ function Checkout() {
             </div>
           </div>
           <div className={styles.TotalSection}>
-            <h3>
-              <span>Total:</span> 1000 LE
-            </h3>
+            <h3>{/* <span>Total:</span> {course?.basePrice} LE */}</h3>
             <input
               type="text"
               placeholder="Add your coupon here"
@@ -305,6 +303,11 @@ function Checkout() {
             </label>
             <span className={styles.phoneNumber}>01212824981</span>
           </div>
+          <p>
+            If You pay with mobile wallet please&nbsp;
+            <Link to="/ContactUs">contact Us</Link>&nbsp; with and attached
+            photo of your payment.
+          </p>
         </div>
       </section>
     </section>
