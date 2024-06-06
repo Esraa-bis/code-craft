@@ -153,7 +153,7 @@ function Enrollments() {
           </div>
           <div className={styles.ACtion}>
             <Link
-              to={`/ViewCourse?courseId=${course?._id}`}
+              to={`/ViewCourse?courseId=${course?.course?._id}`}
               className={styles.viewCourse}
             >
               Continue &#8594;
