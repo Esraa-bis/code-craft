@@ -60,10 +60,11 @@ function Cart() {
             </p>
           )}
         </section>
-        <div className={styles.CheckOut}>
-          <h3>Check Out</h3>
-          <div className={styles.CheckOutContent}>
-            <div className={styles.Promotion}>
+        {cart?.subTotal && (
+          <div className={styles.CheckOut}>
+            <h3>Check Out</h3>
+            <div className={styles.CheckOutContent}>
+              {/* <div className={styles.Promotion}>
               <label>Promotion:</label>
               <div className={styles.PromotionCode}>
                 <input
@@ -74,16 +75,17 @@ function Cart() {
                 />
                 <button className={styles.Apply}>Apply</button>
               </div>
+            </div> */}
+              <h3>
+                Total:{" "}
+                <span className={styles.TotalPrice}>{cart.subTotal} LE</span>
+              </h3>
+              <button className={styles.CheckOutButton}>
+                <Link to={`/Checkout?cartId=${cart?._id}`}>Check Out</Link>
+              </button>
             </div>
-            <h3>
-              Total:{" "}
-              <span className={styles.TotalPrice}>{cart.subTotal} LE</span>
-            </h3>
-            <button className={styles.CheckOutButton}>
-              <Link to={`/Checkout?cartId=${cart?._id}`}>Check Out</Link>
-            </button>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
