@@ -20,6 +20,8 @@
 .discussion .comment.main {
   padding: 0 20px;
   border-right: 1px solid #d3d3d3;
+  border-bottom: 1px solid #d3d3d3;
+  padding-bottom: 10px;
 }
 
 .discussion .userAvatar {
@@ -39,15 +41,16 @@
 
 .discussion .commentDetails {
   flex-grow: 1;
+  flex: 1;
 }
 
 .discussion .commentDetails h3 {
-  margin-top: 0;
+  margin: 0;
   margin-bottom: 5px;
   font-size: 1rem;
 }
 
-.discussion .commentDetails p {
+.discussion .commentDetails .content {
   margin-top: 0;
   margin-bottom: 10px;
   font-size: 0.9rem;
@@ -56,7 +59,8 @@
 .discussion .replies {
   margin-left: 60px;
   margin-top: 20px;
-  /* Indent replies */
+  max-height: 300px;
+  overflow: auto;
 }
 
 .discussion .replies .comment {
@@ -130,4 +134,19 @@
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
+}
+
+.discussion .likes {
+  color: var(--main-color);
+  text-decoration: underline;
+  cursor: pointer;
+  margin: 0;
+}
+
+.discussion .replies .commentDetails {
+  background: #f1f1f1;
+  padding: 10px;
+  border-radius: 10px;
+  max-width: 90%;
+  min-width: 200px;
 }
