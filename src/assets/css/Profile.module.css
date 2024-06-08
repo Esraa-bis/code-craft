@@ -53,7 +53,7 @@
   padding: 7px;
 }
 .ProfileEditMenu .ProfileEditMenuItem.active {
-  background-color: #39476d;
+  background-color: #1b5791;
 }
 .ProfileEditMenuItem.active .menuItemLink {
   color: white;
@@ -64,7 +64,7 @@
   color: #3e3838;
 }
 .ProfileEditMenuItem:hover {
-  background-color: #154c84;
+  background-color: #1b5791;
 }
 .ProfileEditMenuItem:hover .menuItemLink {
   color: white;
@@ -138,10 +138,10 @@ textarea {
   color: rgb(40, 39, 39);
 }
 .formContainer .submitButton:hover {
-  background-color: #1e5d88;
+  background-color: #1b5791;
 }
 .DeleteProfile .submitButton:hover {
-  background-color: #1e5d88;
+  background-color: #1b5791;
 }
 /* delete profile */
 .WarningText {
@@ -218,227 +218,178 @@ textarea {
   width: 50%;
   margin: 30px auto;
 }
-@media screen and (max-width: 630px){
-/* common styles */
-.ProfileUserImageAndName {
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  height: 165px;
-  flex-direction: column;
-  gap: 10px;
-}
-.TitleAndDescription {
-  height: 125px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.234);
+/* password eye */
+.passwordContainer {
+  position: relative;
+  width: 100%;
 }
 
-/* the whole profile component*/
-.container {
-  margin: 0px auto;
+.passwordContainer .input {
   width: 100%;
-  flex-direction: column;
-  display: flex;
-  border: 1px solid rgba(128, 128, 128, 0.234);
-  max-width: 900px;
-  box-shadow: 0px 0px 0px 0px #fff;
-  border-radius: 0;
-}
-/* profile side bar */
-.ProfileSideBar {
-  border-bottom: 1px solid rgba(128, 128, 128, 0.234);
-  width: 100%;
-  text-align: center;
+  padding-right: 40px; /* Make space for the button */
+  box-sizing: border-box;
+  font-size: 1em; /* Base font size */
 }
 
-.ProfilePicture {
-  width: 90px;
-  height: 90px;
-  object-fit: cover;
-  border-radius: 50%;
-  box-shadow: 0px 0px 20px 1px gray;
-}
-.ProfileEditMenu {
-  list-style-type: none;
-  display: flex;
-  flex-direction: column;
-}
-.ProfileEditSection .ProfileEditMenu {
+.passwordContainer .showPassIcon {
+  position: absolute;
+  right: 24%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  cursor: pointer;
   padding: 0;
-}
-.ProfileEditMenu .ProfileEditMenuItem {
-  padding: 7px;
-}
-.ProfileEditMenu .ProfileEditMenuItem.active {
-  background-color: #39476d;
-}
-.ProfileEditMenuItem.active .menuItemLink {
-  color: white;
-}
-
-.menuItemLink {
-  text-decoration: none;
-  color: #3e3838;
-}
-.ProfileEditMenuItem:hover {
-  background-color: #154c84;
-}
-.ProfileEditMenuItem:hover .menuItemLink {
-  color: white;
-}
-/* main content */
-.mainContent {
-  width: 70%;
-}
-/* main profile form */
-
-/* Form container */
-.formContainer {
-  max-width: 600px;
-  width: 90%;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-/* Form fieldset */
-fieldset {
-  border: none;
-  margin-bottom: 15px;
-}
-
-/* Form legend */
-legend {
-  font-size: 18px;
-  margin-bottom: 5px;
-}
-
-/* Form group */
-.formContainer .formGroup {
-  margin-bottom: 10px;
-}
-
-/* Form label */
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-/* Form input */
-.formContainer input[type="text"],
-.formContainer input[type="number"],
-.formContainer input[type="tel"],
-.formContainer input[type="url"],
-.formContainer input[type="password"],
-textarea {
-  width: 80%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-/* Form buttons */
-.ChangePhotoForm .submitButton,
-.DeleteProfile .submitButton,
-.formContainer .submitButton {
-  padding: 9px;
-  background-color: #154c84;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 15px;
-  width: 200px;
-}
-.deletePhotoBtn {
-  border: none;
-  color: rgb(40, 39, 39);
-}
-.formContainer .submitButton:hover {
-  background-color: #1e5d88;
-}
-.DeleteProfile .submitButton:hover {
-  background-color: #1e5d88;
-}
-/* delete profile */
-.WarningText {
-  font-weight: bold;
-  margin-bottom: 10px;
-  padding: 30px;
-}
-.Warning {
-  color: rgb(233, 40, 40);
-}
-.ChangePhotoForm .submitButton,
-.DeleteProfile .submitButton {
-  margin: 0 30px;
-}
-/* change profile picture */
-.CurrentProfilePicture {
+  outline: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
-  border-right: 1px solid rgba(128, 128, 128, 0.234);
-  background-color: rgba(212, 212, 212, 0.234);
-}
-.CurrentPicture {
-  width: 300px;
-  height: 250px;
-  object-fit: contain;
-}
-.ChangePhotoForm .formGroup {
-  display: flex;
-  flex-direction: column;
-  padding: 20px 30px;
-}
-.PhotoInput {
-  /* Add your custom styles here */
-  /* Example styles */
-  border: 2px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  color: #333;
-  font-size: 16px;
-  /* Customize further as needed */
-}
-.CurrentProfilePicture svg {
-  width: 30px;
-  height: 30px;
-  align-self: flex-start;
-  justify-self: flex-start;
+  width: 10px;
+  height: 10px;
+  border: none;
 }
 
-/* ================== */
-/* payment method */
-/* ================== */
-.paymentMethodsContainer {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  border-radius: 5px;
-  margin: 20px;
-  min-height: 50vh;
-}
+@media screen and (max-width: 630px) {
+  /* common styles */
 
-.paymentMethodsContainer {
-  padding: 20px;
-  border-radius: 5px;
-  margin: 20px;
-}
+  .TitleAndDescription {
+    height: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.234);
+  }
+  .passwordContainer .showPassIcon {
+    right: 5%;
+  }
 
-.savedMethods p {
-  text-align: center;
-  border-radius: 5px;
-  border: 1px rgb(128 128 128 / 89%);
-  border-style: dashed;
-  padding: 56px;
-  width: 50%;
-  margin: 30px auto;
-}
+  /* the whole profile component*/
+  .container {
+    margin: 0px auto;
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+    border: 1px solid rgba(128, 128, 128, 0.234);
+    max-width: 900px;
+    box-shadow: 0px 0px 0px 0px #fff;
+    border-radius: 0;
+  }
+  /* profile side bar */
+  .ProfileSideBar {
+    width: 100%;
+  }
+
+  .ProfilePicture {
+    width: 75px;
+    height: 75px;
+  }
+
+  .mainContent {
+    width: 100%;
+  }
+  /* main profile form */
+
+  /* Form container */
+  .formContainer {
+    max-width: 600px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* Form fieldset */
+  fieldset {
+    border: none;
+    margin-bottom: 15px;
+  }
+
+  /* Form legend */
+  legend {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+
+  /* Form group */
+  .formContainer .formGroup {
+    margin-bottom: 10px;
+  }
+
+  /* Form label */
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  /* Form input */
+  .formContainer input[type="text"],
+  .formContainer input[type="number"],
+  .formContainer input[type="tel"],
+  .formContainer input[type="url"],
+  .formContainer input[type="password"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  /* Form buttons */
+  .ChangePhotoForm .submitButton,
+  .DeleteProfile .submitButton,
+  .formContainer .submitButton {
+    padding: 9px;
+    background-color: #154c84;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    width: 200px;
+  }
+  .deletePhotoBtn {
+    border: none;
+    color: rgb(40, 39, 39);
+  }
+
+  .ChangePhotoForm .submitButton,
+  .DeleteProfile .submitButton {
+    margin: 0 30px;
+    width: 40%;
+  }
+  /* change profile picture */
+  .CurrentProfilePicture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-right: 1px solid rgba(128, 128, 128, 0.234);
+    background-color: rgba(212, 212, 212, 0.234);
+  }
+  .CurrentPicture {
+    width: 300px;
+    height: 250px;
+    object-fit: contain;
+  }
+  .ChangePhotoForm .formGroup {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 30px;
+  }
+  .PhotoInput {
+    /* Add your custom styles here */
+    /* Example styles */
+    border: 2px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    color: #333;
+    font-size: 16px;
+    /* Customize further as needed */
+  }
+  .CurrentProfilePicture svg {
+    width: 30px;
+    height: 30px;
+    align-self: flex-start;
+    justify-self: flex-start;
+  }
 }

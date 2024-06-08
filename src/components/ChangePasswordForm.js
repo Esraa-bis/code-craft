@@ -55,73 +55,81 @@ function ChangePasswordForm() {
       <form className={styles.formContainer} onSubmit={handleSubmit}>
         {/* Basics Info */}
         <fieldset>
-          <legend>Passwords:</legend>
           <div className={styles.formGroup}>
-            <input
-              id="CurrentPassword"
-              name="CurrentPassword"
-              className={styles.input}
-              placeholder="Enter current password"
-              type={passwordVisible ? "text" : "password"}
-              value={formData.oldPassword}
-              onChange={(event) => updateFormData(event, "oldPassword")}
-              required
-            />
+            <div className={styles.passwordContainer}>
+              <input
+                id="CurrentPassword"
+                name="CurrentPassword"
+                className={styles.input}
+                placeholder="Enter current password"
+                type={passwordVisible ? "text" : "password"}
+                value={formData.oldPassword}
+                onChange={(event) => updateFormData(event, "oldPassword")}
+                required
+              />
 
-            <button
-              type="button"
-              onClick={() => setPasswordVisible(!passwordVisible)}
-            >
-              {passwordVisible ? (
-                <FontAwesomeIcon icon={faEye} />
-              ) : (
-                <FontAwesomeIcon icon={faEyeSlash} />
-              )}
-            </button>
+              <button
+                type="button"
+                className={styles.showPassIcon}
+                onClick={() => setPasswordVisible(!passwordVisible)}
+              >
+                {passwordVisible ? (
+                  <FontAwesomeIcon icon={faEye} />
+                ) : (
+                  <FontAwesomeIcon icon={faEyeSlash} />
+                )}
+              </button>
+            </div>
           </div>
           <div className={styles.formGroup}>
-            <input
-              id="NewPassword"
-              name="NewPassword"
-              className={styles.input}
-              placeholder="Enter new password"
-              type={passwordVisible ? "text" : "password"}
-              value={formData.newPassword}
-              onChange={(event) => updateFormData(event, "newPassword")}
-              required
-            />
-            <button
-              type="button"
-              onClick={() => setPasswordVisible(!passwordVisible)}
-            >
-              {passwordVisible ? (
-                <FontAwesomeIcon icon={faEye} />
-              ) : (
-                <FontAwesomeIcon icon={faEyeSlash} />
-              )}
-            </button>
+            <div className={styles.passwordContainer}>
+              <input
+                id="NewPassword"
+                name="NewPassword"
+                className={styles.input}
+                placeholder="Enter new password"
+                type={passwordVisible ? "text" : "password"}
+                value={formData.newPassword}
+                onChange={(event) => updateFormData(event, "newPassword")}
+                required
+              />
+              <button
+                className={styles.showPassIcon}
+                type="button"
+                onClick={() => setPasswordVisible(!passwordVisible)}
+              >
+                {passwordVisible ? (
+                  <FontAwesomeIcon icon={faEye} />
+                ) : (
+                  <FontAwesomeIcon icon={faEyeSlash} />
+                )}
+              </button>
+            </div>
           </div>
           <div className={styles.formGroup}>
-            <input
-              id="password"
-              name="ConfirmNewPassword"
-              className={styles.input}
-              placeholder="Re-type new password"
-              type={passwordVisible ? "text" : "password"}
-              value={formData.confirmPassword}
-              onChange={(event) => updateFormData(event, "confirmPassword")}
-              required
-            />
-            <button
-              type="button"
-              onClick={() => setPasswordVisible(!passwordVisible)}
-            >
-              {passwordVisible ? (
-                <FontAwesomeIcon icon={faEye} />
-              ) : (
-                <FontAwesomeIcon icon={faEyeSlash} />
-              )}
-            </button>
+            <div className={styles.passwordContainer}>
+              <input
+                id="password"
+                name="ConfirmNewPassword"
+                className={styles.input}
+                placeholder="Re-type new password"
+                type={passwordVisible ? "text" : "password"}
+                value={formData.confirmPassword}
+                onChange={(event) => updateFormData(event, "confirmPassword")}
+                required
+              />
+              <button
+                type="button"
+                className={styles.showPassIcon}
+                onClick={() => setPasswordVisible(!passwordVisible)}
+              >
+                {passwordVisible ? (
+                  <FontAwesomeIcon icon={faEye} />
+                ) : (
+                  <FontAwesomeIcon icon={faEyeSlash} />
+                )}
+              </button>
+            </div>
           </div>
         </fieldset>
         <button

@@ -7,7 +7,11 @@ import ProfileSideBar from "../components/ProfileSideBar";
 function ChangePassword({ signedIn, user }) {
   return (
     <div className={styles.container}>
-      <ProfileSideBar signedIn={signedIn} user={user} />
+      <ProfileSideBar
+        signedIn={signedIn}
+        user={user}
+        activeSection={"ChangePassword"}
+      />
       <main className={styles.mainContent}>
         <ChangePasswordForm />
       </main>
