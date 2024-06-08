@@ -305,8 +305,8 @@ function Checkout() {
           </div>
           <p>
             If You pay with mobile wallet please&nbsp;
-            <Link to="/ContactUs">contact Us</Link>&nbsp; with and attached
-            photo of your payment.
+            <Link to="/ContactUs">contact Us</Link>&nbsp; with and attache photo
+            of your payment.
           </p>
         </div>
       </section>
