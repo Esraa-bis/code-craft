@@ -149,7 +149,7 @@ function Enrollments() {
             <p className={`${styles.courseDescription}`}>
               {course.course.desc}
             </p>
-            <p className={styles.NotCompletedProgress}>{course.status}</p>
+            <p className={course.status==="Completed"?styles.CompletedProgress:styles.NotCompletedProgress}>{course.status}</p>
           </div>
           <div className={styles.ACtion}>
             <Link
@@ -205,8 +205,8 @@ function InProgress() {
               {course.course.desc}
             </p>
             <p className={styles.NotCompletedProgress}>
-              {course.progress}% Completed{" "}
-              <svg
+              {course.progress.toFixed(0)}% Completed
+              {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -219,7 +219,7 @@ function InProgress() {
                   strokeLinejoin="round"
                   d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                 />
-              </svg>
+              </svg> */}
             </p>
           </div>
           <div className={styles.ACtion}>
@@ -271,7 +271,7 @@ function Completed() {
             <p className={`${styles.courseDescription}`}>
               {course.course.desc}
             </p>
-            <p className={styles.Progress}>
+            <p className={`${styles.Progress} ${styles.completed}`}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -286,7 +286,7 @@ function Completed() {
                   d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                 />
               </svg>
-              {course.progress}% Completed
+              100% Completed
             </p>
           </div>
           <div className={styles.ACtion}>
