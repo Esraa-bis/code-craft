@@ -121,7 +121,6 @@ function Enrollments() {
       .then((response) => {
         if (response.success) {
           setCourses(response.courses);
-          console.log(courses);
         } else {
           setError("Failed to fetch courses");
         }
@@ -149,7 +148,15 @@ function Enrollments() {
             <p className={`${styles.courseDescription}`}>
               {course.course.desc}
             </p>
-            <p className={course.status==="Completed"?styles.CompletedProgress:styles.NotCompletedProgress}>{course.status}</p>
+            <p
+              className={
+                course.status === "Completed"
+                  ? styles.CompletedProgress
+                  : styles.NotCompletedProgress
+              }
+            >
+              {course.status}
+            </p>
           </div>
           <div className={styles.ACtion}>
             <Link

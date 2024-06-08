@@ -1,85 +1,64 @@
 // styles
 import { useEffect, useState } from "react";
 import styles from "../assets/css/Discussion.module.css";
-import { addPostComment, getPostComments } from "../services/comment";
-import { getPosts } from "../services/post";
+import Post from "../components/Post";
+import { createPost, getPosts } from "../services/post";
 import { sweetAlert } from "../services/sweetalert";
 
 function Discussion() {
+  const [newPost, setNewPost] = useState(() => "");
   const [posts, setPosts] = useState(() => []);
-  const [postComments, setPostComments] = useState(() => ({}));
-  const [replyToPost, setReplyToPost] = useState(() => ({}));
   const [count, setCount] = useState(() => 0);
 
-  const updatePostComments = (postId, comments) => {
-    setPostComments((oldPostComments) => {
-      const postComments = { ...oldPostComments };
-      if (!postComments[postId]) {
-        postComments[postId] = { comments: [], ids: {} };
-      }
-      comments.forEach((c) => {
-        if (postComments[postId].ids[c._id]) return;
-        postComments[postId].ids[c._id] = true;
-        postComments[postId].comments.push(c);
+  const updateExistingPost = (post) => {
+    setPosts((posts) => {
+      let i;
+      let p = posts.find((p, index) => {
+        if (p._id === post._id) i = index;
+        return p._id === post._id;
       });
-
-      return postComments;
+      if (i >= 0) {
+        p.numberOfComments = post.numberOfComments;
+        p.numberOfLikes = post.numberOfLikes;
+        posts[i] = { ...p };
+        return [...posts];
+      }
+      return posts;
     });
   };
 
-  const getPostReplies = (postId) => {
-    getPostComments(postId, postComments[postId]?.comments?.length || 0).then(
-      (response) => {
-        if (response.success) {
-          const { comments } = response;
-          updatePostComments(postId, comments);
-        } else {
-          sweetAlert({
-            text: response.message,
-            icon: "error",
-          });
-        }
+  const addNewPost = (post, order = 1) => {
+    setPosts((oldPosts) => {
+      const posts = [...oldPosts];
+      if (order === 1) {
+        posts.push(post);
+      } else {
+        posts.unshift(post);
       }
-    );
+      return posts;
+    });
   };
 
-  const savePostReply = (postId) => {
-    const value = replyToPost[postId];
+  const savePost = () => {
+    const value = newPost;
     if (!value) return;
     if (value.trim().length === 0) return;
-    addPostComment(postId, value).then((response) => {
+
+    createPost(value).then((response) => {
       if (response.success) {
-        updatePostReplyInput(postId, "");
-        const { comment, post } = response;
-        setPosts((posts) => {
-          let i;
-          let p = posts.find((p, index) => {
-            if (p._id === post._id) i = index;
-            return p._id === post._id;
-          });
-          if (i >= 0) {
-            p.numberOfComments = post.numberOfComments;
-            p.numberOfLikes = post.numberOfLikes;
-            posts[i] = { ...p };
-            return [...posts];
-          }
-          return posts;
-        });
-        updatePostComments(postId, [comment]);
+        addNewPost(response.post);
+        updateNewPostInput("");
       } else {
         sweetAlert({
           text: response.message,
-          type: "error",
+          icon: "error",
         });
       }
     });
   };
-  const updatePostReplyInput = (postId, value) => {
-    setReplyToPost((v) => {
-      const replies = { ...v };
-      replies[postId] = value;
-      return replies;
-    });
+
+  const updateNewPostInput = (value) => {
+    setNewPost(() => value);
   };
 
   useEffect(() => {
@@ -100,91 +79,18 @@ function Discussion() {
     <div className={styles.discussion}>
       <h1>Posts: ({count})</h1>
       {posts.map((post) => {
-        return (
-          <div key={post._id} className={`${styles.comment} ${styles.main}`}>
-            <div></div>
-            <div className={styles.userAvatar}>
-              <img
-                src={post.addedBy?.profile_pic?.url}
-                alt={`${post.addedBy?.firstName} ${post.addedBy?.lastName}`}
-              />
-            </div>
-            <div className="commentDetails">
-              <h3>{`${post.addedBy?.firstName} ${post.addedBy?.lastName}`}</h3>
-              <p>{post.content}</p>
-              <p>
-                {post.numberOfLikes}{" "}
-                {post.numberOfLikes === 1 ? "Like" : "Likes"}
-              </p>
-              <div className={styles.replies}>
-                {postComments[post._id]?.comments.map((comment) => {
-                  return (
-                    <div className={styles.comment} key={comment._id}>
-                      <div className={styles.userAvatar}>
-                        <img
-                          src={comment.addedBy?.profile_pic?.url}
-                          alt={`${comment.addedBy?.firstName} ${comment.addedBy?.lastName}`}
-                        />
-                      </div>
-                      <div className={styles.commentDetails}>
-                        <h3>{`${comment.addedBy?.firstName} ${comment.addedBy?.lastName}`}</h3>
-                        <p>{comment.content}</p>
-                        <p>
-                          {comment.numberOfLikes}{" "}
-                          {comment.numberOfLikes === 1 ? "Like" : "Likes"}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className={styles.reply}>
-                <input
-                  type="text"
-                  name="reply"
-                  placeholder="Reply..."
-                  className={styles.discussionInput}
-                  value={replyToPost[post.id] || ""}
-                  onChange={(e) =>
-                    updatePostReplyInput(post._id, e.target.value)
-                  }
-                />
-                <button type="button" onClick={() => savePostReply(post._id)}>
-                  Reply
-                </button>
-              </div>
-              {post.numberOfComments > 0 &&
-                (!postComments[post._id]?.comments ||
-                  post.numberOfComments >
-                    postComments[post._id]?.comments.length) && (
-                  <div className={styles.loadMore}>
-                    <button
-                      type="button"
-                      onClick={() => getPostReplies(post._id)}
-                    >
-                      Load more (
-                      {post.numberOfComments -
-                        (postComments[post._id]?.comments.length || 0)}
-                      &nbsp;
-                      {post.numberOfComments -
-                        (postComments[post._id]?.comments.length || 0) ===
-                      1
-                        ? "reply"
-                        : "replies"}
-                      )...
-                    </button>
-                  </div>
-                )}
-            </div>
-          </div>
-        );
+        return <Post post={post} updateExistingPost={updateExistingPost} />;
       })}
       <form>
         <textarea
           placeholder="Share your thoughts or ask questions here..."
           className={styles.discussionInput}
+          value={newPost}
+          onChange={(e) => updateNewPostInput(e.target.value)}
         ></textarea>
-        <button type="button">Add Post</button>
+        <button type="button" onClick={() => savePost()}>
+          Add Post
+        </button>
       </form>
       {/* <!-- Add more comments here if needed --> */}
     </div>

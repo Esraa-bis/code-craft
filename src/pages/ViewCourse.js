@@ -126,7 +126,6 @@ function ViewCourse() {
     setSuccess(false);
     try {
       const result = await addReview(courseId, reviewRate, reviewComment);
-      console.log("Review added:", result);
       setSuccess(true);
       setReviewRate(0);
       setReviewComment("");

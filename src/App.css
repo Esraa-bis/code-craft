@@ -21,9 +21,16 @@ html,
 body {
   font-family: "Rubik", sans-serif;
   color: var(--main-text-color);
+  scroll-behavior: smooth;
 }
 
 .App .Content {
   max-width: 1464px;
   margin: auto;
+}
+
+.App p.created-since {
+  font-size: 0.8rem;
+  margin: -5px 0 10px 0;
+  color: #a85454;
 }

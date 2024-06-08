@@ -92,7 +92,6 @@ function CourseVideos() {
     if (courseCompleted(videoId)) return;
     try {
       const result = await updateProgress(courseId, videoId);
-      console.log(result);
       // Handle the result as needed
     } catch (error) {
       console.error("Error updating progress:", error);
@@ -100,7 +99,6 @@ function CourseVideos() {
   };
 
   const courseCompleted = (videoId) => {
-    console.log(videoId, progress?.lessons?.indexOf(videoId) >= 0);
     return progress?.lessons?.indexOf(videoId) >= 0;
   };
 
