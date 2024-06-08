@@ -66,7 +66,8 @@
   padding: 16px;
   display: flex;
   flex-direction: column;
-  min-width: 77%;
+ width: 77%;
+
 }
 
 .courseTitle {
@@ -81,7 +82,7 @@
   color: #0056b3;
 }
 .NotCompletedProgress {
-  color: #333;
+  color: #0056b3;
   display: flex;
   align-items: center;
 }
@@ -89,6 +90,11 @@
 .NotCompletedProgress svg {
   width: 25px;
   height: 25px;
+}
+.CompletedProgress{
+  color:green;
+  display: flex;
+  align-items: center;
 }
 .courseDescription {
   font-size: 12px;
@@ -98,10 +104,12 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-bottom: 0;
+
 }
 
 .ACtion {
-  padding: 16px;
+  padding: 10px;
   border-left: 1px solid #eee;
   display: flex;
   justify-content: flex-end;
@@ -113,7 +121,7 @@
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s ease;
-  width: 120px;
+  width:100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -140,7 +148,74 @@
   color: #007bff;
 }
 
-.buyNow Link {
-  color: #0056b3;
-  text-decoration: none;
+.MyLearning .Progress.completed{
+color:green ;
+}
+
+
+@media screen and (max-width: 680px) {
+  .MyLearning{
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+  }
+  .Categories .Type {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+  }
+  .courseImg {
+    width: 60px;
+    height: 60px;
+    min-width: 13%;
+  }
+  .courseTitle {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 13px;
+  }
+  .courseDescription {
+    font-size: 10px;
+    margin-bottom: 0;
+  }
+  .MyLearningCard {
+    padding: 3px;
+    gap: 0px;
+  }
+  .Content {
+    padding: 10px;
+    min-width: 70%;
+    max-width: 71%;
+  }
+  .ACtion {
+    padding: 6px;
+    justify-content: flex-end;
+    flex-direction: column;
+    font-size: 10px;
+  }
+  /* for enrollments */
+  .viewCourse {
+    color: #007bff;
+    text-decoration: none;
+    width:100%;
+   
+  }
+  .NotCompletedProgress {
+    color: #0056b3;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    margin: 0;
+  }
+  .CompletedProgress{
+    color:green;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+
+  }
 }
