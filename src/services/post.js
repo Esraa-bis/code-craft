@@ -26,6 +26,20 @@ export const getPosts = async (skip) => {
   return response.json();
 };
 
+export const editPost = async (postId, content) => {
+  const formData = new FormData();
+  formData.set("content", content);
+
+  const response = await fetch(`${BASE_URL}/Post/updatePost/${postId}`, {
+    method: "PUT",
+    headers: {
+      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+    },
+    body: formData,
+  });
+  return response.json();
+};
+
 export const deletePost = async (postId) => {
   const response = await fetch(`${BASE_URL}/Post/deletePost/${postId}`, {
     method: "DELETE",

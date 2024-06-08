@@ -35,7 +35,9 @@ body {
   margin: -5px 0 10px 0;
   color: #a85454;
 }
-
+.inline-block {
+  display: inline-block;
+}
 .flex {
   display: flex;
 }
@@ -44,6 +46,12 @@ body {
 }
 .justify-content-between {
   justify-content: space-between;
+}
+.justify-content-end {
+  justify-content: flex-end;
+}
+.primary {
+  color: var(--main-color);
 }
 .warn {
   color: var(--warn-color);
@@ -59,4 +67,16 @@ body {
 }
 .cursor-pointer {
   cursor: pointer;
+}
+.semi-bold {
+  font-weight: 500;
+}
+.mt10 {
+  margin-top: 10px;
+}
+.mb10 {
+  margin-bottom: 10px;
+}
+.fw {
+  width: 100%;
 }

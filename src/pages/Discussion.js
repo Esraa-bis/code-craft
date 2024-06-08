@@ -24,6 +24,7 @@ function Discussion({ user }) {
       if (i >= 0) {
         p.numberOfComments = post.numberOfComments;
         p.numberOfLikes = post.numberOfLikes;
+        p.content = post.content;
         posts[i] = { ...p };
         return [...posts];
       }
@@ -95,6 +96,7 @@ function Discussion({ user }) {
       posts.splice(posts.indexOf(post), 1);
       return posts;
     });
+    setCount((count) => Math.max(count - 1, 0));
   };
 
   useEffect(() => {
