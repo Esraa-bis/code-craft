@@ -16,9 +16,19 @@ export const createPost = async (content) => {
   return response.json();
 };
 
-export const getPosts = async () => {
-  const response = await fetch(`${BASE_URL}/Post`, {
+export const getPosts = async (skip) => {
+  const response = await fetch(`${BASE_URL}/Post?skip=${skip}`, {
     method: "GET",
+    headers: {
+      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+    },
+  });
+  return response.json();
+};
+
+export const deletePost = async (postId) => {
+  const response = await fetch(`${BASE_URL}/Post/deletePost/${postId}`, {
+    method: "DELETE",
     headers: {
       token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
     },

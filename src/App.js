@@ -160,7 +160,7 @@ function App() {
               )
             }
           />
-          <Route path="/Discussion" element={<Discussion />} />
+          <Route path="/Discussion" element={<Discussion user={user} />} />
           <Route
             path="/CourseVideos"
             element={
