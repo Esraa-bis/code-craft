@@ -1,17 +1,24 @@
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../assets/css/Discussion.module.css";
 import { addPostComment, getPostComments } from "../services/comment";
-import { likePost } from "../services/like";
+import { doesUserLikeComments, likePost } from "../services/like";
 import { deletePost, editPost } from "../services/post";
 import { sweetAlert } from "../services/sweetalert";
 import CreatedSince from "./CreatedSince";
 import LoadMore from "./LoadMore";
 import PostComment from "./PostComment";
 
-function Post({ user, post, updateExistingPost, onPostDeleted }) {
+function Post({
+  user,
+  post,
+  updateExistingPost,
+  onPostDeleted,
+  setPostsLikes,
+  liked,
+}) {
   const [postComments, setPostComments] = useState(() => ({
     comments: [],
     ids: {},
@@ -19,6 +26,14 @@ function Post({ user, post, updateExistingPost, onPostDeleted }) {
   const [replyToPost, setReplyToPost] = useState(() => "");
   const [editing, setEditing] = useState(() => false);
   const [editingValue, setEditingValue] = useState(() => "");
+  const [postLiked, setPostLiked] = useState(
+    () => liked?.indexOf(post._id) >= 0
+  );
+  const [likedComments, setLikedComments] = useState(() => []);
+
+  useEffect(() => {
+    setPostLiked(() => liked?.indexOf(post._id) >= 0);
+  }, [liked, post]);
 
   const onReplyInputChange = (value) => {
     setReplyToPost(() => value);
@@ -56,12 +71,33 @@ function Post({ user, post, updateExistingPost, onPostDeleted }) {
     });
   };
 
+  const getLikes = (comments) => {
+    const ids = comments.map((p) => p._id);
+    if (ids.length === 0) return;
+    doesUserLikeComments(comments.map((c) => c.id || c._id)).then(
+      (response) => {
+        if (response.success) {
+          setLikedComments((l) => {
+            const likes = [...l, ...response.likes];
+            return likes;
+          });
+        } else {
+          sweetAlert({
+            text: response.message,
+            icon: "error",
+          });
+        }
+      }
+    );
+  };
+
   const onLoadRepliesButtonClick = (postId) => {
     getPostComments(postId, postComments.comments.length || 0).then(
       (response) => {
         if (response.success) {
           const { comments } = response;
           updatePostComments(comments);
+          getLikes(comments);
         } else {
           sweetAlert({
             text: response.message,
@@ -175,6 +211,15 @@ function Post({ user, post, updateExistingPost, onPostDeleted }) {
       .then((response) => {
         if (response.success) {
           updateExistingPost(response.document);
+          setPostsLikes((l) => {
+            const likes = [...l];
+            if (response.like) {
+              likes.push(post._id);
+            } else {
+              likes.splice(likes.indexOf(post._id), 1);
+            }
+            return likes;
+          });
         } else {
           sweetAlert({
             text: response.message,
@@ -253,7 +298,7 @@ function Post({ user, post, updateExistingPost, onPostDeleted }) {
         {!editing && <p className={styles.content}>{post.content}</p>}
         <p className={styles.likes} onClick={() => onLikeButtonClick()}>
           {post.numberOfLikes}&nbsp;
-          {post.numberOfLikes === 1 ? "Like" : "Likes"}
+          {postLiked ? "Unlike" : post.numberOfLikes === 1 ? "Like" : "Likes"}
         </p>
         <div className={styles.replies}>
           {postComments.comments.map((comment) => {
@@ -264,6 +309,8 @@ function Post({ user, post, updateExistingPost, onPostDeleted }) {
                 user={user}
                 onCommentDeleted={onCommentDeleted}
                 updateExistingComment={updateExistingComment}
+                liked={likedComments}
+                setCommentLikes={setLikedComments}
               />
             );
           })}

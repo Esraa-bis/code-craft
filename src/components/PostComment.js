@@ -1,6 +1,6 @@
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../assets/css/Discussion.module.css";
 import { deletePostComment, editPostComment } from "../services/comment";
 import { likeComment } from "../services/like";
@@ -12,9 +12,16 @@ function PostComment({
   user,
   onCommentDeleted,
   updateExistingComment,
+  liked,
+  setCommentLikes,
 }) {
   const [editing, setEditing] = useState(() => false);
   const [editingValue, setEditingValue] = useState(() => "");
+  const [commentLiked, setCommentLiked] = useState(() => false);
+
+  useEffect(() => {
+    setCommentLiked(() => liked?.indexOf(comment._id) >= 0);
+  }, [liked, comment]);
 
   const onEditCommentButtonClick = () => {
     setEditing(() => true);
@@ -89,6 +96,15 @@ function PostComment({
       .then((response) => {
         if (response.success) {
           updateExistingComment(response.document);
+          setCommentLikes((l) => {
+            const likes = [...l];
+            if (response.like) {
+              likes.push(comment._id);
+            } else {
+              likes.splice(likes.indexOf(comment._id), 1);
+            }
+            return likes;
+          });
         } else {
           sweetAlert({
             text: response.message,
@@ -167,7 +183,11 @@ function PostComment({
         {!editing && <p className={styles.content}>{comment.content}</p>}
         <p className={styles.likes} onClick={() => onLikeButtonClick()}>
           {comment.numberOfLikes}&nbsp;
-          {comment.numberOfLikes === 1 ? "Like" : "Likes"}
+          {commentLiked
+            ? "Unlike"
+            : comment.numberOfLikes === 1
+            ? "Like"
+            : "Likes"}
         </p>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "../assets/css/Discussion.module.css";
 import LoadMore from "../components/LoadMore";
 import Post from "../components/Post";
+import { doesUserLikePosts } from "../services/like";
 import { createPost, getPosts } from "../services/post";
 import { sweetAlert } from "../services/sweetalert";
 let loadingPosts = false;
@@ -13,6 +14,7 @@ function Discussion({ user }) {
   const [newPost, setNewPost] = useState(() => "");
   const [posts, setPosts] = useState(() => []);
   const [count, setCount] = useState(() => 0);
+  const [liked, setLiked] = useState(() => []);
 
   const updateExistingPost = (post) => {
     setPosts((posts) => {
@@ -66,6 +68,24 @@ function Discussion({ user }) {
     setNewPost(() => value);
   };
 
+  const getLikes = (posts) => {
+    const ids = posts.map((p) => p._id);
+    if (ids.length === 0) return;
+    doesUserLikePosts(posts.map((p) => p.id || p._id)).then((response) => {
+      if (response.success) {
+        setLiked((l) => {
+          const likes = [...l, ...response.likes];
+          return likes;
+        });
+      } else {
+        sweetAlert({
+          text: response.message,
+          icon: "error",
+        });
+      }
+    });
+  };
+
   const loadPosts = () => {
     if (loadingPosts) return;
     setLoadingPosts(true);
@@ -78,6 +98,7 @@ function Discussion({ user }) {
             return posts;
           });
           setCount(() => response.count);
+          getLikes(response.posts);
         } else {
           sweetAlert({
             text: response.message,
@@ -113,6 +134,8 @@ function Discussion({ user }) {
             updateExistingPost={updateExistingPost}
             user={user}
             onPostDeleted={onPostDeleted}
+            liked={liked}
+            setPostsLikes={setLiked}
           />
         );
       })}
