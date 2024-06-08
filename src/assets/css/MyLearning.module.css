@@ -247,4 +247,26 @@ body {
   font-size: 20px;
 }
 }
+@media (max-width: 650px)and (min-width: 50px){
+  .MyLearning{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+ .MyLearningCard{
+  width: 100%;
+ }
+ .ACtion{
+  font-size: 7px;
+  width: 20%;
+  padding: 0;
+ }
+ .MyLearning .Title {
+  font-size: 15px;
+}
+.courseImg{width: 10%;}
+.Content{width: 65%;}
+
+
+}
 
