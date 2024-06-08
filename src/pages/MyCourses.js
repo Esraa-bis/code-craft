@@ -78,8 +78,7 @@ function Approved({ user }) {
   return (
     <section className={styles.Section}>
       {courses?.map((course, index) => (
-        <div className={`${styles.MyLearningCard}`} key={course.id}>
-          <div className={` ${styles.MyCourses}`}>
+        <div className={`${styles.MyLearningCard} `}>
             <img
               src={course.image.url}
               alt="course css"
@@ -100,7 +99,6 @@ function Approved({ user }) {
                   {course.completedUsers || 0}
                 </span>
               </div>
-            </div>
           </div>
           <div className={styles.ACtion}>
             <Link
@@ -162,10 +160,9 @@ function Disapproved({ user }) {
     <section className={styles.Section}>
       {courses?.map((course, index) => (
         <div className={`${styles.MyLearningCard}`}>
-          <div className={` ${styles.MyCourses}`}>
             <img
               src={CoursePhoto}
-              alt="course css"
+              alt={course.courseName}
               className={`${styles.courseImg}`}
             />
             <div className={`${styles.Content}`}>
@@ -183,7 +180,6 @@ function Disapproved({ user }) {
                   {course.completedUsers || 0}
                 </span>
               </div>
-            </div>
           </div>
           <div className={styles.ACtion}>
             <Link
