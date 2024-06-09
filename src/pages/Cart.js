@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../assets/css/Cart.module.css";
-import CartCourseCard from "../components/CartCourseCard";
-import { userCart } from "../services/course";
+import { removeFromCart, userCart } from "../services/course";
+import { sweetAlert } from "../services/sweetalert";
 
 function Cart() {
   const [courses, setCourses] = useState([]);
   const [error, setError] = useState(null);
-  const [loaded, setLoaded] = useState(() => false);
+  const [loaded, setLoaded] = useState(false);
   const [cart, setCart] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  let loading = false;
-  const setLoading = (value) => {
-    loading = value;
-  };
   useEffect(() => {
     if (loaded || loading) return;
     setLoading(true);
@@ -26,13 +23,34 @@ function Cart() {
         } else {
           setError("Failed to fetch courses");
         }
-        setLoading(() => false);
+        setLoading(false);
       })
       .catch((err) => {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  }, [loaded, loading]);
+
+  const handleRemoveCourse = async (courseId) => {
+    try {
+      const response = await removeFromCart(courseId);
+      if (response && response.success) {
+        setCourses((prevCourses) =>
+          prevCourses.filter((course) => course.courseId !== courseId)
+        );
+      } else {
+        throw new Error(
+          response && response.message ? response.message : "Unknown error"
+        );
+      }
+    } catch (error) {
+      sweetAlert({
+        title: "Error!",
+        text: error.message || "An error occurred",
+        icon: "error",
+      });
+    }
+  };
 
   return (
     <div className={styles.Cart}>
@@ -42,7 +60,7 @@ function Cart() {
           <h3 className={styles.NumCourse}>{courses.length} Courses in Cart</h3>
           {courses.length > 0 ? (
             <ul className={styles.CourseList}>
-              {courses?.map((course, index) => (
+              {courses.map((course, index) => (
                 <li key={index}>
                   <CartCourseCard
                     img={course.image?.url}
@@ -50,6 +68,7 @@ function Cart() {
                     description={course.desc}
                     price={course.basePrice}
                     _id={course.courseId}
+                    onRemove={() => handleRemoveCourse(course.courseId)}
                   />
                 </li>
               ))}
@@ -62,20 +81,7 @@ function Cart() {
         </section>
         {cart?.subTotal && (
           <div className={styles.CheckOut}>
-            <h3>Check Out</h3>
             <div className={styles.CheckOutContent}>
-              {/* <div className={styles.Promotion}>
-              <label>Promotion:</label>
-              <div className={styles.PromotionCode}>
-                <input
-                  type="text"
-                  name="Promotion"
-                  className={styles.PromotionInput}
-                  placeholder="Promotion.."
-                />
-                <button className={styles.Apply}>Apply</button>
-              </div>
-            </div> */}
               <h3>
                 Total:{" "}
                 <span className={styles.TotalPrice}>{cart.subTotal} LE</span>
@@ -92,3 +98,36 @@ function Cart() {
 }
 
 export default Cart;
+
+function CartCourseCard({ img, title, description, price, _id, onRemove }) {
+  return (
+    <div className={styles.CartCard}>
+      <img src={img} alt={title} className={styles.img} />
+      <div className={styles.Content}>
+        <h2 className={styles.title}>{title}</h2>
+        <p className={styles.description}>{description}</p>
+        <p className={styles.Price}>
+          {price === 0 ? (
+            "Free"
+          ) : (
+            <>
+              <span className={styles.price}>{price}</span>
+              <span className={styles.currency}> EGP</span>
+            </>
+          )}
+        </p>
+      </div>
+      <div className={styles.CardBtns}>
+        <Link
+          to={`/ViewCourse?courseId=${_id}`}
+          className={styles.ViewCourseBTN}
+        >
+          View Course
+        </Link>
+        <button className={styles.removeBTN} onClick={onRemove}>
+          Remove
+        </button>
+      </div>
+    </div>
+  );
+}
