@@ -3,6 +3,7 @@
   margin: 60px;
   border: 1px solid rgba(204, 204, 204, 0.549);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01);
+  gap: 30px;
 }
 .CheckoutContainer {
   max-width: 400px;
@@ -126,6 +127,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 8px;
+  max-width: 600px;
+  margin: 21px 10px;
 }
 
 .MyCourse {
@@ -150,6 +153,11 @@
 .courseTitle {
   font-size: 18px;
   font-weight: bold;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .courseDescription {
@@ -170,4 +178,17 @@
 }
 .phoneNumber {
   color: rgb(79, 79, 79);
+}
+@media (max-width: 768px) {
+  .CheckoutPage {
+    flex-direction: column-reverse;
+    margin: 0;
+    border: none;
+  }
+  h2 {
+    text-align: center;
+  }
+  .courseTitle {
+    font-size: 15px;
+  }
 }
