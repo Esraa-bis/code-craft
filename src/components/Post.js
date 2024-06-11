@@ -38,7 +38,9 @@ function Post({
   useEffect(() => {
     setPostLiked(() => liked?.indexOf(post._id) >= 0);
   }, [liked, post]);
-
+  useEffect(() => {
+    onLoadRepliesButtonClick(post._id);
+  }, []);
   const onReplyInputChange = (value) => {
     setReplyToPost(() => value);
   };
