@@ -27,6 +27,7 @@ const TeachOnCodeCraft = ({ edit }) => {
     // fetch course by id,
     // populate course data.
   }
+  // to get all categories
   useEffect(() => {
     setLoading(true);
     getAllCategories()
