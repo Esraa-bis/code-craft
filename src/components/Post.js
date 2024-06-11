@@ -1,5 +1,9 @@
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faComment,
+  faThumbsUp,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import styles from "../assets/css/Discussion.module.css";
@@ -30,7 +34,7 @@ function Post({
     () => liked?.indexOf(post._id) >= 0
   );
   const [likedComments, setLikedComments] = useState(() => []);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   useEffect(() => {
     setPostLiked(() => liked?.indexOf(post._id) >= 0);
   }, [liked, post]);
@@ -235,72 +239,86 @@ function Post({
       });
   };
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div key={post._id} className={`${styles.comment} ${styles.main}`}>
-      <div className={styles.userAvatar}>
+      {/* <div className={styles.userAvatar}>
         <img
           src={post.addedBy?.profile_pic?.url}
           alt={`${post.addedBy?.firstName} ${post.addedBy?.lastName}`}
         />
-      </div>
+      </div> */}
       <div className={styles.commentDetails}>
-        <div className="flex align-items-center justify-content-between">
-          <div>
-            <h3>{`${post.addedBy?.firstName} ${post.addedBy?.lastName}`}</h3>
-            <CreatedSince timestamp={post.createdAt}></CreatedSince>
+        <div className={styles.mainData}>
+          <div className="flex align-items-center justify-content-between">
+            <div className={styles.userinfo}>
+              <div className={styles.userAvatar}>
+                <img
+                  src={post.addedBy?.profile_pic?.url}
+                  alt={`${post.addedBy?.firstName} ${post.addedBy?.lastName}`}
+                />
+              </div>
+              <div>
+                <h3>{`${post.addedBy?.firstName} ${post.addedBy?.lastName}`}</h3>
+                <CreatedSince timestamp={post.createdAt}></CreatedSince>
+              </div>
+            </div>
+            {post.addedBy._id === user?.id && (
+              <div>
+                <button
+                  type="button"
+                  class="bg-color-transparent border0 outline0 cursor-pointer"
+                  onClick={() => onEditPostButtonClick()}
+                >
+                  <FontAwesomeIcon icon={faEdit} />
+                </button>
+                &nbsp;&nbsp;
+                <button
+                  type="button"
+                  class="bg-color-transparent warn border0 outline0 cursor-pointer"
+                  onClick={() => onDeletePostButtonClick()}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </div>
+            )}
           </div>
-          {post.addedBy._id === user?.id && (
-            <div>
-              <button
-                type="button"
-                class="bg-color-transparent border0 outline0 cursor-pointer"
-                onClick={() => onEditPostButtonClick()}
-              >
-                <FontAwesomeIcon icon={faEdit} />
-              </button>
-              &nbsp;&nbsp;
-              <button
-                type="button"
-                class="bg-color-transparent warn border0 outline0 cursor-pointer"
-                onClick={() => onDeletePostButtonClick()}
-              >
-                <FontAwesomeIcon icon={faTrash} />
-              </button>
-            </div>
+          {editing && (
+            <>
+              <textarea
+                value={editingValue}
+                onChange={(e) => onTextAreaChange(e.target.value)}
+                className="fw comment"
+              ></textarea>
+              <div className="flex justify-content-end">
+                <button
+                  type="button"
+                  className="warn semi-bold border0 outline0 bg-color-transparent mt10 mb10 inline-block"
+                  onClick={() => onCancelEditButtonClick()}
+                >
+                  Cancel
+                </button>
+                &nbsp;&nbsp;
+                <button
+                  type="button"
+                  className="primary semi-bold border0 outline0 bg-color-transparent mt10 mb10 inline-block"
+                  onClick={() => onSaveEditButtonClick()}
+                >
+                  Save
+                </button>
+              </div>
+            </>
           )}
+          {!editing && <p className={styles.content}>{post.content}</p>}
         </div>
-        {editing && (
-          <>
-            <textarea
-              value={editingValue}
-              onChange={(e) => onTextAreaChange(e.target.value)}
-              className="fw"
-            ></textarea>
-            <div className="flex justify-content-end">
-              <button
-                type="button"
-                className="warn semi-bold border0 outline0 bg-color-transparent mt10 mb10 inline-block"
-                onClick={() => onCancelEditButtonClick()}
-              >
-                Cancel
-              </button>
-              &nbsp;&nbsp;
-              <button
-                type="button"
-                className="primary semi-bold border0 outline0 bg-color-transparent mt10 mb10 inline-block"
-                onClick={() => onSaveEditButtonClick()}
-              >
-                Save
-              </button>
-            </div>
-          </>
-        )}
-        {!editing && <p className={styles.content}>{post.content}</p>}
-        <p className={styles.likes} onClick={() => onLikeButtonClick()}>
-          {post.numberOfLikes}&nbsp;
-          {postLiked ? "Unlike" : post.numberOfLikes === 1 ? "Like" : "Likes"}
-        </p>
-        <div className={styles.replies}>
+
+        {/* <div className={styles.replies}>
           {postComments.comments.map((comment) => {
             return (
               <PostComment
@@ -317,23 +335,97 @@ function Post({
           <LoadMore
             loaded={postComments?.comments.length}
             total={post.numberOfComments}
-            singular="reply"
-            plural="replies"
+            singular="Comment"
+            plural="Comments"
             onLoadMoreClick={() => onLoadRepliesButtonClick(post._id)}
           />
           <div className={styles.reply}>
             <input
               type="text"
               name="reply"
-              placeholder="Reply..."
+              placeholder="Add comment....."
               className={styles.discussionInput}
               value={replyToPost || ""}
               onChange={(e) => onReplyInputChange(e.target.value)}
             />
             <button type="button" onClick={() => onReplyButtonClick(post._id)}>
-              Reply
+              Comment
             </button>
           </div>
+        </div> */}
+        <div className={styles.interActions}>
+          <button className={styles.likes} onClick={() => onLikeButtonClick()}>
+            {postLiked ? (
+              <>
+                <FontAwesomeIcon icon={faThumbsUp} /> Liked
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faThumbsUp} /> Like
+              </>
+            )}
+            &nbsp;
+            {post.numberOfLikes}
+          </button>
+          <button className={styles.showCommentsButton} onClick={showModal}>
+            <FontAwesomeIcon icon={faComment} /> Comment{" "}
+            {post?.numberOfComments}
+          </button>
+          {isModalOpen && (
+            <div className={styles.modal} id="commentsModal">
+              <div className={styles.modalContent}>
+                <span className={styles.closeButton} onClick={closeModal}>
+                  &times;
+                </span>
+                <div className={styles.replies}>
+                  {postComments.comments.length === 0 ? (
+                    <div className={styles.noComments}>
+                      There are no comments yet.
+                    </div>
+                  ) : (
+                    postComments.comments.map((comment) => (
+                      <PostComment
+                        key={comment._id}
+                        postId={post._id}
+                        comment={comment}
+                        user={user}
+                        onCommentDeleted={onCommentDeleted}
+                        updateExistingComment={updateExistingComment}
+                        liked={likedComments}
+                        setCommentLikes={setLikedComments}
+                      />
+                    ))
+                  )}
+                  {postComments.comments.length > 0 && (
+                    <LoadMore
+                      loaded={postComments.comments.length}
+                      total={post.numberOfComments}
+                      singular="Comment"
+                      plural="Comments"
+                      onLoadMoreClick={() => onLoadRepliesButtonClick(post._id)}
+                    />
+                  )}
+                  <div className={styles.reply}>
+                    <input
+                      type="text"
+                      name="reply"
+                      placeholder="Add new comment....."
+                      className={styles.discussionInput}
+                      value={replyToPost || ""}
+                      onChange={(e) => onReplyInputChange(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      className="commentBtn"
+                      onClick={() => onReplyButtonClick(post._id)}
+                    >
+                      Comment
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

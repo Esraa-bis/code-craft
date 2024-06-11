@@ -1,4 +1,6 @@
 // styles
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import styles from "../assets/css/Discussion.module.css";
 import LoadMore from "../components/LoadMore";
@@ -10,11 +12,12 @@ let loadingPosts = false;
 const setLoadingPosts = (v) => {
   loadingPosts = v;
 };
-function Discussion({ user }) {
+function Discussion({ user, signedIn }) {
   const [newPost, setNewPost] = useState(() => "");
   const [posts, setPosts] = useState(() => []);
   const [count, setCount] = useState(() => 0);
   const [liked, setLiked] = useState(() => []);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const updateExistingPost = (post) => {
     setPosts((posts) => {
@@ -62,6 +65,7 @@ function Discussion({ user }) {
         });
       }
     });
+    closeForm();
   };
 
   const updateNewPostInput = (value) => {
@@ -124,9 +128,54 @@ function Discussion({ user }) {
     loadPosts();
   }, []);
 
+  const showForm = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeForm = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div className={styles.discussion}>
-      <h1>Posts: ({count})</h1>
+      <h1>Community</h1>
+      <div>
+        {signedIn && (
+          <div className={styles.newPost}>
+            <img src={user?.profile_pic?.url} />
+            <button className={styles.showFormButton} onClick={showForm}>
+              <FontAwesomeIcon icon={faPenToSquare} /> Add New Post
+            </button>
+          </div>
+        )}
+        {isModalOpen && (
+          <div className={styles.modal} id="postModal">
+            <div className={styles.modalContent}>
+              <span className={styles.closeButton} onClick={closeForm}>
+                &times;
+              </span>
+              <form
+                className={styles.postForm}
+                onSubmit={(e) => e.preventDefault()}
+              >
+                <textarea
+                  placeholder="Share your thoughts or ask questions here..."
+                  className={styles.discussionInput}
+                  value={newPost}
+                  onChange={(e) => updateNewPostInput(e.target.value)}
+                ></textarea>
+                <button
+                  type="button"
+                  onClick={savePost}
+                  className={styles.addPostButton}
+                >
+                  Add Post
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
+      </div>
+      {/*  */}
       {posts.map((post) => {
         return (
           <Post
@@ -146,17 +195,7 @@ function Discussion({ user }) {
         plural="posts"
         onLoadMoreClick={() => loadPosts()}
       />
-      <form>
-        <textarea
-          placeholder="Share your thoughts or ask questions here..."
-          className={styles.discussionInput}
-          value={newPost}
-          onChange={(e) => updateNewPostInput(e.target.value)}
-        ></textarea>
-        <button type="button" onClick={() => savePost()}>
-          Add Post
-        </button>
-      </form>
+
       {/* <!-- Add more comments here if needed --> */}
     </div>
   );
