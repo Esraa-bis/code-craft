@@ -6,6 +6,7 @@ import styles from "../assets/css/ViewCourse.module.css";
 import {
   addToCart,
   coursePreview,
+  freeEnroll,
   updateRecentlyViewed,
 } from "../services/course";
 import { convertMinutes } from "../services/generalFunctions";
@@ -139,6 +140,30 @@ function ViewCourse() {
     setReviewRate(rate);
   };
 
+  // free enrollment
+  // handle add to cart
+  async function handleFreeEnroll(courseID) {
+    try {
+      const response = await freeEnroll(courseID);
+      if (response && response.success) {
+        sweetAlert({
+          title: "Success!",
+          text: response.message,
+          icon: "success",
+        });
+      } else {
+        throw new Error(
+          response && response.message ? response.message : "Unknown error"
+        );
+      }
+    } catch (error) {
+      sweetAlert({
+        title: "Error!",
+        text: error.message || "An error occurred",
+        icon: "error",
+      });
+    }
+  }
   return (
     <>
       <section className={styles.CoursePreview}>
@@ -244,13 +269,24 @@ function ViewCourse() {
                     </div>
                   )}
                 </div>
-                <button className={styles.buyNow}>
-                  <Link
-                    to={`/Checkout?courseId=${course?._id}`}
-                    className={styles.buyNowLink}
-                  >
-                    {course?.appliedPrice ? " Buy Now" : "Enroll for free"}{" "}
-                  </Link>
+                <button
+                  className={styles.buyNow}
+                  onClick={() => {
+                    if (course?.appliedPrice === 0) {
+                      handleFreeEnroll(course?._id);
+                    }
+                  }}
+                >
+                  {course?.appliedPrice === 0 ? (
+                    "Enroll for free"
+                  ) : (
+                    <Link
+                      to={`/Checkout?courseId=${course?._id}`}
+                      className={styles.buyNowLink}
+                    >
+                      Buy Now
+                    </Link>
+                  )}
                 </button>
               </div>
             )}
