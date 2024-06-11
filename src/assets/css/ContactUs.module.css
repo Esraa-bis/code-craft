@@ -25,25 +25,40 @@
 .contactUsForm h2 {
   margin-bottom: 30px;
 }
-.ContactUsContainer input[type="email"],
-.ContactUsContainer input[type="text"] {
+.ContactUsContainer input {
   width: 80%;
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
-      margin-bottom: 15px;
-
+  margin-bottom: 15px;
 }
 .ContactUsContainer .button {
   background-color: #154c84;
   margin-top: 13px;
-      display: block;
-    padding: 10px 43px;
-    color: white;
-    border: none;
-    border-radius: 6px;
+  display: block;
+  padding: 10px 43px;
+  color: white;
+  border: none;
+  border-radius: 6px;
 }
 
 .ContactUsContainer .button:hover {
   background-color: #1e5d88;
+}
+@media screen and (max-width: 900px) {
+  .ContactUsContainer {
+    width: 90%;
+  }
+  .ContactUsImg {
+    display: none;
+  }
+  .contactUsForm {
+    width: 100%;
+  }
+  .ContactUsContainer input {
+    width: 100%;
+  }
+  .ContactUsContainer textarea {
+    width: 100%;
+  }
 }
