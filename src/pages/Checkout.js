@@ -150,33 +150,18 @@ function Checkout() {
     <section className={styles.CheckoutPage}>
       <section className={styles.OrderDetails}>
         <h2>Order details</h2>
-        {/* <div>
-          <div className={styles.item}>
-            <img
-              src={course.image.url}
-              alt="course"
-              className={styles.courseImg}
-            />
-            <div className={styles.Content}>
-              <h5 className={styles.courseTitle}>{course.courseName}</h5>
-              <p className={styles.courseDescription} title={course.desc}>
-                {course.desc}
-              </p>
-              <p className={styles.price}>{course.basePrice} LE</p>
-            </div>
-          </div>
-        </div> */}
+
         {cartId ? (
           courses?.map((course, index) => (
             <div key={index}>
               <div className={styles.item}>
                 <img
                   src={course.image.url}
-                  alt="course"
+                  alt={course.title}
                   className={styles.courseImg}
                 />
                 <div className={styles.Content}>
-                  <h5 className={styles.courseTitle}>{course.courseName}</h5>
+                  <h5 className={styles.courseTitle}>{course.title}</h5>
                   <p className={styles.courseDescription} title={course.desc}>
                     {course.desc}
                   </p>
@@ -190,7 +175,7 @@ function Checkout() {
             <div className={styles.item}>
               <img
                 src={course.image.url}
-                alt="course"
+                alt={course.courseName}
                 className={styles.courseImg}
               />
               <div className={styles.Content}>
@@ -259,7 +244,7 @@ function Checkout() {
             <h3>{/* <span>Total:</span> {course?.basePrice} LE */}</h3>
             <input
               type="text"
-              placeholder="Add your coupon here"
+              placeholder="Add your voucher code here"
               className={styles.CouponInput}
             />
             <button
@@ -305,8 +290,8 @@ function Checkout() {
           </div>
           <p>
             If You pay with mobile wallet please&nbsp;
-            <Link to="/ContactUs">contact Us</Link>&nbsp; with and attached
-            photo of your payment.
+            <Link to="/ContactUs">contact Us</Link>&nbsp; with and attache photo
+            of your payment.
           </p>
         </div>
       </section>

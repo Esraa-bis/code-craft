@@ -86,7 +86,7 @@ function Home({ signedIn }) {
   useEffect(() => {
     const filters = {
       isApproved: true,
-      basePrice: 0,
+      price: "0",
       fields: "-vidoes",
     };
 

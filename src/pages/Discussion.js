@@ -1,90 +1,201 @@
 // styles
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
 import styles from "../assets/css/Discussion.module.css";
-import Avatar from "../assets/images/pp.jpg";
+import LoadMore from "../components/LoadMore";
+import Post from "../components/Post";
+import { doesUserLikePosts } from "../services/like";
+import { createPost, getPosts } from "../services/post";
+import { sweetAlert } from "../services/sweetalert";
+let loadingPosts = false;
+const setLoadingPosts = (v) => {
+  loadingPosts = v;
+};
+function Discussion({ user, signedIn }) {
+  const [newPost, setNewPost] = useState(() => "");
+  const [posts, setPosts] = useState(() => []);
+  const [count, setCount] = useState(() => 0);
+  const [liked, setLiked] = useState(() => []);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-function Discussion() {
+  const updateExistingPost = (post) => {
+    setPosts((posts) => {
+      let i;
+      let p = posts.find((p, index) => {
+        if (p._id === post._id) i = index;
+        return p._id === post._id;
+      });
+      if (i >= 0) {
+        p.numberOfComments = post.numberOfComments;
+        p.numberOfLikes = post.numberOfLikes;
+        p.content = post.content;
+        posts[i] = { ...p };
+        return [...posts];
+      }
+      return posts;
+    });
+  };
+
+  const addNewPost = (post, order = 1) => {
+    setPosts((oldPosts) => {
+      const posts = [...oldPosts];
+      if (order === 1) {
+        posts.push(post);
+      } else {
+        posts.unshift(post);
+      }
+      return posts;
+    });
+  };
+
+  const savePost = () => {
+    const value = newPost;
+    if (!value) return;
+    if (value.trim().length === 0) return;
+
+    createPost(value).then((response) => {
+      if (response.success) {
+        addNewPost(response.post);
+        updateNewPostInput("");
+      } else {
+        sweetAlert({
+          text: response.message,
+          icon: "error",
+        });
+      }
+    });
+    closeForm();
+  };
+
+  const updateNewPostInput = (value) => {
+    setNewPost(() => value);
+  };
+
+  const getLikes = (posts) => {
+    const ids = posts.map((p) => p._id);
+    if (ids.length === 0) return;
+    doesUserLikePosts(posts.map((p) => p.id || p._id)).then((response) => {
+      if (response.success) {
+        setLiked((l) => {
+          const likes = [...l, ...response.likes];
+          return likes;
+        });
+      } else {
+        sweetAlert({
+          text: response.message,
+          icon: "error",
+        });
+      }
+    });
+  };
+
+  const loadPosts = () => {
+    if (loadingPosts) return;
+    setLoadingPosts(true);
+    getPosts(posts.length)
+      .then((response) => {
+        if (response.success) {
+          setPosts((oldPosts) => {
+            const posts = [...oldPosts];
+            posts.push(...response.posts);
+            return posts;
+          });
+          setCount(() => response.count);
+          getLikes(response.posts);
+        } else {
+          sweetAlert({
+            text: response.message,
+            icon: "error",
+          });
+        }
+      })
+      .finally(() => {
+        setLoadingPosts(false);
+      });
+  };
+
+  const onPostDeleted = (post) => {
+    setPosts((oldPosts) => {
+      const posts = [...oldPosts];
+      posts.splice(posts.indexOf(post), 1);
+      return posts;
+    });
+    setCount((count) => Math.max(count - 1, 0));
+  };
+
+  useEffect(() => {
+    loadPosts();
+  }, []);
+
+  const showForm = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeForm = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div className={styles.discussion}>
-      <h1>Discussion: (2)</h1>
-      <div className={`${styles.comment} ${styles.main}`}>
-        <div className={styles.userAvatar}>
-          <img src={Avatar} alt="User Avatar" />
-        </div>
-        <div className="commentDetails">
-          <h3>User Name</h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et
-            commodo massa, id suscipit enim. Donec consectetur auctor semper.
-          </p>
-          <div className={styles.replies}>
-            <div className={styles.comment}>
-              <div className={styles.userAvatar}>
-                <img src={Avatar} alt="User Avatar" />
-              </div>
-              <div className={styles.commentDetails}>
-                <h3>Reply User Name</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </div>
+      <h1>Community</h1>
+      <div>
+        {signedIn && (
+          <div className={styles.newPost}>
+            <img src={user?.profile_pic?.url} />
+            <button className={styles.showFormButton} onClick={showForm}>
+              <FontAwesomeIcon icon={faPenToSquare} /> Add New Post
+            </button>
+          </div>
+        )}
+        {isModalOpen && (
+          <div className={styles.modal} id="postModal">
+            <div className={styles.modalContent}>
+              <span className={styles.closeButton} onClick={closeForm}>
+                &times;
+              </span>
+              <form
+                className={styles.postForm}
+                onSubmit={(e) => e.preventDefault()}
+              >
+                <textarea
+                  placeholder="Share your thoughts or ask questions here..."
+                  className={styles.discussionInput}
+                  value={newPost}
+                  onChange={(e) => updateNewPostInput(e.target.value)}
+                ></textarea>
+                <button
+                  type="button"
+                  onClick={savePost}
+                  className={styles.addPostButton}
+                >
+                  Add Post
+                </button>
+              </form>
             </div>
-            {/* <!-- Add more replies here if needed --> */}
           </div>
-          <div className={styles.reply}>
-            <input
-              type="text"
-              name="reply"
-              placeholder="Reply..."
-              className={styles.discussionInput}
-            />
-            <button type="button">Reply</button>
-          </div>
-          <div className={styles.loadMore}>
-            <button type="button">Load more (10 replies)</button>
-          </div>
-        </div>
+        )}
       </div>
-      <div className={`${styles.comment} ${styles.main}`}>
-        <div className={styles.userAvatar}>
-          <img src={Avatar} alt="User Avatar" />
-        </div>
-        <div className={styles.commentDetails}>
-          <h3>User Name</h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et
-            commodo massa, id suscipit enim. Donec consectetur auctor semper.
-          </p>
-          <div className={styles.replies}>
-            <div className={styles.comment}>
-              <div className={styles.userAvatar}>
-                <img src={Avatar} alt="User Avatar" />
-              </div>
-              <div className={styles.commentDetails}>
-                <h3>Reply User Name</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </div>
-            </div>
-            {/* <!-- Add more replies here if needed --> */}
-          </div>
-          <div className={styles.reply}>
-            <input
-              type="text"
-              name="reply"
-              placeholder="Reply..."
-              className={styles.discussionInput}
-            />
-            <button type="button">Reply</button>
-          </div>
-          <div className={styles.loadMore}>
-            <button type="button">Load more (2 replies)</button>
-          </div>
-        </div>
-      </div>
-      <form>
-        <textarea
-          placeholder="Share your thoughts or ask questions here..."
-          className={styles.discussionInput}
-        ></textarea>
-        <button type="button">Add Comment</button>
-      </form>
+      {/*  */}
+      {posts.map((post) => {
+        return (
+          <Post
+            post={post}
+            updateExistingPost={updateExistingPost}
+            user={user}
+            onPostDeleted={onPostDeleted}
+            liked={liked}
+            setPostsLikes={setLiked}
+          />
+        );
+      })}
+      <LoadMore
+        loaded={posts.length}
+        total={count}
+        singular="post"
+        plural="posts"
+        onLoadMoreClick={() => loadPosts()}
+      />
+
       {/* <!-- Add more comments here if needed --> */}
     </div>
   );

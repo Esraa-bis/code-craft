@@ -160,7 +160,10 @@ function App() {
               )
             }
           />
-          <Route path="/Discussion" element={<Discussion />} />
+          <Route
+            path="/Discussion"
+            element={<Discussion user={user} signedIn={signedIn} />}
+          />
           <Route
             path="/CourseVideos"
             element={

@@ -15,7 +15,6 @@ const TeachOnCodeCraft = ({ edit }) => {
   }
   const query = useQuery();
   const editCourseId = query.get("courseId");
-  console.log(editCourseId);
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -28,6 +27,7 @@ const TeachOnCodeCraft = ({ edit }) => {
     // fetch course by id,
     // populate course data.
   }
+  // to get all categories
   useEffect(() => {
     setLoading(true);
     getAllCategories()

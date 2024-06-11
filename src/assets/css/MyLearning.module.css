@@ -66,7 +66,8 @@
   padding: 16px;
   display: flex;
   flex-direction: column;
-  min-width: 77%;
+ width: 77%;
+
 }
 
 .courseTitle {
@@ -81,7 +82,7 @@
   color: #0056b3;
 }
 .NotCompletedProgress {
-  color: #333;
+  color: #0056b3;
   display: flex;
   align-items: center;
 }
@@ -89,6 +90,11 @@
 .NotCompletedProgress svg {
   width: 25px;
   height: 25px;
+}
+.CompletedProgress{
+  color:green;
+  display: flex;
+  align-items: center;
 }
 .courseDescription {
   font-size: 12px;
@@ -98,14 +104,19 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-bottom: 0;
+
 }
 
 .ACtion {
-  padding: 16px;
+  padding: 10px;
   border-left: 1px solid #eee;
   display: flex;
   justify-content: flex-end;
   flex-direction: column;
+  /* font-size: 15px; */
+  font-size: clamp(10px, 2vw, 14px);
+
 }
 
 .viewCourse {
@@ -113,7 +124,7 @@
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s ease;
-  width: 120px;
+  width:100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,14 +132,6 @@
 
 .viewCourse:hover {
   color: #0056b3;
-}
-
-/* MyCourses */
-.MyCourses {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
 }
 
 .courseStats {
@@ -140,7 +143,130 @@
   color: #007bff;
 }
 
-.buyNow Link {
-  color: #0056b3;
-  text-decoration: none;
+.MyLearning .Progress.completed{
+color:green ;
 }
+
+
+@media screen and (max-width: 680px) {
+  .MyLearning{
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+  }
+  .Categories .Type {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+  }
+  .courseImg {
+    width: 60px;
+    height: 60px;
+    min-width: 13%;
+  }
+  .courseTitle {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 13px;
+  }
+  .courseDescription {
+    font-size: 10px;
+    margin-bottom: 0;
+  }
+  .MyLearningCard {
+    padding: 3px;
+    gap: 0px;
+  }
+  .Content {
+    padding: 10px;
+    width: 70%;
+  }
+  .ACtion {
+    padding: 6px;
+    justify-content: flex-end;
+    flex-direction: column;
+    font-size: 10px;
+    width: 20%;
+
+  }
+  /* for enrollments */
+  .viewCourse {
+    color: #007bff;
+    text-decoration: none;
+    width:100%;
+   
+  }
+  .NotCompletedProgress {
+    color: #0056b3;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    margin: 0;
+  }
+  .CompletedProgress{
+    color:green;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+  }
+  /* Stats */
+  .courseStats {
+   font-size: 10px;
+  }
+  
+  .courseStats svg {
+    color: #007bff;
+  }
+}
+.courseImg{width: 13%;}
+.Content{width: 70%;}
+.ACtion{width: 15%;}
+body {
+  font-size: 15px; /* Default font size */
+}
+
+@media (max-width: 1050px)and (min-width: 650px){
+  .MyLearning{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+ .MyLearningCard{
+  width: 100%;
+ }
+ .ACtion{
+  font-size: 14px;
+  width: 20%;
+  padding: 0;
+ }
+ .MyLearning .Title {
+  font-size: 20px;
+}
+}
+@media (max-width: 650px)and (min-width: 50px){
+  .MyLearning{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+ .MyLearningCard{
+  width: 100%;
+ }
+ .ACtion{
+  font-size: 7px;
+  width: 20%;
+  padding: 0;
+ }
+ .MyLearning .Title {
+  font-size: 15px;
+}
+.courseImg{width: 10%;}
+.Content{width: 65%;}
+
+
+}
+

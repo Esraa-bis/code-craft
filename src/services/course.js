@@ -209,3 +209,15 @@ export async function deleteSpceficVideo(courseId, videoId) {
 
   return response.json();
 }
+
+// free enrollment
+export async function freeEnroll(courseId) {
+  const response = await fetch(`${BASE_URL}/Enroll/${courseId}/freeEnroll`, {
+    method: "POST",
+    headers: {
+      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+    },
+  });
+
+  return response.json();
+}

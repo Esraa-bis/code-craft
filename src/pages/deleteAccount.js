@@ -7,7 +7,11 @@ import ProfileSideBar from "../components/ProfileSideBar";
 function DeleteAccount({ signedIn, user, setSignedIn }) {
   return (
     <div className={styles.container}>
-      <ProfileSideBar signedIn={signedIn} user={user} />
+      <ProfileSideBar
+        signedIn={signedIn}
+        user={user}
+        activeSection={"DeleteAccount"}
+      />
       <main className={styles.mainContent}>
         <DeleteProfile
           signedIn={signedIn}
