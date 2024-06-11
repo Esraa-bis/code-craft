@@ -18,6 +18,8 @@ function Discussion({ user, signedIn }) {
   const [count, setCount] = useState(() => 0);
   const [liked, setLiked] = useState(() => []);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // for images
+  const [images, setImages] = useState([]);
 
   const updateExistingPost = (post) => {
     setPosts((posts) => {
@@ -54,10 +56,11 @@ function Discussion({ user, signedIn }) {
     if (!value) return;
     if (value.trim().length === 0) return;
 
-    createPost(value).then((response) => {
+    createPost(value, images).then((response) => {
       if (response.success) {
         addNewPost(response.post);
         updateNewPostInput("");
+        setImages([]);
       } else {
         sweetAlert({
           text: response.message,
@@ -134,6 +137,11 @@ function Discussion({ user, signedIn }) {
 
   const closeForm = () => {
     setIsModalOpen(false);
+    setNewPost("");
+  };
+  //for uploading images
+  const handleImageChange = (e) => {
+    setImages(Array.from(e.target.files)); // Update images state with selected files
   };
   return (
     <div className={styles.discussion}>
@@ -163,6 +171,12 @@ function Discussion({ user, signedIn }) {
                   value={newPost}
                   onChange={(e) => updateNewPostInput(e.target.value)}
                 ></textarea>
+                <input
+                  type="file"
+                  multiple
+                  onChange={handleImageChange}
+                  className={styles.fileInput}
+                />
                 <button
                   type="button"
                   onClick={savePost}
