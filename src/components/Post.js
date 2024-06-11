@@ -317,7 +317,16 @@ function Post({
               </div>
             </>
           )}
-          {!editing && <p className={styles.content}>{post.content}</p>}
+          {!editing && (
+            <>
+              <p className={styles.content}>{post.content} </p>
+              <div className={styles.imageContainer}>
+                {post.images.map((image) => (
+                  <img key={image.id} src={image.url} alt="Post" />
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
         {/* <div className={styles.replies}>

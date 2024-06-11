@@ -1,9 +1,16 @@
 import { BASE_URL, BEARER_KEY } from "./api";
 import { SessionTokenStorage } from "./local-storage";
 
-export const createPost = async (content) => {
+export const createPost = async (content, images) => {
   const formData = new FormData();
   formData.set("content", content);
+  // Append each image individually to the FormData object
+
+  if (images && images.length > 0) {
+    images.forEach((image) => {
+      formData.append("images", image);
+    });
+  }
 
   const response = await fetch(`${BASE_URL}/Post/addPost`, {
     method: "POST",
