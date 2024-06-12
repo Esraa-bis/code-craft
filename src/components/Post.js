@@ -328,6 +328,42 @@ function Post({
             </>
           )}
         </div>
+
+        {/* <div className={styles.replies}>
+          {postComments.comments.map((comment) => {
+            return (
+              <PostComment
+                postId={post._id}
+                comment={comment}
+                user={user}
+                onCommentDeleted={onCommentDeleted}
+                updateExistingComment={updateExistingComment}
+                liked={likedComments}
+                setCommentLikes={setLikedComments}
+              />
+            );
+          })}
+          <LoadMore
+            loaded={postComments?.comments.length}
+            total={post.numberOfComments}
+            singular="Comment"
+            plural="Comments"
+            onLoadMoreClick={() => onLoadRepliesButtonClick(post._id)}
+          />
+          <div className={styles.reply}>
+            <input
+              type="text"
+              name="reply"
+              placeholder="Add comment....."
+              className={styles.discussionInput}
+              value={replyToPost || ""}
+              onChange={(e) => onReplyInputChange(e.target.value)}
+            />
+            <button type="button" onClick={() => onReplyButtonClick(post._id)}>
+              Comment
+            </button>
+          </div>
+        </div> */}
         <div className={styles.interActions}>
           <button className={styles.likes} onClick={() => onLikeButtonClick()}>
             {postLiked ? (

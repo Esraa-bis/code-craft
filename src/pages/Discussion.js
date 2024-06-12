@@ -145,9 +145,7 @@ function Discussion({ user, signedIn }) {
   };
   return (
     <div className={styles.discussion}>
-      {/* <h1>
-        <FontAwesomeIcon icon={faUsers} /> Community
-      </h1> */}
+      <h1>Community</h1>
       <div>
         {signedIn && (
           <div className={styles.newPost}>
