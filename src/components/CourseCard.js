@@ -52,9 +52,7 @@ export default function CourseCard({ course, signedIn }) {
 
       if (response && response.success) {
         sweetAlert({
-          title: "Success!",
           text: response.message,
-          icon: "success",
         });
       } else {
         throw new Error(
