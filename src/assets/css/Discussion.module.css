@@ -392,7 +392,9 @@
   padding: 0;
   border-top: 1px solid lightgrey;
 }
-
+.postLiked {
+  color: #165cbb;
+}
 /*  */
 .comment {
   white-space: pre-wrap; /* This preserves whitespace and line breaks */

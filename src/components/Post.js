@@ -342,16 +342,16 @@ function Post({
         <div className={styles.interActions}>
           <button className={styles.likes} onClick={() => onLikeButtonClick()}>
             {postLiked ? (
-              <>
-                <FontAwesomeIcon icon={faThumbsUp} /> Liked
-              </>
+              <span className={styles.postLiked}>
+                <FontAwesomeIcon icon={faThumbsUp} />
+                Liked {post.numberOfLikes}
+              </span>
             ) : (
               <>
-                <FontAwesomeIcon icon={faThumbsUp} /> Like
+                <FontAwesomeIcon icon={faThumbsUp} /> Like {post.numberOfLikes}
               </>
             )}
             &nbsp;
-            {post.numberOfLikes}
           </button>
           <button className={styles.showCommentsButton} onClick={showModal}>
             <FontAwesomeIcon icon={faComment} /> Comment{" "}
