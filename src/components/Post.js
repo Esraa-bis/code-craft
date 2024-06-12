@@ -14,6 +14,10 @@ import { sweetAlert } from "../services/sweetalert";
 import CreatedSince from "./CreatedSince";
 import LoadMore from "./LoadMore";
 import PostComment from "./PostComment";
+// for the slider
+
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 
 function Post({
   user,
@@ -33,6 +37,8 @@ function Post({
   const [postLiked, setPostLiked] = useState(
     () => liked?.indexOf(post._id) >= 0
   );
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+
   const [likedComments, setLikedComments] = useState(() => []);
   const [isModalOpen, setIsModalOpen] = useState(false);
   useEffect(() => {
@@ -248,6 +254,10 @@ function Post({
   const closeModal = () => {
     setIsModalOpen(false);
   };
+  // to handle open images
+
+  const visibleImages = post.images.slice(0, 4); // Display the first 4 images
+  const hiddenImages = post.images.slice(4); // Additional images hidden
   return (
     <div key={post._id} className={`${styles.comment} ${styles.main}`}>
       {/* <div className={styles.userAvatar}>
@@ -329,41 +339,6 @@ function Post({
           )}
         </div>
 
-        {/* <div className={styles.replies}>
-          {postComments.comments.map((comment) => {
-            return (
-              <PostComment
-                postId={post._id}
-                comment={comment}
-                user={user}
-                onCommentDeleted={onCommentDeleted}
-                updateExistingComment={updateExistingComment}
-                liked={likedComments}
-                setCommentLikes={setLikedComments}
-              />
-            );
-          })}
-          <LoadMore
-            loaded={postComments?.comments.length}
-            total={post.numberOfComments}
-            singular="Comment"
-            plural="Comments"
-            onLoadMoreClick={() => onLoadRepliesButtonClick(post._id)}
-          />
-          <div className={styles.reply}>
-            <input
-              type="text"
-              name="reply"
-              placeholder="Add comment....."
-              className={styles.discussionInput}
-              value={replyToPost || ""}
-              onChange={(e) => onReplyInputChange(e.target.value)}
-            />
-            <button type="button" onClick={() => onReplyButtonClick(post._id)}>
-              Comment
-            </button>
-          </div>
-        </div> */}
         <div className={styles.interActions}>
           <button className={styles.likes} onClick={() => onLikeButtonClick()}>
             {postLiked ? (
