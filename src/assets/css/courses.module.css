@@ -1,14 +1,18 @@
 .CoursesFilters {
   display: flex;
+  margin: 0;
+  gap: 10px;
 }
 .filters {
   box-shadow: inset 2px -2px 15px rgba(0, 0, 0, 0.1);
+  padding: 3px;
 }
 .CoursesFilters .filters {
-  padding: 30px 20px;
+  /* padding: 30px 20px; */
   width: 17%;
   background-color: white;
   height: 100%;
+  min-width: 225px;
 }
 .CoursesFilters .filterIcon {
   width: 35px;
@@ -67,4 +71,28 @@
 .checkboxList input[type="checkbox"]:checked + label {
   font-weight: bold; /* Change font weight for checked checkboxes */
   color: #007bff; /* Change text color for checked checkboxes */
+}
+.filtersBtn {
+  background-color: inherit;
+  border: none;
+  /* width: 146%; */
+  font-size: 24px;
+  padding-top: 15px;
+  color: #0d4276;
+}
+.filtersDiv {
+  background-color: rgb(255, 255, 255);
+}
+
+/*  */
+@media (max-width: 600px) {
+  .filters {
+    display: none;
+  }
+
+  .filters.visible {
+    display: block;
+    z-index: 9999;
+    position: fixed;
+  }
 }
