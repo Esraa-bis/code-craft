@@ -37,9 +37,9 @@
 }
 
 .AdminPage .Active {
-  background-color: #458bd0; 
-  color: white; 
-  border-color: #458bd0; 
+  background-color: #458bd0;
+  color: white;
+  border-color: #458bd0;
 }
 
 /* All Courses section styles */
@@ -184,10 +184,10 @@
   color: #d04563;
 }
 .actions {
-display: flex;
-align-items: center;
-justify-content: center;
-border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
 }
 .enable {
   color: #fff;
@@ -198,7 +198,7 @@ border: none;
   margin: 2px;
 }
 .Ban {
-   color: #fff;
+  color: #fff;
   background-color: #d04563;
   border: none;
   padding: 7px 14px;
@@ -226,14 +226,13 @@ border: none;
   background-color: #f2f2f2;
 }
 
-
 .deleteBtn {
-  background-color: #f44336;
-  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   padding: 6px 12px;
+  color: red;
+  background-color: inherit;
 }
 
 .deleteBtn:hover {
@@ -271,10 +270,10 @@ border: none;
   text-overflow: ellipsis;
 }
 
-.rating{
+.rating {
   text-align: center;
 }
-.rating svg{
+.rating svg {
   color: #dede2b;
   font-size: 18px;
 }
@@ -290,9 +289,7 @@ border: none;
 .disapproveBtn {
   background-color: #d04563;
   justify-self: flex-end;
-    grid-column: 2;
-
-
+  grid-column: 2;
 }
 .approveBtn,
 .disapproveBtn {
@@ -326,7 +323,6 @@ border: none;
 .categoryTable tr:nth-child(even) {
   background-color: #f2f2f2;
 }
-
 
 .addCategory {
   margin: 50px auto;
@@ -439,4 +435,3 @@ th {
 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
-

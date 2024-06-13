@@ -1,6 +1,7 @@
 import {
   faCheck,
   faStar,
+  faTrash,
   faUsers,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
@@ -151,6 +152,7 @@ function AllCourses() {
             <th>Uploaded Date</th>
             <th>Course Status</th>
             <th>Action</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -158,7 +160,6 @@ function AllCourses() {
             <tr key={course._id}>
               <td>{index + 1}</td>
               <td title={course._id}>{course._id}</td>
-
               <td title={course.courseName}>{course.courseName}</td>
               <td>{course.enrolledUsers || 0} User</td>
               <td>{course.completedUsers || 0} User</td>
@@ -173,7 +174,6 @@ function AllCourses() {
               </td>
               <td>{course.appliedPrice} EGP</td>
               <td>{course.createdAt}</td>
-
               <td>
                 {course.isApproved === true && (
                   <div className={`${styles.circle} ${styles.green}`}></div>
@@ -209,6 +209,11 @@ function AllCourses() {
                     <FontAwesomeIcon icon={faXmark} />
                   </button>
                 )}
+              </td>
+              <td>
+                <button className={styles.deleteBtn}>
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
               </td>
             </tr>
           ))}
