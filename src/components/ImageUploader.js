@@ -26,7 +26,7 @@ function ImageUploader({ user, setUser }) {
     deleteProfilePicture()
       .then((response) => {
         if (response.success) {
-          // setUser({ ...user, profile_pic?.id: undefined });
+          setUser((user) => ({ ...user, ...response.user }));
           sweetAlert({
             title: response.message,
             icon: "success",
