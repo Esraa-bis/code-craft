@@ -80,3 +80,33 @@ body {
 .fw {
   width: 100%;
 }
+.text-center {
+  text-align: center;
+}
+
+.table-pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.table-pagination button {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  border: 1px solid #ddd;
+}
+
+.table-pagination button.active {
+  background-color: #4caf50;
+  color: white;
+  border: 1px solid #4caf50;
+}
+
+.table-pagination button:not(:disabled):hover:not(.active) {
+  background-color: #ddd;
+}
+.table-pagination button:disabled {
+  pointer-events: none;
+}

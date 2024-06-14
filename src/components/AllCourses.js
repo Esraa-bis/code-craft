@@ -9,13 +9,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import styles from "../assets/css/AdminPage.module.css";
 import { approvement, disApprove, getAllCourses } from "../services/admin";
+import { getCoursesFilters } from "../services/course.js";
 import { sweetAlert } from "../services/sweetalert";
+import TablePagination from "./TablePagination.js";
 
 function AllCourses() {
-  const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState(() => []);
   const [user, setUser] = useState();
   const [error, setError] = useState(null);
   const [loaded, setLoaded] = useState(() => false);
+  const [selectedFilter, setSelectedFilter] = useState("All");
+  const [total, setTotal] = useState(0);
+  const [page, setCurrentPage] = useState(1);
+  const [filters, setFilters] = useState({});
+
   let loading = false;
   const setLoading = (value) => {
     loading = value;
@@ -27,6 +34,7 @@ function AllCourses() {
       .then((response) => {
         if (response.success) {
           setCourses(response.coursesWithEnrollment);
+          setTotal(() => response.total);
           setLoaded(true);
         } else {
           setError("Failed to fetch courses");
@@ -119,17 +127,66 @@ function AllCourses() {
       }
     });
   };
+  const handleFilterChange = (e) => {
+    const value = e.target.value;
+    setSelectedFilter(value);
+  };
+
+  const filterCourses = (filters) => {
+    getCoursesFilters(filters)
+      .then((response) => {
+        if (response.success) {
+          setCourses(response.coursesWithEnrollment);
+          setTotal(() => response.total);
+        } else {
+          setError("Failed to fetch courses");
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    const filters = {
+      page,
+    };
+
+    switch (selectedFilter) {
+      case "Approved":
+        filters.isApproved = true;
+        break;
+      case "Disapproved":
+        filters.isApproved = false;
+        break;
+      case "User Enrolled":
+        filters.enrolledUsers = true;
+        break;
+      case "Users Completed":
+        filters.completedUsers = true;
+        break;
+      default:
+        filters.isApproved = true; // Default filter, adjust as needed
+        break;
+    }
+    setFilters(() => {
+      filterCourses(filters);
+      return filters;
+    });
+  }, [selectedFilter]);
+
   return (
     <div className={styles.allCourses}>
       {/* Filter dropdown */}
-      {/* <select>
+      <select onChange={handleFilterChange}>
         <option value="All">All</option>
         <option value="Approved">Approved</option>
         <option value="Disapproved">Disapproved</option>
-        <option value="banned">banned</option>
         <option value="User Enrolled">User Enrolled</option>
-        <option value="Enrolled in courses">Users Completed</option>
-      </select> */}
+        <option value="Users Completed">Users Completed</option>
+      </select>
       <table className={styles.courseTable}>
         <thead>
           <tr>
@@ -219,8 +276,18 @@ function AllCourses() {
           ))}
         </tbody>
       </table>
-
       {/* Render the Pagination component */}
+      <TablePagination
+        total={total}
+        onPageChange={(page) => {
+          setCurrentPage(page);
+          setFilters((f) => {
+            const filters = { ...f, page };
+            filterCourses(filters);
+            return filters;
+          });
+        }}
+      />
     </div>
   );
 }

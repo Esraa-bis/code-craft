@@ -28,8 +28,24 @@ export async function getAllCategories() {
 }
 
 // get All users
-export async function getAllUsers() {
-  const response = await fetch(`${BASE_URL}/Admin/getAllUsers`, {
+export async function getAllUsers(filters) {
+  const queryString = Object.entries(filters)
+    .map(([key, value]) => `${key}=${value}`)
+    .join("&");
+  const response = await fetch(`${BASE_URL}/Admin/getAllUsers?${queryString}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+    },
+  });
+
+  return response.json();
+}
+
+// get users stats
+export async function getUsersStats() {
+  const response = await fetch(`${BASE_URL}/Admin/getUsersStats`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -154,4 +170,3 @@ export async function disApprove(courseID) {
 
   return response.json();
 }
-
