@@ -381,7 +381,7 @@ function ProfileDropDownSS({ setSignedIn, user }) {
         {user.coursesUploadedCount > 0 ? (
           <li>
             <Link to="/MyCourses" className="modal-link">
-              Uploaded courses
+              My courses
             </Link>
           </li>
         ) : (
