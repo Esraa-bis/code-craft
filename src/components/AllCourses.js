@@ -7,8 +7,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "../assets/css/AdminPage.module.css";
-import { approvement, disApprove, getAllCourses } from "../services/admin";
+import {
+  approvement,
+  deleteCourse,
+  disApprove,
+  getAllCourses,
+} from "../services/admin";
 import { getCoursesFilters } from "../services/course.js";
 import { sweetAlert } from "../services/sweetalert";
 import TablePagination from "./TablePagination.js";
@@ -34,7 +40,7 @@ function AllCourses() {
       .then((response) => {
         if (response.success) {
           setCourses(response.coursesWithEnrollment);
-          setTotal(() => response.total);
+          setTotal(() => response.coursesNum);
           setLoaded(true);
         } else {
           setError("Failed to fetch courses");
@@ -137,7 +143,7 @@ function AllCourses() {
       .then((response) => {
         if (response.success) {
           setCourses(response.coursesWithEnrollment);
-          setTotal(() => response.total);
+          setTotal(() => response.coursesNum);
         } else {
           setError("Failed to fetch courses");
         }
@@ -177,6 +183,23 @@ function AllCourses() {
     });
   }, [selectedFilter]);
 
+  const handleDeleteCourse = (course) => {
+    deleteCourse(course._id)
+      .then((response) => {
+        sweetAlert({
+          title: response.message,
+          icon: response.success ? "success" : "error",
+        });
+        if (response.success) {
+          setCourses((prevCoupons) =>
+            prevCoupons.filter((c) => c._id !== course._id)
+          );
+        }
+      })
+      .catch((error) => {
+        sweetAlert({ title: error.message, icon: "error" });
+      });
+  };
   return (
     <div className={styles.allCourses}>
       {/* Filter dropdown */}
@@ -217,7 +240,13 @@ function AllCourses() {
             <tr key={course._id}>
               <td>{index + 1}</td>
               <td title={course._id}>{course._id}</td>
-              <td title={course.courseName}>{course.courseName}</td>
+              <td title={course.courseName}>
+                <Link
+                  to={`/ViewCourse?courseId=${course?._id}&slug=${course.slug}`}
+                >
+                  {course.courseName}
+                </Link>
+              </td>
               <td>{course.enrolledUsers || 0} User</td>
               <td>{course.completedUsers || 0} User</td>
               <td className={styles.rating}>
@@ -268,7 +297,10 @@ function AllCourses() {
                 )}
               </td>
               <td>
-                <button className={styles.deleteBtn}>
+                <button
+                  className={styles.deleteBtn}
+                  onClick={() => handleDeleteCourse(course)}
+                >
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
               </td>
