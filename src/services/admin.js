@@ -170,3 +170,16 @@ export async function disApprove(courseID) {
 
   return response.json();
 }
+
+// delete course
+export async function deleteCourse(courseId) {
+  const response = await fetch(`${BASE_URL}/Course/deleteCourse/${courseId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+    },
+  });
+
+  return response.json();
+}
