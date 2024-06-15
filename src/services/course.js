@@ -233,3 +233,14 @@ export async function EnrollUserInCourse(courseId, email) {
 
   return response.json();
 }
+
+export const getCourseEditsIfExists = (course) => {
+  if (!course) {
+    return {};
+  }
+  return {
+    ...course,
+    ...(course?.edits?.courseName ? course.edits : {}),
+    image: course?.image,
+  };
+};

@@ -36,6 +36,11 @@ function App() {
   const [signedIn, setSignedIn] = useState(SessionTokenStorage.hasToken());
   const [user, setUser] = useState(() => ({}));
   const [keyword, setKeyword] = useState(() => "");
+  const [isAdmin, setIsAdmin] = useState(() => false);
+
+  useEffect(() => {
+    setIsAdmin(() => user?.role === "superAdmin");
+  }, [user]);
 
   useEffect(() => {
     if (signedIn && isUserLoaded() === false) {
@@ -145,7 +150,17 @@ function App() {
             path="/ViewCourse"
             element={
               signedIn ? (
-                <ViewCourse />
+                <ViewCourse user={user} />
+              ) : (
+                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+              )
+            }
+          />
+          <Route
+            path="/ReviewCourse"
+            element={
+              signedIn ? (
+                <ViewCourse user={user} />
               ) : (
                 <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
               )
@@ -208,11 +223,7 @@ function App() {
           <Route
             path="/AdminDashboard"
             element={
-              user.role === "superAdmin" ? (
-                <AdminDashboard />
-              ) : (
-                <Home signedIn={signedIn} />
-              )
+              isAdmin ? <AdminDashboard /> : <Home signedIn={signedIn} />
             }
           />
           <Route

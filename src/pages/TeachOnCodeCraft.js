@@ -4,6 +4,7 @@ import styles from "../assets/css/TeachOnCodeCraft.module.css";
 import { getAllCategories } from "../services/admin";
 import {
   coursePreview,
+  getCourseEditsIfExists,
   updateCourseInfo,
   uploadCourseInfo,
 } from "../services/course";
@@ -94,10 +95,7 @@ const TeachOnCodeCraft = ({ edit }) => {
       .then((response) => {
         if (response.success) {
           const { course: courseData } = response;
-          const course =
-            courseData.edits && courseData.edits.courseName
-              ? courseData.edits
-              : courseData;
+          const course = getCourseEditsIfExists(courseData);
 
           const data = {
             name: course.courseName,

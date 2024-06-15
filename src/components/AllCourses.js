@@ -21,13 +21,12 @@ import TablePagination from "./TablePagination.js";
 
 function AllCourses() {
   const [courses, setCourses] = useState(() => []);
-  const [user, setUser] = useState();
-  const [error, setError] = useState(null);
+  const [, setError] = useState(null);
   const [loaded, setLoaded] = useState(() => false);
   const [selectedFilter, setSelectedFilter] = useState("All");
   const [total, setTotal] = useState(0);
   const [page, setCurrentPage] = useState(1);
-  const [filters, setFilters] = useState({});
+  const [, setFilters] = useState({});
 
   let loading = false;
   const setLoading = (value) => {
@@ -256,7 +255,7 @@ function AllCourses() {
               <td title={course._id}>{course._id}</td>
               <td title={course.courseName}>
                 <Link
-                  to={`/ViewCourse?courseId=${course?._id}&slug=${course.slug}`}
+                  to={`/ReviewCourse?courseId=${course?._id}&slug=${course.slug}`}
                 >
                   {course.courseName}
                 </Link>
