@@ -1,17 +1,12 @@
-
-import {
- 
-  faChartSimple,
-
-  
-} from "@fortawesome/free-solid-svg-icons";
+import { faChartSimple } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "../assets/css/AdminPage.module.css";
-import AllCourses from "../components/AllCourses";
-import AllCoupons from "../components/AllCoupons";
-import AllCategories from "../components/AllCategories";
-import AllUsers from "../components/AllUsers";
 import { useState } from "react";
+import styles from "../assets/css/AdminPage.module.css";
+import AllCategories from "../components/AllCategories";
+import AllCoupons from "../components/AllCoupons";
+import AllCourses from "../components/AllCourses";
+import AllUsers from "../components/AllUsers";
+import EnrollUser from "../components/EnrollUser";
 
 function AdminDashboard() {
   const [activeSection, setActiveSection] = useState("AllCourses");
@@ -58,14 +53,22 @@ function AdminDashboard() {
         >
           Coupons
         </div>
+        <div
+          className={`${styles.section} ${
+            activeSection === "EnrollUser" ? styles.Active : ""
+          }`}
+          onClick={() => handleSectionClick("EnrollUser")}
+        >
+          Enroll User
+        </div>
       </div>
       {/* Render component based on activeSection state */}
       {activeSection === "AllCourses" && <AllCourses />}
       {activeSection === "AllCategories" && <AllCategories />}
       {activeSection === "AllUsers" && <AllUsers />}
       {activeSection === "Coupons" && <AllCoupons />}
+      {activeSection === "EnrollUser" && <EnrollUser />}
     </section>
   );
 }
 export default AdminDashboard;
-
