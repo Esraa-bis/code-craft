@@ -17,7 +17,7 @@ function MyCourses({ user }) {
 
   return (
     <section className={styles.MyLearning}>
-      <h1 className={styles.Title}>My Courses</h1>
+      <h1 className={styles.Title}>Uploaded Course</h1>
       <div className={styles.Categories}>
         {/* Update activeSection state on link click */}
         <div
@@ -79,26 +79,26 @@ function Approved({ user }) {
     <section className={styles.Section}>
       {courses?.map((course, index) => (
         <div className={`${styles.MyLearningCard} `}>
-            <img
-              src={course.image.url}
-              alt="course css"
-              className={`${styles.courseImg}`}
-            />
-            <div className={`${styles.Content}`}>
-              <h5 className={`${styles.courseTitle}`}>{course.courseName} </h5>
-              <p className={`${styles.courseDescription}`} title={course.desc}>
-                {course.desc}
-              </p>
-              <div className={styles.courseStats}>
-                <span className={styles.enrolledUsers}>
-                  <FontAwesomeIcon icon={faUsers} /> Enrolled Users:
-                  {course.enrolledUsers || 0}
-                </span>
-                <span className={styles.completedUsers}>
-                  <FontAwesomeIcon icon={faUserGraduate} /> Completed Users:
-                  {course.completedUsers || 0}
-                </span>
-              </div>
+          <img
+            src={course.image.url}
+            alt="course css"
+            className={`${styles.courseImg}`}
+          />
+          <div className={`${styles.Content}`}>
+            <h5 className={`${styles.courseTitle}`}>{course.courseName} </h5>
+            <p className={`${styles.courseDescription}`} title={course.desc}>
+              {course.desc}
+            </p>
+            <div className={styles.courseStats}>
+              <span className={styles.enrolledUsers}>
+                <FontAwesomeIcon icon={faUsers} /> Enrolled Users:
+                {course.enrolledUsers || 0}
+              </span>
+              <span className={styles.completedUsers}>
+                <FontAwesomeIcon icon={faUserGraduate} /> Completed Users:
+                {course.completedUsers || 0}
+              </span>
+            </div>
           </div>
           <div className={styles.ACtion}>
             <Link
@@ -160,26 +160,26 @@ function Disapproved({ user }) {
     <section className={styles.Section}>
       {courses?.map((course, index) => (
         <div className={`${styles.MyLearningCard}`}>
-            <img
-              src={CoursePhoto}
-              alt={course.courseName}
-              className={`${styles.courseImg}`}
-            />
-            <div className={`${styles.Content}`}>
-              <h5 className={`${styles.courseTitle}`}>{course.courseName} </h5>
-              <p className={`${styles.courseDescription}`} title={course.desc}>
-                {course.desc}
-              </p>
-              <div className={styles.courseStats}>
-                <span className={styles.enrolledUsers}>
-                  <FontAwesomeIcon icon={faUsers} /> Enrolled Users:
-                  {course.enrolledUsers || 0}
-                </span>
-                <span className={styles.completedUsers}>
-                  <FontAwesomeIcon icon={faUserGraduate} /> Completed Users:
-                  {course.completedUsers || 0}
-                </span>
-              </div>
+          <img
+            src={CoursePhoto}
+            alt={course.courseName}
+            className={`${styles.courseImg}`}
+          />
+          <div className={`${styles.Content}`}>
+            <h5 className={`${styles.courseTitle}`}>{course.courseName} </h5>
+            <p className={`${styles.courseDescription}`} title={course.desc}>
+              {course.desc}
+            </p>
+            <div className={styles.courseStats}>
+              <span className={styles.enrolledUsers}>
+                <FontAwesomeIcon icon={faUsers} /> Enrolled Users:
+                {course.enrolledUsers || 0}
+              </span>
+              <span className={styles.completedUsers}>
+                <FontAwesomeIcon icon={faUserGraduate} /> Completed Users:
+                {course.completedUsers || 0}
+              </span>
+            </div>
           </div>
           <div className={styles.ACtion}>
             <Link

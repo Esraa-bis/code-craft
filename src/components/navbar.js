@@ -189,7 +189,7 @@ function Modal({ signedIn, isOpen, onClose, setSignedIn, user }) {
                 {user.coursesUploadedCount > 0 ? (
                   <li>
                     <Link to="/MyCourses" className="modal-link">
-                      My Courses
+                      Uploaded Courses
                     </Link>
                   </li>
                 ) : (
@@ -381,7 +381,7 @@ function ProfileDropDownSS({ setSignedIn, user }) {
         {user.coursesUploadedCount > 0 ? (
           <li>
             <Link to="/MyCourses" className="modal-link">
-              {t("My Courses")}
+              Uploaded courses
             </Link>
           </li>
         ) : (
