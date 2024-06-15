@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import styles from "../assets/css/MyLearning.module.css";
 // course photo
-import CoursePhoto from "../assets/images/css.avif";
 // link
 import { faUserGraduate, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -161,7 +160,7 @@ function Disapproved({ user }) {
       {courses?.map((course, index) => (
         <div className={`${styles.MyLearningCard}`}>
           <img
-            src={CoursePhoto}
+            src={course.image.url}
             alt={course.courseName}
             className={`${styles.courseImg}`}
           />

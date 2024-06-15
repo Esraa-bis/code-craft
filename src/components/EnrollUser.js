@@ -52,13 +52,13 @@ function EnrollUser() {
           value={formData.courseId}
           onChange={(event) => updateFormData(event, "courseId")}
         />
-        <br />
         <input
           type="email"
           placeholder="Email"
           value={formData.email}
           onChange={(event) => updateFormData(event, "email")}
         />
+
         <button className={styles.addCategoryBtn} disabled={loading}>
           Enroll User
         </button>

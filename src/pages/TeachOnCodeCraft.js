@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import styles from "../assets/css/TeachOnCodeCraft.module.css";
 import { getAllCategories } from "../services/admin";
 import {
@@ -93,7 +93,12 @@ const TeachOnCodeCraft = ({ edit }) => {
     coursePreview(editCourseId)
       .then((response) => {
         if (response.success) {
-          const { course } = response;
+          const { course: courseData } = response;
+          const course =
+            courseData.edits && courseData.edits.courseName
+              ? courseData.edits
+              : courseData;
+
           const data = {
             name: course.courseName,
             desc: course.desc,
@@ -258,6 +263,22 @@ const TeachOnCodeCraft = ({ edit }) => {
             onChange={(event) => updateFormData(event, "courseImage")}
           />
         </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="terms" className={styles.terms}>
+            <input
+              required
+              type="checkbox"
+              name="terms"
+              className={styles.termsInput}
+            />
+            I have read and accept the&nbsp;
+            <Link to="/policy" target="_blank">
+              Policy
+            </Link>
+            .
+          </label>
+        </div>
+
         <button type="submit" className={styles.save} disabled={loading}>
           Save & Continue
         </button>

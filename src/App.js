@@ -25,6 +25,7 @@ import MyLearning from "./pages/MyLearning";
 import PaymentMethods from "./pages/PaymentMethods";
 import Profile from "./pages/Profile";
 import TeachOnCodeCraft from "./pages/TeachOnCodeCraft";
+import Policy from "./pages/TermsAndConditions";
 import UploadCourse from "./pages/UploadCourse";
 import ViewCourse from "./pages/ViewCourse";
 import DeleteAccount from "./pages/deleteAccount";
@@ -244,6 +245,8 @@ function App() {
               )
             }
           />
+          <Route path="/policy" element={<Policy />} />
+
           <Route path="/Checkout" element={<Checkout />} />
         </Routes>
 

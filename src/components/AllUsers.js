@@ -183,15 +183,16 @@ function AllUsers() {
         </div>
       </div>
 
-      {/* Filter dropdown */}
-      {/* <select value={filter}>
+      <select
+      // onChange={handleFilterChange}
+      >
         <option value="All">All</option>
         <option value="banned user">banned user</option>
         <option value="Unpinned">Unpinned</option>
         <option value="Deactivated">Deactivated</option>
         <option value="Enrolled in courses">Enrolled in courses</option>
-        <option value="Uploaded courses">Uploaded courses</option>
-      </select> */}
+        <option value="Uploaded courses">Upload courses</option>
+      </select>
 
       {/* Users table */}
       <table className={styles.userTable}>

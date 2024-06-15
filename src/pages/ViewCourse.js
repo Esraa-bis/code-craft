@@ -307,17 +307,19 @@ function ViewCourse() {
             {convertMinutes(course?.courseDuration)}
           </p>
           <ul>
-            {/* {course?.vidoes.map((video, index) => (
+            {/* {course?.videos.map((video, index) => (
               <li key={video._id}>
                 <span>{formatIndex(index)} </span>
                 {video.title}
               </li>
             ))} */}
-            {course?.vidoes.map((video, index) => (
+            {course?.videos.map((video, index) => (
               <li key={video._id}>
                 <span>{formatIndex(index)} </span>
                 {index === 0 ? (
-                  <Link to={video.url}>{video.title}</Link>
+                  <Link to={video.video.url} target="_blank">
+                    {video.title}
+                  </Link>
                 ) : (
                   video.title
                 )}

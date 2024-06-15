@@ -65,7 +65,7 @@ function Home({ signedIn }) {
     const filters = {
       isApproved: true,
       sort: "createdAt desc",
-      fields: "-vidoes",
+      fields: "-videos",
     };
 
     getCoursesFilters(filters)
@@ -87,7 +87,7 @@ function Home({ signedIn }) {
     const filters = {
       isApproved: true,
       price: "0",
-      fields: "-vidoes",
+      fields: "-videos",
     };
 
     getCoursesFilters(filters)
@@ -109,7 +109,7 @@ function Home({ signedIn }) {
   useEffect(() => {
     const filters = {
       isApproved: true,
-      fields: "-vidoes",
+      fields: "-videos",
     };
     getCoursesFilters(filters)
       .then((response) => {

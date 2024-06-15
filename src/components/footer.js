@@ -162,17 +162,18 @@ function FooterLinks() {
         <Link className="FooterLink" to="/ContactUs">
           Contact Us
         </Link>
-        <Link className="FooterLink">Help And Support</Link>
+
+        {/* <Link className="FooterLink">Help And Support</Link> */}
       </div>
       <div className="footer-column">
         <Link className="FooterLink" to="/Discussion">
           Discussions
         </Link>
-        <Link className="FooterLink" to="/TeachOnCodeCraft">
-          Upload Your Course
+        <Link className="FooterLink" to="/policy">
+          Policy
         </Link>
-        <Link className="FooterLink">Privacy Policy</Link>
       </div>
+      <div></div>
     </section>
   );
 }

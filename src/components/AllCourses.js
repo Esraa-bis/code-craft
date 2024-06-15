@@ -133,6 +133,20 @@ function AllCourses() {
       }
     });
   };
+  //
+  const confirmDeleteCourse = (courseID) => {
+    sweetAlert({
+      title: "Are you sure?",
+      text: "Do you want to delete this course?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willApprove) => {
+      if (willApprove) {
+        handleDeleteCourse(courseID);
+      }
+    });
+  };
   const handleFilterChange = (e) => {
     const value = e.target.value;
     setSelectedFilter(value);
@@ -174,7 +188,7 @@ function AllCourses() {
         filters.completedUsers = true;
         break;
       default:
-        filters.isApproved = true; // Default filter, adjust as needed
+        // filters.isApproved = true; // Default filter, adjust as needed
         break;
     }
     setFilters(() => {
@@ -299,7 +313,11 @@ function AllCourses() {
               <td>
                 <button
                   className={styles.deleteBtn}
-                  onClick={() => handleDeleteCourse(course)}
+                  onClick={() => {
+                    {
+                      confirmDeleteCourse(course);
+                    }
+                  }}
                 >
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
