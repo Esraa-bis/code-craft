@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 
 function TablePagination({ total, onPageChange }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [pages, setPages] = useState([]);
   const [nextDisabled, setNextDisabled] = useState(false);
   const [previousDisabled, setPreviousDisabled] = useState(true);
 
@@ -15,6 +16,7 @@ function TablePagination({ total, onPageChange }) {
       setPreviousDisabled(() => currentPage === 1);
       return pages;
     });
+    setPages(() => (total > 0 ? [...Array(total)] : []));
   }, [total]);
 
   const handleNextPage = () => {
@@ -47,7 +49,7 @@ function TablePagination({ total, onPageChange }) {
       <button onClick={handlePreviousPage} disabled={previousDisabled}>
         Previous
       </button>
-      {[...Array(totalPages)].map((_, index) => (
+      {pages.map((_, index) => (
         <button
           key={index}
           onClick={() => handlePageClick(index + 1)}

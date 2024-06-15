@@ -31,6 +31,8 @@ function AllUsers() {
     };
   });
 
+  const [userCourses, setUserCourses] = useState(() => ({}));
+
   let loading = false;
   const setLoading = (value) => {
     loading = value;
@@ -39,8 +41,8 @@ function AllUsers() {
     getAllUsers(filters)
       .then((response) => {
         if (response.success) {
-          setUsers(response.users);
-          setTotal(response.usersNum);
+          setUsers(() => response.users);
+          setUserCourses(() => response.enrollmentsMap);
           setLoaded(true);
         } else {
           setError("Failed to fetch users");
@@ -60,6 +62,7 @@ function AllUsers() {
     getUsersStats().then((response) => {
       if (response.success) {
         setUsersStats(() => response.stats);
+        setTotal(() => response.total);
       }
     });
   }, [filters]);
@@ -71,6 +74,7 @@ function AllUsers() {
     getUsersStats().then((response) => {
       if (response.success) {
         setUsersStats(() => response.stats);
+        setTotal(() => response.total);
       }
     });
   }, []);
@@ -131,6 +135,28 @@ function AllUsers() {
     }
   };
 
+  const handleFilterChange = (e) => {
+    switch (e.target.value) {
+      case "all":
+        setFilters(() => ({ page: currentPage }));
+        break;
+      case "banned":
+        setFilters(() => ({ page: currentPage, "isBanned[eq]": true }));
+        break;
+      case "deactivated":
+        setFilters(() => ({ page: currentPage, "isDeleted[eq]": true }));
+        break;
+      case "has_courses":
+        setFilters(() => ({ page: currentPage, hasCourses: true }));
+        break;
+      case "enrolled":
+        setFilters(() => ({ page: currentPage, enrolled: true }));
+        break;
+      default:
+        throw new Error(`Invalid filter value "${e.target.value}"`);
+    }
+  };
+
   return (
     <div className={styles.allUsers}>
       {/* Analysis section */}
@@ -145,36 +171,21 @@ function AllUsers() {
           </div>
           <p>{userStats.total}</p>
         </div>
-        <div
-          className={`${styles.usersAnalysis} ${styles.Active}`}
-          onClick={() => {
-            setFilters(() => ({ page: currentPage, isActive: false }));
-          }}
-        >
+        <div className={`${styles.usersAnalysis} ${styles.Active}`}>
           <h3>Active</h3>
           <div className={`${styles.usersIcon}`}>
             <FontAwesomeIcon icon={faUsers} />
           </div>
           <p>{userStats.active}</p>
         </div>
-        <div
-          className={`${styles.usersAnalysis} ${styles.Deactivated}`}
-          onClick={() => {
-            setFilters(() => ({ page: currentPage, "isDeleted[eq]": true }));
-          }}
-        >
+        <div className={`${styles.usersAnalysis} ${styles.Deactivated}`}>
           <h3>Deactivated</h3>
           <div className={`${styles.usersIcon}`}>
             <FontAwesomeIcon icon={faUsers} />
           </div>
           <p>{userStats.deactivated}</p>
         </div>
-        <div
-          className={`${styles.usersAnalysis} ${styles.banned}`}
-          onClick={() => {
-            setFilters(() => ({ page: currentPage, isBanned: true }));
-          }}
-        >
+        <div className={`${styles.usersAnalysis} ${styles.banned}`}>
           <h3>banned</h3>
           <div className={`${styles.usersIcon}`}>
             <FontAwesomeIcon icon={faUsers} />
@@ -183,15 +194,12 @@ function AllUsers() {
         </div>
       </div>
 
-      <select
-      // onChange={handleFilterChange}
-      >
-        <option value="All">All</option>
-        <option value="banned user">banned user</option>
-        <option value="Unpinned">Unpinned</option>
-        <option value="Deactivated">Deactivated</option>
-        <option value="Enrolled in courses">Enrolled in courses</option>
-        <option value="Uploaded courses">Upload courses</option>
+      <select onChange={(e) => handleFilterChange(e)}>
+        <option value="all">All</option>
+        <option value="banned">Banned</option>
+        <option value="deactivated">Deactivated</option>
+        <option value="enrolled">Enrolled in courses</option>
+        <option value="has_courses">Has Courses</option>
       </select>
 
       {/* Users table */}
@@ -230,9 +238,8 @@ function AllUsers() {
                 {user.firstName} {user.lastName}
               </td>
               <td>{user.email}</td>
-              <td>{user.coursesEnrolledCount}</td>
+              <td>{userCourses[user._id]?.enrolled || 0}</td>
               <td>{user.coursesUploadedCount}</td>
-
               <td>
                 <div
                   className={`${styles.circle} ${

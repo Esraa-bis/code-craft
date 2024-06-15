@@ -186,6 +186,9 @@ function AllCourses() {
       case "Users Completed":
         filters.completedUsers = true;
         break;
+      case "Has Edits":
+        filters.hasEdits = true;
+        break;
       default:
         // filters.isApproved = true; // Default filter, adjust as needed
         break;
@@ -222,6 +225,7 @@ function AllCourses() {
         <option value="Disapproved">Disapproved</option>
         <option value="User Enrolled">User Enrolled</option>
         <option value="Users Completed">Users Completed</option>
+        <option value="Has Edits">Has Edits</option>
       </select>
       <table className={styles.courseTable}>
         <thead>
