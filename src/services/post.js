@@ -29,7 +29,9 @@ export const getPosts = async (skip, userId) => {
   const response = await fetch(`${BASE_URL}/Post${queryString}`, {
     method: "GET",
     headers: {
-      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+      token: userId
+        ? `${BEARER_KEY}${SessionTokenStorage.getToken()}`
+        : undefined,
     },
   });
   return response.json();

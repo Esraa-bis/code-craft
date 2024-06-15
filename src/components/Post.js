@@ -35,7 +35,7 @@ function Post({
   const [editing, setEditing] = useState(() => false);
   const [editingValue, setEditingValue] = useState(() => "");
   const [postLiked, setPostLiked] = useState(
-    () => liked?.indexOf(post._id) >= 0
+    () => liked?.indexOf(post?._id) >= 0
   );
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
@@ -45,7 +45,7 @@ function Post({
     setPostLiked(() => liked?.indexOf(post._id) >= 0);
   }, [liked, post]);
   useEffect(() => {
-    onLoadRepliesButtonClick(post._id);
+    onLoadRepliesButtonClick(post?._id);
   }, []);
   const onReplyInputChange = (value) => {
     setReplyToPost(() => value);
@@ -55,8 +55,8 @@ function Post({
     setPostComments((oldPostComments) => {
       const postComments = { ...oldPostComments };
       comments.forEach((c) => {
-        if (postComments.ids[c._id]) return;
-        postComments.ids[c._id] = true;
+        if (postComments.ids[c?._id]) return;
+        postComments.ids[c?._id] = true;
         postComments.comments.push(c);
       });
 
@@ -84,9 +84,10 @@ function Post({
   };
 
   const getLikes = (comments) => {
-    const ids = comments.map((p) => p._id);
+    if (!user?.id && !user?._id) return;
+    const ids = comments.map((p) => p?._id);
     if (ids.length === 0) return;
-    doesUserLikeComments(comments.map((c) => c.id || c._id)).then(
+    doesUserLikeComments(comments.map((c) => c?.id || c?._id)).then(
       (response) => {
         if (response.success) {
           setLikedComments((l) => {
@@ -129,7 +130,7 @@ function Post({
       denyButtonText: "No",
     });
     if (isDenied || isConfirmed !== true) return;
-    deletePost(post._id)
+    deletePost(post?._id)
       .then((response) => {
         if (response.success) {
           onPostDeleted(post);
@@ -166,8 +167,8 @@ function Post({
       const comments = [...oldComments];
       let i;
       let c = comments.find((c, index) => {
-        if (c._id === comment._id) i = index;
-        return c._id === comment._id;
+        if (c?._id === comment?._id) i = index;
+        return c?._id === comment?._id;
       });
       if (i >= 0) {
         c.content = comment.content;
@@ -198,7 +199,7 @@ function Post({
       onCancelEditButtonClick();
       return;
     }
-    editPost(post._id, value)
+    editPost(post?._id, value)
       .then((response) => {
         if (response.success) {
           updateExistingPost(response.post);
@@ -219,16 +220,16 @@ function Post({
   };
 
   const onLikeButtonClick = () => {
-    likePost(post._id)
+    likePost(post?._id)
       .then((response) => {
         if (response.success) {
           updateExistingPost(response.document);
           setPostsLikes((l) => {
             const likes = [...l];
             if (response.like) {
-              likes.push(post._id);
+              likes.push(post?._id);
             } else {
-              likes.splice(likes.indexOf(post._id), 1);
+              likes.splice(likes.indexOf(post?._id), 1);
             }
             return likes;
           });
@@ -259,7 +260,7 @@ function Post({
   const visibleImages = post.images.slice(0, 4); // Display the first 4 images
   const hiddenImages = post.images.slice(4); // Additional images hidden
   return (
-    <div key={post._id} className={`${styles.comment} ${styles.main}`}>
+    <div key={post?._id} className={`${styles.comment} ${styles.main}`}>
       {/* <div className={styles.userAvatar}>
         <img
           src={post.addedBy?.profile_pic?.url}
@@ -281,7 +282,7 @@ function Post({
                 <CreatedSince timestamp={post.createdAt}></CreatedSince>
               </div>
             </div>
-            {post.addedBy._id === user?.id && (
+            {post.addedBy?._id === user?.id && (
               <div>
                 <button
                   type="button"
@@ -371,8 +372,8 @@ function Post({
                   ) : (
                     postComments.comments.map((comment) => (
                       <PostComment
-                        key={comment._id}
-                        postId={post._id}
+                        key={comment?._id}
+                        postId={post?._id}
                         comment={comment}
                         user={user}
                         onCommentDeleted={onCommentDeleted}
@@ -388,7 +389,9 @@ function Post({
                       total={post.numberOfComments}
                       singular="Comment"
                       plural="Comments"
-                      onLoadMoreClick={() => onLoadRepliesButtonClick(post._id)}
+                      onLoadMoreClick={() =>
+                        onLoadRepliesButtonClick(post?._id)
+                      }
                     />
                   )}
                   <div className={styles.reply}>
@@ -403,7 +406,7 @@ function Post({
                     <button
                       type="button"
                       className="commentBtn"
-                      onClick={() => onReplyButtonClick(post._id)}
+                      onClick={() => onReplyButtonClick(post?._id)}
                     >
                       Comment
                     </button>

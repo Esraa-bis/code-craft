@@ -77,6 +77,7 @@ function Discussion({ user, signedIn }) {
   };
 
   const getLikes = (posts) => {
+    if (!user?.id && !user?._id) return;
     const ids = posts.map((p) => p._id);
     if (ids.length === 0) return;
     doesUserLikePosts(posts.map((p) => p.id || p._id)).then((response) => {
@@ -95,6 +96,7 @@ function Discussion({ user, signedIn }) {
   };
 
   const loadPosts = (reset = false) => {
+    // if (!user?._id || !user?.id) return;
     if (loadingPosts) return;
     setLoadingPosts(true);
     getPosts(reset ? filters.skip : posts.length, filters.userId)
@@ -149,7 +151,7 @@ function Discussion({ user, signedIn }) {
   };
   return (
     <div className={styles.discussion}>
-      <h1>Community</h1>
+      {/* <h1>Community</h1> */}
       <div>
         {signedIn && (
           <>
