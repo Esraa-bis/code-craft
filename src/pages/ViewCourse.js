@@ -1,35 +1,46 @@
 import { faPlay, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styles from "../assets/css/ViewCourse.module.css";
 import {
   addToCart,
   coursePreview,
   freeEnroll,
+  getCourseEditsIfExists,
   updateRecentlyViewed,
 } from "../services/course";
 import { convertMinutes } from "../services/generalFunctions";
 import { addReview, courseReview } from "../services/reviews";
 
+import StarRating from "../components/StarRating";
 import { sweetAlert } from "../services/sweetalert";
 
 let courseLoading = false;
 let reviewsLoading = false;
 let pageVisited = false;
 
-function ViewCourse() {
+function ViewCourse({ user }) {
+  const location = useLocation();
+  const { pathname } = location;
   const [reviews, setReviews] = useState([]);
   const [course, setCourse] = useState(null);
   const [isEnrolled, setIsEnrolled] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [, setError] = useState(null);
   const [reviewRate, setReviewRate] = useState(0);
   const [reviewComment, setReviewComment] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [, setSuccess] = useState(false);
   const [courseId] = useState(() => {
     return new URLSearchParams(window.location.search).get("courseId");
   });
+  const [isAdmin, setIsAdmin] = useState(() => false);
+  const [isReview, setIsReview] = useState(() => false);
+
+  useEffect(() => {
+    setIsAdmin(() => user.role === "superAdmin");
+    setIsReview(() => pathname === "/ReviewCourse");
+  }, [user]);
 
   useEffect(() => {
     if (loading || pageVisited) return;
@@ -45,14 +56,19 @@ function ViewCourse() {
   }, [courseId]);
 
   useEffect(() => {
+    if (!user || !user.id || !user._id) return;
     if (loading || courseLoading) return;
     courseLoading = true;
     setLoading(true);
     coursePreview(courseId)
       .then((response) => {
         if (response.success) {
-          setCourse(response.course);
-          setIsEnrolled(response.isEnrolled);
+          if (user.role === "superAdmin" && isReview) {
+            setCourse(() => getCourseEditsIfExists(response.course));
+          } else {
+            setCourse(() => response.course);
+            setIsEnrolled(response.isEnrolled);
+          }
         } else {
           setError("Failed to fetch course preview");
         }
@@ -84,7 +100,7 @@ function ViewCourse() {
       .finally(() => {
         reviewsLoading = false;
       });
-  }, [courseId]);
+  }, [courseId, user]);
 
   // to format the index
   function formatIndex(index) {
@@ -186,7 +202,7 @@ function ViewCourse() {
               <p>
                 Created by:
                 <Link>
-                  {course?.addedBy.firstName} {course?.addedBy.lastName}
+                  {course?.addedBy?.firstName} {course?.addedBy?.lastName}
                 </Link>
               </p>
             </div>
@@ -244,50 +260,58 @@ function ViewCourse() {
                 <div className={styles.cartAndWishList}>
                   {course?.appliedPrice !== 0 && (
                     <div className={styles.innerDiv}>
-                      <button
-                        onClick={() => handleAddToCart(course?._id)}
-                        className={styles.AddToCartIcon}
-                      >
-                        Add to Cart
-                      </button>
-                      <button className={styles.wishListIcon}>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-6 h-6"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-                          />
-                        </svg>
-                      </button>
+                      {!(isAdmin && isReview) && (
+                        <>
+                          <button
+                            onClick={() => handleAddToCart(course?._id)}
+                            className={styles.AddToCartIcon}
+                          >
+                            Add to Cart
+                          </button>
+                          <button className={styles.wishListIcon}>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="w-6 h-6"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+                              />
+                            </svg>
+                          </button>
+                        </>
+                      )}
                     </div>
                   )}
                 </div>
-                <button
-                  className={styles.buyNow}
-                  onClick={() => {
-                    if (course?.appliedPrice === 0) {
-                      handleFreeEnroll(course?._id);
-                    }
-                  }}
-                >
-                  {course?.appliedPrice === 0 ? (
-                    "Enroll for free"
-                  ) : (
-                    <Link
-                      to={`/Checkout?courseId=${course?._id}`}
-                      className={styles.buyNowLink}
+                {!(isAdmin && isReview) && (
+                  <>
+                    <button
+                      className={styles.buyNow}
+                      onClick={() => {
+                        if (course?.appliedPrice === 0) {
+                          handleFreeEnroll(course?._id);
+                        }
+                      }}
                     >
-                      Buy Now
-                    </Link>
-                  )}
-                </button>
+                      {course?.appliedPrice === 0 ? (
+                        "Enroll for free"
+                      ) : (
+                        <Link
+                          to={`/Checkout?courseId=${course?._id}`}
+                          className={styles.buyNowLink}
+                        >
+                          Buy Now
+                        </Link>
+                      )}
+                    </button>
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -307,17 +331,13 @@ function ViewCourse() {
             {convertMinutes(course?.courseDuration)}
           </p>
           <ul>
-            {/* {course?.vidoes.map((video, index) => (
-              <li key={video._id}>
-                <span>{formatIndex(index)} </span>
-                {video.title}
-              </li>
-            ))} */}
-            {course?.vidoes.map((video, index) => (
+            {course?.videos.map((video, index) => (
               <li key={video._id}>
                 <span>{formatIndex(index)} </span>
                 {index === 0 ? (
-                  <Link to={video.url}>{video.title}</Link>
+                  <Link to={video.video.url} target="_blank">
+                    {video.title}
+                  </Link>
                 ) : (
                   video.title
                 )}
@@ -397,19 +417,3 @@ function ViewCourse() {
   );
 }
 export default ViewCourse;
-
-const StarRating = ({ rating, onRatingChange }) => {
-  return (
-    <div className={styles.starRating}>
-      {[1, 2, 3, 4, 5].map((star) => (
-        <span
-          key={star}
-          className={`${styles.star} ${star <= rating ? styles.filled : ""}`}
-          onClick={() => onRatingChange(star)}
-        >
-          ★
-        </span>
-      ))}
-    </div>
-  );
-};

@@ -1,5 +1,3 @@
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import styles from "../assets/css/AdminPage.module.css";
 import { addCategory, getAllCategories } from "../services/admin";
@@ -86,7 +84,7 @@ function AllCategories() {
           <tr>
             <th>Category Name</th>
             <th>Number of Courses</th>
-            <th>Delete</th>
+            {/* <th>Delete</th> */}
           </tr>
         </thead>
         <tbody>
@@ -94,11 +92,11 @@ function AllCategories() {
             <tr key={category.id}>
               <td>{category.name}</td>
               <td>{category?.courses?.length ?? 0} courses</td>
-              <td>
+              {/* <td>
                 <button className={styles.deleteBtn}>
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
-              </td>
+              </td> */}
             </tr>
           ))}
         </tbody>

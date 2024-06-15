@@ -260,12 +260,6 @@ function UploadCourse() {
             Select videos
           </label>
         </form>
-        {/* <progress
-          id="progressBar"
-          max="100"
-          value="0"
-          // ref={progressBarRef}
-        ></progress> */}
       </div>
       <div className={styles.videos}>
         {videos?.map((video) => (

@@ -87,7 +87,7 @@
 }
 
 .video {
-  width: 90%;
+  width: 100%;
 }
 
 .Arrows svg {
@@ -109,4 +109,13 @@
 
 .completed {
   color: #0054ad;
+}
+@media (max-width: 1400px) {
+  .CourseVideos {
+    flex-direction: column-reverse;
+  }
+  .CourseContent {
+    width: 100%;
+    border-right: none;
+  }
 }

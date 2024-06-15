@@ -12,7 +12,7 @@ let loadingPosts = false;
 const setLoadingPosts = (v) => {
   loadingPosts = v;
 };
-function Discussion({ user, signedIn }) {
+function MyPosts({ user, signedIn }) {
   const [newPost, setNewPost] = useState(() => "");
   const [posts, setPosts] = useState(() => []);
   const [count, setCount] = useState(() => 0);
@@ -20,7 +20,6 @@ function Discussion({ user, signedIn }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // for images
   const [images, setImages] = useState([]);
-  const [filters, setFilters] = useState({ skip: 0, userId: null });
 
   const updateExistingPost = (post) => {
     setPosts((posts) => {
@@ -94,19 +93,16 @@ function Discussion({ user, signedIn }) {
     });
   };
 
-  const loadPosts = (reset = false) => {
+  const loadPosts = () => {
     if (loadingPosts) return;
     setLoadingPosts(true);
-    getPosts(reset ? filters.skip : posts.length, filters.userId)
+    getPosts(posts.length)
       .then((response) => {
         if (response.success) {
           setPosts((oldPosts) => {
-            if (!reset) {
-              const posts = [...oldPosts];
-              posts.push(...response.posts);
-              return posts;
-            }
-            return response.posts;
+            const posts = [...oldPosts];
+            posts.push(...response.posts);
+            return posts;
           });
           setCount(() => response.count);
           getLikes(response.posts);
@@ -132,8 +128,8 @@ function Discussion({ user, signedIn }) {
   };
 
   useEffect(() => {
-    loadPosts(true);
-  }, [filters]);
+    loadPosts();
+  }, []);
 
   const showForm = () => {
     setIsModalOpen(true);
@@ -152,31 +148,12 @@ function Discussion({ user, signedIn }) {
       <h1>Community</h1>
       <div>
         {signedIn && (
-          <>
-            <div className={styles.newPost}>
-              <img src={user?.profile_pic?.url} />
-              <button className={styles.showFormButton} onClick={showForm}>
-                <FontAwesomeIcon icon={faPenToSquare} /> Add New Post
-              </button>
-            </div>
-            <button
-              className={styles.myPosts}
-              onClick={() => {
-                setFilters(() => ({ userId: null, skip: 0 }));
-              }}
-            >
-              All
+          <div className={styles.newPost}>
+            <img src={user?.profile_pic?.url} />
+            <button className={styles.showFormButton} onClick={showForm}>
+              <FontAwesomeIcon icon={faPenToSquare} /> Add New Post
             </button>
-            &nbsp;&nbsp;
-            <button
-              className={styles.myPosts}
-              onClick={() => {
-                setFilters(() => ({ userId: user._id || user.id, skip: 0 }));
-              }}
-            >
-              My Posts
-            </button>
-          </>
+          </div>
         )}
         {isModalOpen && (
           <div className={styles.modal} id="postModal">
@@ -237,4 +214,4 @@ function Discussion({ user, signedIn }) {
     </div>
   );
 }
-export default Discussion;
+export default MyPosts;

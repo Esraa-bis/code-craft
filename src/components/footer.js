@@ -54,7 +54,7 @@ function LogoAndArabicBtn() {
     <>
       <section className="LogoAndArabicBtn">
         <img src={Logo} alt="code craft logo" className="logo w-6 h-6" />
-        <div class="custom-select" tabindex="0">
+        {/* <div class="custom-select" tabindex="0">
           <div class="select-selected" tabindex="0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +80,7 @@ function LogoAndArabicBtn() {
               English
             </button>
           </div>
-        </div>
+        </div> */}
         {/* <div className="dropdown">
           <button
             className="btn btn-secondary dropdown-toggle lang-btn"
@@ -162,17 +162,18 @@ function FooterLinks() {
         <Link className="FooterLink" to="/ContactUs">
           Contact Us
         </Link>
-        <Link className="FooterLink">Help And Support</Link>
+
+        {/* <Link className="FooterLink">Help And Support</Link> */}
       </div>
       <div className="footer-column">
         <Link className="FooterLink" to="/Discussion">
           Discussions
         </Link>
-        <Link className="FooterLink" to="/TeachOnCodeCraft">
-          Upload Your Course
+        <Link className="FooterLink" to="/policy">
+          Policy
         </Link>
-        <Link className="FooterLink">Privacy Policy</Link>
       </div>
+      <div></div>
     </section>
   );
 }

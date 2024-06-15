@@ -45,10 +45,6 @@ function SignIn({ signedIn, setSignedIn }) {
 
       <div className={`${styles.container}`}>
         <h2>Sign in</h2>
-        {/* sign in with google btn */}
-        <button type="button" className={`${styles.loginWithGoogleBtn}`}>
-          Sign In with Google
-        </button>
         <form
           id="signInForm"
           className={`${styles.signform}`}

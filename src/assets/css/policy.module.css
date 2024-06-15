@@ -1,0 +1,52 @@
+.Policy {
+  width: 90%;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.Policy h1 {
+  color: #333333;
+  font-size: 28px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.Policy h2 {
+  color: #1a5276;
+  font-size: 24px;
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.Policy p {
+  color: #34495e;
+  margin-top: 10px;
+}
+
+.Policy strong {
+  color: #2980b9;
+}
+
+.Policy ul {
+  list-style-type: disc;
+  margin-bottom: 15px;
+}
+
+.Policy li {
+  color: #34495e;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .Policy {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+  }
+}

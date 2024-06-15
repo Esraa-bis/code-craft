@@ -7,30 +7,42 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import styles from "../assets/css/AdminPage.module.css";
-import { banAccount, enableAccount, getAllUsers } from "../services/admin";
+import {
+  banAccount,
+  enableAccount,
+  getAllUsers,
+  getUsersStats,
+} from "../services/admin";
 import { sweetAlert } from "../services/sweetalert";
-import Paginationn from "./Pagination";
+import TablePagination from "./TablePagination";
 function AllUsers() {
   const [users, setUsers] = useState([]);
-  const [user, setUser] = useState();
   const [error, setError] = useState(null); // Tracks any errors
   const [currentPage, setCurrentPage] = useState(1); // Tracks the current page for pagination
-  const noPerPage = 10; // Number of users to display per page
-  const [filter, setFilter] = useState("All"); // Tracks the selected filter option
   const [loaded, setLoaded] = useState(false);
+  const [total, setTotal] = useState(0);
+  const [filters, setFilters] = useState(() => ({ page: 1 }));
+  const [userStats, setUsersStats] = useState(() => {
+    return {
+      total: 0,
+      active: 0,
+      banned: 0,
+      deactivated: 0,
+    };
+  });
+
+  const [userCourses, setUserCourses] = useState(() => ({}));
 
   let loading = false;
   const setLoading = (value) => {
     loading = value;
   };
-  // Fetch users when the component mounts
-  useEffect(() => {
-    if (loading || loaded) return;
-    setLoading(true);
-    getAllUsers()
+  const getUsers = () => {
+    getAllUsers(filters)
       .then((response) => {
         if (response.success) {
-          setUsers(response.users);
+          setUsers(() => response.users);
+          setUserCourses(() => response.enrollmentsMap);
           setLoaded(true);
         } else {
           setError("Failed to fetch users");
@@ -41,7 +53,32 @@ function AllUsers() {
         setError(err.message);
         setLoading(false);
       });
+  };
+
+  // Fetch users when the component mounts
+  useEffect(() => {
+    setLoading(true);
+    getUsers();
+    getUsersStats().then((response) => {
+      if (response.success) {
+        setUsersStats(() => response.stats);
+        setTotal(() => response.total);
+      }
+    });
+  }, [filters]);
+
+  useEffect(() => {
+    if (loading || loaded) return;
+    setLoading(true);
+    getUsers();
+    getUsersStats().then((response) => {
+      if (response.success) {
+        setUsersStats(() => response.stats);
+        setTotal(() => response.total);
+      }
+    });
   }, []);
+
   // Handle ban account
   const handleBanUser = async (user) => {
     try {
@@ -98,77 +135,72 @@ function AllUsers() {
     }
   };
 
-  // Handle pagination
-  const handlePaginate = (pageNumber) => {
-    setCurrentPage(pageNumber); // Update the current page number
+  const handleFilterChange = (e) => {
+    switch (e.target.value) {
+      case "all":
+        setFilters(() => ({ page: currentPage }));
+        break;
+      case "banned":
+        setFilters(() => ({ page: currentPage, "isBanned[eq]": true }));
+        break;
+      case "deactivated":
+        setFilters(() => ({ page: currentPage, "isDeleted[eq]": true }));
+        break;
+      case "has_courses":
+        setFilters(() => ({ page: currentPage, hasCourses: true }));
+        break;
+      case "enrolled":
+        setFilters(() => ({ page: currentPage, enrolled: true }));
+        break;
+      default:
+        throw new Error(`Invalid filter value "${e.target.value}"`);
+    }
   };
 
-  // Calculate indices for slicing the users array
-  const indexOfLastUser = currentPage * noPerPage;
-  const indexOfFirstUser = indexOfLastUser - noPerPage;
-
-  // Filter users based on the selected filter
-  const filterUsers = users.filter((user) => {
-    if (filter === "banned user") {
-      return user.isPinned;
-    } else if (filter === "Unpinned") {
-      return !user.isPinned;
-    } else if (filter === "Deactivated") {
-      return !user.isActive;
-    } else if (filter === "Enrolled in courses") {
-      return user.recentlyViewedCourses.length > 0;
-    } else if (filter === "Uploaded courses") {
-      return user.coursesUploaded.length > 0;
-    } else {
-      return true; // Return all users if the filter is "All"
-    }
-  });
-
-  // Get the users for the current page
-  const currentUsers = filterUsers.slice(indexOfFirstUser, indexOfLastUser);
   return (
     <div className={styles.allUsers}>
       {/* Analysis section */}
       <div className={styles.analysis}>
-        <div className={`${styles.usersAnalysis} ${styles.All}`}>
+        <div
+          className={`${styles.usersAnalysis} ${styles.All}`}
+          onClick={() => setFilters(() => ({ page: currentPage }))}
+        >
           <h3> All Users</h3>
           <div className={`${styles.usersIcon}`}>
             <FontAwesomeIcon icon={faUsers} />
           </div>
-          <p>{users.length}</p>
+          <p>{userStats.total}</p>
         </div>
         <div className={`${styles.usersAnalysis} ${styles.Active}`}>
           <h3>Active</h3>
           <div className={`${styles.usersIcon}`}>
             <FontAwesomeIcon icon={faUsers} />
           </div>
-          <p>{users.filter((user) => user.isActive).length}</p>
+          <p>{userStats.active}</p>
         </div>
         <div className={`${styles.usersAnalysis} ${styles.Deactivated}`}>
           <h3>Deactivated</h3>
           <div className={`${styles.usersIcon}`}>
             <FontAwesomeIcon icon={faUsers} />
           </div>
-          <p>{users.filter((user) => !user.isActive).length}</p>
+          <p>{userStats.deactivated}</p>
         </div>
         <div className={`${styles.usersAnalysis} ${styles.banned}`}>
           <h3>banned</h3>
           <div className={`${styles.usersIcon}`}>
             <FontAwesomeIcon icon={faUsers} />
           </div>
-          <p>{users.filter((user) => !user.isActive).length}</p>
+          <p>{userStats.banned}</p>
         </div>
       </div>
 
-      {/* Filter dropdown */}
-      {/* <select value={filter}>
-        <option value="All">All</option>
-        <option value="banned user">banned user</option>
-        <option value="Unpinned">Unpinned</option>
-        <option value="Deactivated">Deactivated</option>
-        <option value="Enrolled in courses">Enrolled in courses</option>
-        <option value="Uploaded courses">Uploaded courses</option>
-      </select> */}
+      <select onChange={(e) => handleFilterChange(e)}>
+        <option value="all">All</option>
+        <option value="banned">Banned</option>
+        <option value="deactivated">Deactivated</option>
+        <option value="enrolled">Enrolled in courses</option>
+        <option value="has_courses">Has Courses</option>
+      </select>
 
       {/* Users table */}
       <table className={styles.userTable}>
@@ -195,7 +227,7 @@ function AllUsers() {
           </tr>
         </thead>
         <tbody>
-          {currentUsers.map((user, index) => (
+          {users?.map((user, index) => (
             <tr key={user._id}>
               <td>{index + 1}</td>
               <td>{user._id}</td>
@@ -206,9 +238,8 @@ function AllUsers() {
                 {user.firstName} {user.lastName}
               </td>
               <td>{user.email}</td>
-              <td>{user.coursesEnrolledCount}</td>
+              <td>{userCourses[user._id]?.enrolled || 0}</td>
               <td>{user.coursesUploadedCount}</td>
-
               <td>
                 <div
                   className={`${styles.circle} ${
@@ -267,14 +298,13 @@ function AllUsers() {
       </table>
 
       {/* Pagination controls */}
-      <div className={styles.paginate}>
-        <Paginationn
-          noPerPage={noPerPage}
-          total={filterUsers.length}
-          paginate={handlePaginate}
-          currentPage={currentPage}
-        />
-      </div>
+      <TablePagination
+        total={total}
+        onPageChange={(page) => {
+          setCurrentPage(page);
+          setFilters((filters) => ({ ...filters, page }));
+        }}
+      />
     </div>
   );
 }

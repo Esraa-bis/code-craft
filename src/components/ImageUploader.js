@@ -2,6 +2,8 @@
 import { useState } from "react";
 import styles from "../assets/css/Profile.module.css";
 // components
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { sweetAlert } from "../services/sweetalert";
 import {
   deleteProfilePicture,
@@ -9,8 +11,6 @@ import {
   uploadProfilePicture,
 } from "../services/user";
 import ProfileSectionTitleAndDescription from "./ProfileContentTitle";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faTrashCan } from "@fortawesome/free-solid-svg-icons";
 // photos
 function ImageUploader({ user, setUser }) {
   const [file, setFile] = useState();
@@ -26,7 +26,7 @@ function ImageUploader({ user, setUser }) {
     deleteProfilePicture()
       .then((response) => {
         if (response.success) {
-          setUser({ ...user, profile_pic:undefined});
+          setUser((user) => ({ ...user, ...response.user }));
           sweetAlert({
             title: response.message,
             icon: "success",
@@ -49,7 +49,10 @@ function ImageUploader({ user, setUser }) {
   const handleUpload = (e) => {
     e.preventDefault();
     setLoading(true);
-    (user.profile_pic?.id =="Code-Craft/user/profilepics/defaults/Windows_10_Default_Profile_Picture.svg_ry6suu"? updateProfilePicture : uploadProfilePicture)({
+    (user.profile_pic?.id ===
+      "Code-Craft/user/profilepics/defaults/Windows_10_Default_Profile_Picture.svg_vz3o73"
+      ? uploadProfilePicture
+      : updateProfilePicture)({
       file,
       oldPublicId: user.profile_pic?.id,
     })
@@ -87,10 +90,7 @@ function ImageUploader({ user, setUser }) {
           onClick={handleDelete}
           disabled={loading}
         >
-          <FontAwesomeIcon
-            icon={faTrashCan}
-           
-          />
+          <FontAwesomeIcon icon={faTrashCan} />
         </button>
 
         <img

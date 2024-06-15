@@ -16,8 +16,8 @@ import LoadMore from "./LoadMore";
 import PostComment from "./PostComment";
 // for the slider
 
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
+// import "slick-carousel/slick/slick.css";
 
 function Post({
   user,
@@ -354,7 +354,7 @@ function Post({
             &nbsp;
           </button>
           <button className={styles.showCommentsButton} onClick={showModal}>
-            <FontAwesomeIcon icon={faComment} /> Comment{" "}
+            <FontAwesomeIcon icon={faComment} /> Comment
             {post?.numberOfComments}
           </button>
           {isModalOpen && (

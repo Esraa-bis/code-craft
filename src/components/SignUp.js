@@ -44,9 +44,9 @@ function SignUp({ signedIn }) {
       <div className={styles.container}>
         <h2>Sign Up</h2>
         {/* Sign in with Google button */}
-        <button type="button" className={styles.loginWithGoogleBtn}>
+        {/* <button type="button" className={styles.loginWithGoogleBtn}>
           Sign Up with Google
-        </button>
+        </button> */}
         {/* Sign up form */}
         <form
           id="signUpForm"

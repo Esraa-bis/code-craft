@@ -1,20 +1,33 @@
 import {
   faCheck,
   faStar,
+  faTrash,
   faUsers,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "../assets/css/AdminPage.module.css";
-import { approvement, disApprove, getAllCourses } from "../services/admin";
+import {
+  approvement,
+  deleteCourse,
+  disApprove,
+  getAllCourses,
+} from "../services/admin";
+import { getCoursesFilters } from "../services/course.js";
 import { sweetAlert } from "../services/sweetalert";
+import TablePagination from "./TablePagination.js";
 
 function AllCourses() {
-  const [courses, setCourses] = useState([]);
-  const [user, setUser] = useState();
-  const [error, setError] = useState(null);
+  const [courses, setCourses] = useState(() => []);
+  const [, setError] = useState(null);
   const [loaded, setLoaded] = useState(() => false);
+  const [selectedFilter, setSelectedFilter] = useState("All");
+  const [total, setTotal] = useState(0);
+  const [page, setCurrentPage] = useState(1);
+  const [, setFilters] = useState({});
+
   let loading = false;
   const setLoading = (value) => {
     loading = value;
@@ -26,6 +39,7 @@ function AllCourses() {
       .then((response) => {
         if (response.success) {
           setCourses(response.coursesWithEnrollment);
+          setTotal(() => response.coursesNum);
           setLoaded(true);
         } else {
           setError("Failed to fetch courses");
@@ -118,17 +132,101 @@ function AllCourses() {
       }
     });
   };
+  //
+  const confirmDeleteCourse = (courseID) => {
+    sweetAlert({
+      title: "Are you sure?",
+      text: "Do you want to delete this course?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willApprove) => {
+      if (willApprove) {
+        handleDeleteCourse(courseID);
+      }
+    });
+  };
+  const handleFilterChange = (e) => {
+    const value = e.target.value;
+    setSelectedFilter(value);
+  };
+
+  const filterCourses = (filters) => {
+    getCoursesFilters(filters)
+      .then((response) => {
+        if (response.success) {
+          setCourses(response.coursesWithEnrollment);
+          setTotal(() => response.coursesNum);
+        } else {
+          setError("Failed to fetch courses");
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    const filters = {
+      page,
+    };
+
+    switch (selectedFilter) {
+      case "Approved":
+        filters.isApproved = true;
+        break;
+      case "Disapproved":
+        filters.isApproved = false;
+        break;
+      case "User Enrolled":
+        filters.enrolledUsers = true;
+        break;
+      case "Users Completed":
+        filters.completedUsers = true;
+        break;
+      case "Has Edits":
+        filters.hasEdits = true;
+        break;
+      default:
+        // filters.isApproved = true; // Default filter, adjust as needed
+        break;
+    }
+    setFilters(() => {
+      filterCourses(filters);
+      return filters;
+    });
+  }, [selectedFilter]);
+
+  const handleDeleteCourse = (course) => {
+    deleteCourse(course._id)
+      .then((response) => {
+        sweetAlert({
+          title: response.message,
+          icon: response.success ? "success" : "error",
+        });
+        if (response.success) {
+          setCourses((prevCoupons) =>
+            prevCoupons.filter((c) => c._id !== course._id)
+          );
+        }
+      })
+      .catch((error) => {
+        sweetAlert({ title: error.message, icon: "error" });
+      });
+  };
   return (
     <div className={styles.allCourses}>
       {/* Filter dropdown */}
-      {/* <select>
+      <select onChange={handleFilterChange}>
         <option value="All">All</option>
         <option value="Approved">Approved</option>
         <option value="Disapproved">Disapproved</option>
-        <option value="banned">banned</option>
         <option value="User Enrolled">User Enrolled</option>
-        <option value="Enrolled in courses">Users Completed</option>
-      </select> */}
+        <option value="Users Completed">Users Completed</option>
+        <option value="Has Edits">Has Edits</option>
+      </select>
       <table className={styles.courseTable}>
         <thead>
           <tr>
@@ -151,6 +249,7 @@ function AllCourses() {
             <th>Uploaded Date</th>
             <th>Course Status</th>
             <th>Action</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -158,8 +257,13 @@ function AllCourses() {
             <tr key={course._id}>
               <td>{index + 1}</td>
               <td title={course._id}>{course._id}</td>
-
-              <td title={course.courseName}>{course.courseName}</td>
+              <td title={course.courseName}>
+                <Link
+                  to={`/ReviewCourse?courseId=${course?._id}&slug=${course.slug}`}
+                >
+                  {course.courseName}
+                </Link>
+              </td>
               <td>{course.enrolledUsers || 0} User</td>
               <td>{course.completedUsers || 0} User</td>
               <td className={styles.rating}>
@@ -173,7 +277,6 @@ function AllCourses() {
               </td>
               <td>{course.appliedPrice} EGP</td>
               <td>{course.createdAt}</td>
-
               <td>
                 {course.isApproved === true && (
                   <div className={`${styles.circle} ${styles.green}`}></div>
@@ -210,12 +313,34 @@ function AllCourses() {
                   </button>
                 )}
               </td>
+              <td>
+                <button
+                  className={styles.deleteBtn}
+                  onClick={() => {
+                    {
+                      confirmDeleteCourse(course);
+                    }
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
-
       {/* Render the Pagination component */}
+      <TablePagination
+        total={total}
+        onPageChange={(page) => {
+          setCurrentPage(page);
+          setFilters((f) => {
+            const filters = { ...f, page };
+            filterCourses(filters);
+            return filters;
+          });
+        }}
+      />
     </div>
   );
 }
