@@ -54,7 +54,7 @@ function LogoAndArabicBtn() {
     <>
       <section className="LogoAndArabicBtn">
         <img src={Logo} alt="code craft logo" className="logo w-6 h-6" />
-        <div class="custom-select" tabindex="0">
+        {/* <div class="custom-select" tabindex="0">
           <div class="select-selected" tabindex="0">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +80,7 @@ function LogoAndArabicBtn() {
               English
             </button>
           </div>
-        </div>
+        </div> */}
         {/* <div className="dropdown">
           <button
             className="btn btn-secondary dropdown-toggle lang-btn"
