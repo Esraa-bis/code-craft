@@ -221,3 +221,15 @@ export async function freeEnroll(courseId) {
 
   return response.json();
 }
+// free enrollment
+export async function EnrollUserInCourse(courseId, email) {
+  const response = await fetch(`${BASE_URL}/Enroll/${courseId}/freeEnroll`, {
+    method: "POST",
+    headers: {
+      token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
+    },
+    body: email,
+  });
+
+  return response.json();
+}
