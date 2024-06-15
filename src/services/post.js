@@ -23,8 +23,10 @@ export const createPost = async (content, images) => {
   return response.json();
 };
 
-export const getPosts = async (skip) => {
-  const response = await fetch(`${BASE_URL}/Post?skip=${skip}`, {
+export const getPosts = async (skip, userId) => {
+  let queryString = `?skip=${skip}`;
+  if (userId) queryString += `&addedBy=${userId}`;
+  const response = await fetch(`${BASE_URL}/Post${queryString}`, {
     method: "GET",
     headers: {
       token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,

@@ -66,9 +66,9 @@
 
 .discussion .replies {
   /* margin-left: 60px; */
-  margin-top: 20px;
+  /* margin-top: 20px;
   max-height: 300px;
-  overflow: auto;
+  overflow: auto; */
 }
 
 .discussion .replies .comment {
@@ -190,16 +190,17 @@
   background-color: rgba(0, 0, 0, 0.537);
 }
 
-.modalContent {
+/* .modalContent {
   background-color: #fefefe;
   margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+  width: 60%;
   max-width: 500px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+
+  /* height: 90%; */
 
 .closeButton {
   color: #aaa;
@@ -294,11 +295,12 @@
   background-color: #fefefe;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
-  max-width: 500px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: relative;
+
+  width: 65%;
+  overflow: hidden;
 }
 
 .closeButton {
@@ -318,7 +320,7 @@
 }
 
 .replies {
-  max-height: 300px;
+  height: 90%;
   overflow-y: auto;
   margin-bottom: 10px;
 }
@@ -436,12 +438,6 @@
   z-index: 9999; /* Ensure the modal appears above other content */
 }
 
-.modalContent {
-  max-width: 90%;
-  max-height: 90%;
-  overflow: hidden;
-}
-
 .modalContent img {
   max-width: 90%;
   max-height: 90%;
@@ -469,4 +465,10 @@
 
 .image:hover {
   transform: scale(1.05); /* Scale up the image on hover */
+}
+.myPosts {
+  border: 1px solid gray;
+  padding: 10px;
+  margin: 2px 0 10px 0;
+  border-radius: 21px;
 }

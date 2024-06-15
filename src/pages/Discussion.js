@@ -20,6 +20,7 @@ function Discussion({ user, signedIn }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // for images
   const [images, setImages] = useState([]);
+  const [filters, setFilters] = useState({ skip: 0, userId: null });
 
   const updateExistingPost = (post) => {
     setPosts((posts) => {
@@ -93,16 +94,19 @@ function Discussion({ user, signedIn }) {
     });
   };
 
-  const loadPosts = () => {
+  const loadPosts = (reset = false) => {
     if (loadingPosts) return;
     setLoadingPosts(true);
-    getPosts(posts.length)
+    getPosts(reset ? filters.skip : posts.length, filters.userId)
       .then((response) => {
         if (response.success) {
           setPosts((oldPosts) => {
-            const posts = [...oldPosts];
-            posts.push(...response.posts);
-            return posts;
+            if (!reset) {
+              const posts = [...oldPosts];
+              posts.push(...response.posts);
+              return posts;
+            }
+            return response.posts;
           });
           setCount(() => response.count);
           getLikes(response.posts);
@@ -128,8 +132,8 @@ function Discussion({ user, signedIn }) {
   };
 
   useEffect(() => {
-    loadPosts();
-  }, []);
+    loadPosts(true);
+  }, [filters]);
 
   const showForm = () => {
     setIsModalOpen(true);
@@ -148,12 +152,31 @@ function Discussion({ user, signedIn }) {
       <h1>Community</h1>
       <div>
         {signedIn && (
-          <div className={styles.newPost}>
-            <img src={user?.profile_pic?.url} />
-            <button className={styles.showFormButton} onClick={showForm}>
-              <FontAwesomeIcon icon={faPenToSquare} /> Add New Post
+          <>
+            <div className={styles.newPost}>
+              <img src={user?.profile_pic?.url} />
+              <button className={styles.showFormButton} onClick={showForm}>
+                <FontAwesomeIcon icon={faPenToSquare} /> Add New Post
+              </button>
+            </div>
+            <button
+              className={styles.myPosts}
+              onClick={() => {
+                setFilters(() => ({ userId: null, skip: 0 }));
+              }}
+            >
+              All
             </button>
-          </div>
+            &nbsp;&nbsp;
+            <button
+              className={styles.myPosts}
+              onClick={() => {
+                setFilters(() => ({ userId: user._id || user.id, skip: 0 }));
+              }}
+            >
+              My Posts
+            </button>
+          </>
         )}
         {isModalOpen && (
           <div className={styles.modal} id="postModal">
