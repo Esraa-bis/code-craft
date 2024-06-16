@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import styles from "../assets/css/Discussion.module.css";
 import { addPostComment, getPostComments } from "../services/comment";
+import { checkLogin } from "../services/generalFunctions";
 import { doesUserLikeComments, likePost } from "../services/like";
 import { deletePost, editPost } from "../services/post";
 import { sweetAlert } from "../services/sweetalert";
@@ -26,6 +27,7 @@ function Post({
   onPostDeleted,
   setPostsLikes,
   liked,
+  signedIn,
 }) {
   const [postComments, setPostComments] = useState(() => ({
     comments: [],
@@ -257,16 +259,8 @@ function Post({
   };
   // to handle open images
 
-  const visibleImages = post.images.slice(0, 4); // Display the first 4 images
-  const hiddenImages = post.images.slice(4); // Additional images hidden
   return (
     <div key={post?._id} className={`${styles.comment} ${styles.main}`}>
-      {/* <div className={styles.userAvatar}>
-        <img
-          src={post.addedBy?.profile_pic?.url}
-          alt={`${post.addedBy?.firstName} ${post.addedBy?.lastName}`}
-        />
-      </div> */}
       <div className={styles.commentDetails}>
         <div className={styles.mainData}>
           <div className="flex align-items-center justify-content-between">
@@ -341,7 +335,14 @@ function Post({
         </div>
 
         <div className={styles.interActions}>
-          <button className={styles.likes} onClick={() => onLikeButtonClick()}>
+          <button
+            className={styles.likes}
+            onClick={() => {
+              if (checkLogin(signedIn)) {
+                onLikeButtonClick();
+              }
+            }}
+          >
             {postLiked ? (
               <span className={styles.postLiked}>
                 <FontAwesomeIcon icon={faThumbsUp} />
@@ -354,6 +355,7 @@ function Post({
             )}
             &nbsp;
           </button>
+
           <button className={styles.showCommentsButton} onClick={showModal}>
             <FontAwesomeIcon icon={faComment} /> Comment
             {post?.numberOfComments}
@@ -380,6 +382,7 @@ function Post({
                         updateExistingComment={updateExistingComment}
                         liked={likedComments}
                         setCommentLikes={setLikedComments}
+                        signedIn={signedIn}
                       />
                     ))
                   )}
@@ -406,7 +409,11 @@ function Post({
                     <button
                       type="button"
                       className="commentBtn"
-                      onClick={() => onReplyButtonClick(post?._id)}
+                      onClick={() => {
+                        if (checkLogin(signedIn)) {
+                          onReplyButtonClick(post?._id);
+                        }
+                      }}
                     >
                       Comment
                     </button>

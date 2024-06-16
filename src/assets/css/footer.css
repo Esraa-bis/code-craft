@@ -144,7 +144,7 @@
   position: absolute;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
-  z-index: 99;
+  z-index: 1;
   width: 100%;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   border-radius: 4px;

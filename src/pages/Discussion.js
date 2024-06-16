@@ -224,6 +224,7 @@ function Discussion({ user, signedIn }) {
             onPostDeleted={onPostDeleted}
             liked={liked}
             setPostsLikes={setLiked}
+            signedIn={signedIn}
           />
         );
       })}
