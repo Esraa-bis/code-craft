@@ -1,15 +1,27 @@
 // styles
 import styles from "../assets/css/Profile.module.css";
-import { deleteAccount } from "../services/auth";
+import { logOut } from "../services/auth";
 import { SessionTokenStorage } from "../services/local-storage";
 import { sweetAlert } from "../services/sweetalert";
 // components
 import ProfileSectionTitleAndDescription from "./ProfileContentTitle";
 
 function DeleteProfile({ setSignedIn, user }) {
-  const handleDeleteAccount = async (e) => {
-    e.preventDefault();
-    deleteAccount()
+  const confirmDeactivate = () => {
+    sweetAlert({
+      title: "Are you sure?",
+      text: "Do you want to deactivate your account?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willApprove) => {
+      if (willApprove) {
+        handleLogout();
+      }
+    });
+  };
+  const handleLogout = async (e) => {
+    logOut()
       .then((response) => {
         if (response.success !== true) {
           sweetAlert({
@@ -34,14 +46,13 @@ function DeleteProfile({ setSignedIn, user }) {
       />
       <div className={styles.DeleteProfile}>
         <div className={styles.WarningText}>
-          <span className={styles.Warning}>Warning:</span> If you close your
-          account, you will be unsubscribed from your 1 course, and will lose
-          access forever.
+          <span className={styles.Warning}>Warning:</span> are you sure you want
+          to deactivate your account
         </div>
         <button
           type="submit"
           className={styles.submitButton}
-          onClick={handleDeleteAccount}
+          onClick={confirmDeactivate}
         >
           Deactivate Account
         </button>

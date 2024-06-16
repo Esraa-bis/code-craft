@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import styles from "../assets/css/courses.module.css";
 import CourseCard from "../components/CourseCard";
+import TablePagination from "../components/TablePagination.js";
 import { getCoursesFilters } from "../services/course";
 import { convertMinutes } from "../services/generalFunctions.js";
 import CourseFilters from "./CourseFilters.js";
@@ -11,6 +12,8 @@ import CourseFilters from "./CourseFilters.js";
 function Courses({ signedIn, keyword }) {
   const [courses, setCourses] = useState([]);
   const [error, setError] = useState(null);
+  const [total, setTotal] = useState(0);
+  const [page, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState(() => ({
     categories: [],
     level: [],
@@ -21,13 +24,14 @@ function Courses({ signedIn, keyword }) {
   const setLoading = (value) => {
     loading = value;
   };
-  useEffect(() => {
-    if (loading) return;
+
+  const filterCourses = () => {
     setLoading(() => true);
-    getCoursesFilters({ ...filters, keyword })
+    getCoursesFilters({ ...filters, keyword, page })
       .then((response) => {
         if (response.success) {
           setCourses(response.coursesWithEnrollment);
+          setTotal(() => response.total);
         } else {
           setError("Failed to fetch courses");
         }
@@ -37,6 +41,10 @@ function Courses({ signedIn, keyword }) {
         setError(err.message);
         setLoading(() => false);
       });
+  };
+  useEffect(() => {
+    if (loading) return;
+    filterCourses();
   }, [filters, keyword]);
   //
   //
@@ -52,7 +60,6 @@ function Courses({ signedIn, keyword }) {
       </button>
       <section className={styles.CoursesFilters}>
         {/* filter section */}
-
         <CourseFilters
           filters={filters}
           setFilters={setFilters}
@@ -77,6 +84,17 @@ function Courses({ signedIn, keyword }) {
           ))}
         </div>
       </section>
+      <TablePagination
+        total={total}
+        onPageChange={(page) => {
+          setCurrentPage(page);
+          setFilters((f) => {
+            const filters = { ...f, page };
+            filterCourses(filters);
+            return filters;
+          });
+        }}
+      />
     </>
   );
 }

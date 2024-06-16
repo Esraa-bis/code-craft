@@ -14,16 +14,19 @@ function TablePagination({ total, onPageChange }) {
       const pages = Math.ceil(total / itemsPerPage);
       setNextDisabled(() => pages === currentPage);
       setPreviousDisabled(() => currentPage === 1);
+      setPages(() => (pages > 0 ? [...Array(pages)] : []));
       return pages;
     });
-    setPages(() => (total > 0 ? [...Array(total)] : []));
   }, [total]);
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage((page) => {
-        onPageChange(page + 1);
-        return page + 1;
+        const nextPage = page + 1;
+        setNextDisabled(() => totalPages === nextPage);
+        setPreviousDisabled(() => nextPage === 1);
+        onPageChange(nextPage);
+        return nextPage;
       });
     }
   };
@@ -31,7 +34,10 @@ function TablePagination({ total, onPageChange }) {
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage((page) => {
-        onPageChange(page - 1);
+        const prevPage = Math.max(1, page - 1);
+        setNextDisabled(() => totalPages === prevPage);
+        setPreviousDisabled(() => prevPage === 1);
+        onPageChange(prevPage);
         return page - 1;
       });
     }
@@ -39,6 +45,8 @@ function TablePagination({ total, onPageChange }) {
 
   const handlePageClick = (pageNumber) => {
     setCurrentPage(() => {
+      setNextDisabled(() => totalPages === pageNumber);
+      setPreviousDisabled(() => pageNumber === 1);
       onPageChange(pageNumber);
       return pageNumber;
     });

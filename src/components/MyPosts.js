@@ -76,6 +76,7 @@ function MyPosts({ user, signedIn }) {
   };
 
   const getLikes = (posts) => {
+    if (!user?.id && !user?._id) return;
     const ids = posts.map((p) => p._id);
     if (ids.length === 0) return;
     doesUserLikePosts(posts.map((p) => p.id || p._id)).then((response) => {
@@ -145,7 +146,7 @@ function MyPosts({ user, signedIn }) {
   };
   return (
     <div className={styles.discussion}>
-      <h1>Community</h1>
+      s{/* <h1>Community</h1> */}
       <div>
         {signedIn && (
           <div className={styles.newPost}>
@@ -209,7 +210,6 @@ function MyPosts({ user, signedIn }) {
         plural="posts"
         onLoadMoreClick={() => loadPosts()}
       />
-
       {/* <!-- Add more comments here if needed --> */}
     </div>
   );

@@ -246,6 +246,7 @@ function Checkout() {
               type="text"
               placeholder="Add your voucher code here"
               className={styles.CouponInput}
+              onChange={(event) => updateFormData(event, "couponCode")}
             />
             <button
               type="submit"

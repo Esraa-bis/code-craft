@@ -39,7 +39,7 @@ function AllCourses() {
       .then((response) => {
         if (response.success) {
           setCourses(response.coursesWithEnrollment);
-          setTotal(() => response.coursesNum);
+          setTotal(() => response.total);
           setLoaded(true);
         } else {
           setError("Failed to fetch courses");
@@ -156,7 +156,7 @@ function AllCourses() {
       .then((response) => {
         if (response.success) {
           setCourses(response.coursesWithEnrollment);
-          setTotal(() => response.coursesNum);
+          setTotal(() => response.total);
         } else {
           setError("Failed to fetch courses");
         }

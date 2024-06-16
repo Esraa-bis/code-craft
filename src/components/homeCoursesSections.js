@@ -1,7 +1,4 @@
 // for translate into arabic
-import i18n from "i18next";
-import cookies from "js-cookie";
-import { useEffect } from "react";
 //
 import "../assets/css/HomeCoursesSections.css";
 import CourseCard from "./CourseCard";
@@ -102,11 +99,6 @@ const breakpoints = {
 };
 
 function HomeCoursesSections({ sectionTitle, courses, signedIn }) {
-  // const { t } = useTranslation();
-  const lng = cookies.get("i18next") || "en";
-  useEffect(() => {
-    window.document.dir = i18n.dir();
-  }, [lng]);
   return (
     <section className="HomeCoursesSections">
       <h2 className="section-title">{sectionTitle}</h2>
