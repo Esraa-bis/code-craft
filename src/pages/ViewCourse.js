@@ -106,6 +106,7 @@ function ViewCourse({ user }) {
   function formatIndex(index) {
     return `#${index.toString().padStart(2, "0")}`;
   }
+
   // handle add to cart
   async function handleAddToCart(courseID) {
     try {
@@ -157,7 +158,6 @@ function ViewCourse({ user }) {
   };
 
   // free enrollment
-  // handle add to cart
   async function handleFreeEnroll(courseID) {
     try {
       const response = await freeEnroll(courseID);

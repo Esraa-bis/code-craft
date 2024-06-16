@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import styles from "../assets/css/Discussion.module.css";
 import { deletePostComment, editPostComment } from "../services/comment";
+import { checkLogin } from "../services/generalFunctions";
 import { likeComment } from "../services/like";
 import { sweetAlert } from "../services/sweetalert";
 import CreatedSince from "./CreatedSince";
@@ -14,6 +15,7 @@ function PostComment({
   updateExistingComment,
   liked,
   setCommentLikes,
+  signedIn,
 }) {
   const [editing, setEditing] = useState(() => false);
   const [editingValue, setEditingValue] = useState(() => "");
@@ -121,7 +123,7 @@ function PostComment({
   };
 
   return (
-    <div className={styles.comment} key={comment._id}>
+    <div className={styles.comment}>
       <div className={styles.userAvatar}>
         <img
           src={comment.addedBy?.profile_pic?.url}
@@ -134,7 +136,7 @@ function PostComment({
             <h3>{`${comment.addedBy?.firstName} ${comment.addedBy?.lastName}`}</h3>
             <CreatedSince timestamp={comment.createdAt}></CreatedSince>
           </div>
-          {comment.addedBy._id === user?.id && (
+          {comment.addedBy?._id === user?.id && (
             <div>
               <button
                 type="button"
@@ -181,7 +183,14 @@ function PostComment({
           </>
         )}
         {!editing && <p className={styles.content}>{comment.content}</p>}
-        <p className={styles.likes} onClick={() => onLikeButtonClick()}>
+        <p
+          className={styles.likes}
+          onClick={() => {
+            if (checkLogin(signedIn)) {
+              onLikeButtonClick();
+            }
+          }}
+        >
           {comment.numberOfLikes}&nbsp;
           {commentLiked
             ? "Unlike"

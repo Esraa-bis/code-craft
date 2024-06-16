@@ -27,7 +27,7 @@ function Navbar({ signedIn, setSignedIn, user, keyword, setKeyword }) {
       <Logo />
       <CoursesLink />
       <SearchBar keyword={keyword} setKeyword={setKeyword} />
-      <DiscussionsLink />
+      <DiscussionsLink signedIn={signedIn} />
       {signedIn ? (
         <UserBasicsInNav
           signedIn={signedIn}

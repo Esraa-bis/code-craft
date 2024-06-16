@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// for translate into arabic
 // imported components
 import HeroSection from "./heroSection.js";
 import HomeCoursesSections from "./homeCoursesSections.js";

@@ -1,7 +1,7 @@
 import { BASE_URL, BEARER_KEY } from "./api";
 import { SessionTokenStorage } from "./local-storage";
 
-export const getPostComments = async (postId, skip) => {
+export const getPostComments = async (postId, skip, user) => {
   const response = await fetch(
     `${BASE_URL}/Comment/all?postId=${postId}&skip=${skip}&limit=10`,
     {
