@@ -33,7 +33,7 @@ function SearchBar({ setKeyword }) {
         type="text"
         // Conditionally add the "show" class based on the isSearchVisible state
         className={`search-input ${isSearchVisible ? "show" : ""} `}
-        placeholder="searchPlaceHolder"
+        placeholder="Search...."
       />
       <button
         type="button"
