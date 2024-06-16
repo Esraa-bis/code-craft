@@ -1,49 +1,16 @@
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import i18n from "i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
-import HttpApi from "i18next-http-backend";
-import cookies from "js-cookie";
-import { useEffect, useState } from "react";
-import { initReactI18next, useTranslation } from "react-i18next";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../assets/css/CourseCard.css";
 import { addToCart } from "../services/course";
 import { checkLogin } from "../services/generalFunctions";
 import { sweetAlert } from "../services/sweetalert";
 
-i18n
-  .use(LanguageDetector)
-  .use(HttpApi)
-  .use(initReactI18next)
-  .init({
-    fallbackLng: "en",
-    detection: {
-      order: [
-        "htmlTag",
-        "cookie",
-        "localStorage",
-        "sessionStorage",
-        "navigator",
-        "path",
-        "subdomain",
-      ],
-      caches: ["localStorage", "cookie"],
-    },
-    backend: {
-      loadPath: "/locales/{{lng}}/{{ns}}.json",
-    },
-  });
-
 export default function CourseCard({ course, signedIn }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(() => false);
-  // for arabic language
-  const { t } = useTranslation();
-  const lng = cookies.get("i18next") || "en";
-  useEffect(() => {
-    window.document.dir = i18n.dir();
-  }, [lng]);
+
   // for add to cart api calling
   // handle add to cart
   async function handleAddToCart(courseId) {
@@ -128,7 +95,7 @@ export default function CourseCard({ course, signedIn }) {
                     }
                   }}
                 >
-                  {t("Add to Cart")}
+                  Add to Cart
                 </button>
               ) : (
                 ""

@@ -1,17 +1,7 @@
-import i18n from "i18next";
-import cookies from "js-cookie";
-import React, { useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import React from "react";
 import { Link } from "react-router-dom";
 import "../assets/css/navcourses.css";
 function CoursesDropDownNavMenu() {
-  const { t } = useTranslation();
-  const lng = cookies.get("i18next") || "en";
-
-  useEffect(() => {
-    window.document.dir = i18n.dir();
-  }, [lng]);
-
   // Define an array of programs
   const programs = [
     { name: "Frontend", route: "/program1" },
@@ -32,7 +22,7 @@ function CoursesDropDownNavMenu() {
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        {t("Courses")}
+        Courses
       </button>
       <ul className="dropdown-menu">
         {programs?.map((program, index) => (
