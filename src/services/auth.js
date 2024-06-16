@@ -87,7 +87,7 @@ export async function checkCode({ forgetCode, email }) {
 
   return response.json();
 }
-// reset passwprd
+// reset password
 export async function resetPassword({ email, password, confirmpassword }) {
   const response = await fetch(
     `${BASE_URL}/Auth//resetPassword/?` +
