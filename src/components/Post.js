@@ -16,8 +16,8 @@ import LoadMore from "./LoadMore";
 import PostComment from "./PostComment";
 // for the slider
 
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
+// import "slick-carousel/slick/slick.css";
 
 function Post({
   user,
