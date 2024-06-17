@@ -37,6 +37,7 @@ function AllUsers() {
   const setLoading = (value) => {
     loading = value;
   };
+
   const getUsers = () => {
     getAllUsers(filters)
       .then((response) => {
@@ -85,6 +86,10 @@ function AllUsers() {
       const response = await banAccount(user.id);
 
       if (response.success) {
+        sweetAlert({
+          title: response.message,
+          icon: "success",
+        });
         setUsers((prevUsers) =>
           prevUsers?.map((u) =>
             u.id === user.id
@@ -106,13 +111,30 @@ function AllUsers() {
       sweetAlert({ title: error.message, icon: "error" });
     }
   };
-
+  // Confirmation before ban user
+  const confirmBanUser = (User) => {
+    sweetAlert({
+      title: "Are you sure?",
+      text: "Do you want to ban this user?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willApprove) => {
+      if (willApprove) {
+        handleBanUser(User);
+      }
+    });
+  };
   // Handle enable account
   const handleEnableAccount = async (user) => {
     try {
       const response = await enableAccount(user.id);
 
       if (response.success) {
+        sweetAlert({
+          title: response.message,
+          icon: "success",
+        });
         setUsers((prevUsers) =>
           prevUsers?.map((u) =>
             u.id === user.id
@@ -135,6 +157,20 @@ function AllUsers() {
     }
   };
 
+  // Confirmation before enable user
+  const confirmEnableUser = (user) => {
+    sweetAlert({
+      title: "Are you sure?",
+      text: "Do you want to enable this user?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willApprove) => {
+      if (willApprove) {
+        handleEnableAccount(user);
+      }
+    });
+  };
   const handleFilterChange = (e) => {
     switch (e.target.value) {
       case "all":
@@ -272,7 +308,7 @@ function AllUsers() {
                 {user.isBanned ? (
                   <button
                     onClick={() => {
-                      handleEnableAccount(user);
+                      confirmEnableUser(user);
                     }}
                     className={styles.enable}
                   >
@@ -283,7 +319,7 @@ function AllUsers() {
                 ) : (
                   <button
                     onClick={() => {
-                      handleBanUser(user);
+                      confirmBanUser(user);
                     }}
                     title="Ban user"
                     className={styles.Ban}
