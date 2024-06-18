@@ -18,9 +18,9 @@ import TablePagination from "./TablePagination";
 
 function AllUsers() {
   const [users, setUsers] = useState([]);
-  const [, setError] = useState(null); // Tracks any errors
+  const [error, setError] = useState(null); // Tracks any errors
   const [currentPage, setCurrentPage] = useState(1); // Tracks the current page for pagination
-  const [, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const [total, setTotal] = useState(0);
   const [filters, setFilters] = useState(() => ({ page: 1 }));
   const [userStats, setUsersStats] = useState(() => {
@@ -68,7 +68,7 @@ function AllUsers() {
         setTotal(() => response.stats?.total);
       }
     });
-  });
+  }, []);
 
   // Handle ban account
   const handleBanUser = async (user) => {

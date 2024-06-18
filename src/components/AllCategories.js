@@ -6,7 +6,7 @@ import { sweetAlert } from "../services/sweetalert";
 function AllCategories() {
   const [formData, setFormData] = useState({});
   const [categories, setCategories] = useState([]);
-  const [, setError] = useState(null);
+  const [error, setError] = useState(null);
   const [loaded, setLoaded] = useState(false);
 
   async function handleSubmit(e) {
@@ -71,7 +71,7 @@ function AllCategories() {
         setError(err.message);
         setLoading(false);
       });
-  });
+  }, []);
 
   function updateFormData(event, fieldName) {
     setFormData({ ...formData, [fieldName]: event.target.value });

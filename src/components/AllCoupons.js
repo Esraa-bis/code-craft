@@ -11,9 +11,10 @@ const setLoading = (value) => {
 };
 
 function AllCoupons() {
-  const [, setError] = useState(null);
+  const [error, setError] = useState(null);
   const [formData, setFormData] = useState({});
   const [coupons, setCoupons] = useState([]);
+
   const updateFormData = (event, fieldName) => {
     setFormData({ ...formData, [fieldName]: event.target.value });
   };
@@ -94,7 +95,7 @@ function AllCoupons() {
         setError(err.message);
         setLoading(false);
       });
-  });
+  }, []);
 
   return (
     <div className={styles.coupons}>

@@ -50,7 +50,7 @@ function AllCourses() {
         setError(err.message);
         setLoading(false);
       });
-  });
+  }, []);
 
   const updateCourseStatus = (courseID, isApproved) => {
     setCourses(

@@ -39,6 +39,7 @@ function Post({
   const [postLiked, setPostLiked] = useState(
     () => liked?.indexOf(post?._id) >= 0
   );
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null);
 
   const [likedComments, setLikedComments] = useState(() => []);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,7 +48,7 @@ function Post({
   }, [liked, post]);
   useEffect(() => {
     onLoadRepliesButtonClick(post?._id);
-  });
+  }, []);
   const onReplyInputChange = (value) => {
     setReplyToPost(() => value);
   };

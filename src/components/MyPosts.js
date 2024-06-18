@@ -130,7 +130,7 @@ function MyPosts({ user, signedIn }) {
 
   useEffect(() => {
     loadPosts();
-  });
+  }, []);
 
   const showForm = () => {
     setIsModalOpen(true);
