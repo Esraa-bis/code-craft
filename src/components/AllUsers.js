@@ -15,6 +15,7 @@ import {
 } from "../services/admin";
 import { sweetAlert } from "../services/sweetalert";
 import TablePagination from "./TablePagination";
+
 function AllUsers() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null); // Tracks any errors
@@ -69,13 +70,10 @@ function AllUsers() {
   }, [filters]);
 
   useEffect(() => {
-    if (loading || loaded) return;
-    setLoading(true);
-    getUsers();
     getUsersStats().then((response) => {
       if (response.success) {
         setUsersStats(() => response.stats);
-        setTotal(() => response.total);
+        setTotal(() => response.stats?.total);
       }
     });
   }, []);
