@@ -14,6 +14,7 @@ export async function addCategory({ name }) {
 
   return response.json();
 }
+
 // Get All Categories
 export async function getAllCategories() {
   const response = await fetch(`${BASE_URL}/Category/getAllCategories`, {

@@ -19,7 +19,7 @@ const TeachOnCodeCraft = ({ edit }) => {
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [submited, setSubmited] = useState(false);
+  const [submited, setSubmitted] = useState(false);
   const [courseId, setCourseId] = useState("");
   const [formData, setFormData] = useState({});
   const [course, setCourse] = useState(null);
@@ -53,7 +53,7 @@ const TeachOnCodeCraft = ({ edit }) => {
       const response = await uploadCourseInfo(formData);
       if (response.success) {
         setCourseId(encodeURIComponent(response.data.id));
-        setSubmited(true);
+        setSubmitted(true);
         sweetAlert({
           title: response.message,
           icon: "success",
@@ -129,7 +129,7 @@ const TeachOnCodeCraft = ({ edit }) => {
       const response = await updateCourseInfo(changes.value, editCourseId);
       if (response.success) {
         setCourseId(encodeURIComponent(response.data.id));
-        setSubmited(true);
+        setSubmitted(true);
         sweetAlert({
           title: response.message,
           icon: "success",
@@ -151,16 +151,16 @@ const TeachOnCodeCraft = ({ edit }) => {
     }
   }
 
-  function updateFormData(event, fieldname) {
-    if (fieldname === "courseImage") {
+  function updateFormData(event, fieldName) {
+    if (fieldName === "courseImage") {
       setFormData((formData) => ({
         ...formData,
-        [fieldname]: event.target.files[0],
+        [fieldName]: event.target.files[0],
       }));
     } else {
       setFormData((formData) => ({
         ...formData,
-        [fieldname]: event.target.value,
+        [fieldName]: event.target.value,
       }));
     }
   }

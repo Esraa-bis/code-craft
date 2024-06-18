@@ -37,12 +37,12 @@ function ContactUs() {
     }
   }
 
-  function updateFormData(event, fieldname) {
+  function updateFormData(event, fieldName) {
     const value =
-      fieldname === "file" ? event.target.files[0] : event.target.value;
+      fieldName === "file" ? event.target.files[0] : event.target.value;
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [fieldname]: value,
+      [fieldName]: value,
     }));
   }
 
