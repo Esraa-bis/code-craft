@@ -67,8 +67,8 @@ export default MyLearning;
 
 function RecentlyViewed() {
   const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [, setLoading] = useState(true);
+  const [, setError] = useState(null);
 
   useEffect(() => {
     recentlyViewed()
@@ -84,7 +84,8 @@ function RecentlyViewed() {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  });
+
   return (
     <section className={styles.Section}>
       {courses?.map((course, index) => (
@@ -113,8 +114,8 @@ function RecentlyViewed() {
 }
 function Enrollments() {
   const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [, setLoading] = useState(true);
+  const [, setError] = useState(null);
 
   useEffect(() => {
     inProgress()
@@ -130,7 +131,7 @@ function Enrollments() {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  });
 
   return (
     <section className={styles.Section}>
@@ -173,8 +174,8 @@ function Enrollments() {
 }
 function InProgress() {
   const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [, setLoading] = useState(true);
+  const [, setError] = useState(null);
 
   useEffect(() => {
     const filters = {
@@ -194,7 +195,8 @@ function InProgress() {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  });
+
   return (
     <section className={styles.Section}>
       {courses?.map((course, index) => (
@@ -240,8 +242,8 @@ function InProgress() {
 
 function Completed() {
   const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [, setLoading] = useState(true);
+  const [, setError] = useState(null);
 
   useEffect(() => {
     const filters = {
@@ -261,7 +263,8 @@ function Completed() {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  });
+
   return (
     <section className={styles.Section}>
       {courses?.map((course, index) => (

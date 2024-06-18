@@ -69,7 +69,7 @@ function CourseFilters({ setFilters, filtersVisible }) {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  });
   //
   //
   // const [filtersVisible, setFiltersVisible] = useState(false);

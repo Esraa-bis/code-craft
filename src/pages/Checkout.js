@@ -54,7 +54,8 @@ function Checkout() {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  });
+
   useEffect(() => {
     if (cartId) return;
     setLoading(true);

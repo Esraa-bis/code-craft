@@ -6,11 +6,9 @@ import { addCoupon, deleteCoupon, getAllCoupons } from "../services/admin";
 import { sweetAlert } from "../services/sweetalert";
 
 function AllCoupons() {
-  const [error, setError] = useState(null);
+  const [, setError] = useState(null);
   const [formData, setFormData] = useState({});
   const [coupons, setCoupons] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const noPerPage = 10;
   const updateFormData = (event, fieldname) => {
     setFormData({ ...formData, [fieldname]: event.target.value });
   };
@@ -96,7 +94,7 @@ function AllCoupons() {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  });
 
   return (
     <div className={styles.coupons}>

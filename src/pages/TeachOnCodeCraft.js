@@ -44,7 +44,7 @@ const TeachOnCodeCraft = ({ edit }) => {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  });
 
   async function handleUploadCourseInfo(e) {
     e.preventDefault();

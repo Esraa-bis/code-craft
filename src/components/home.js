@@ -13,8 +13,8 @@ function Home({ signedIn }) {
   const [mostPopular, setMostPopular] = useState([]);
   const [recentlyAdded, setRecentlyAdded] = useState([]);
   const [freeCourses, setFreeCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [, setLoading] = useState(true);
+  const [, setError] = useState(null);
 
   //  for recommended for you
   useEffect(() => {
@@ -31,7 +31,7 @@ function Home({ signedIn }) {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  });
 
   // for  recently added
   useEffect(() => {
@@ -54,7 +54,7 @@ function Home({ signedIn }) {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  });
 
   // for  free courses
   useEffect(() => {
@@ -77,7 +77,7 @@ function Home({ signedIn }) {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  });
 
   // for most popular
   useEffect(() => {
@@ -98,7 +98,7 @@ function Home({ signedIn }) {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  });
 
   return (
     <>
