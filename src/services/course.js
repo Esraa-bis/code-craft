@@ -228,7 +228,7 @@ export async function EnrollUserInCourse(courseId, email) {
     headers: {
       token: `${BEARER_KEY}${SessionTokenStorage.getToken()}`,
     },
-    body: email,
+    body: JSON.stringify({ email }),
   });
 
   return response.json();
