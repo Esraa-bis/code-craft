@@ -51,10 +51,10 @@ function EditProfileForm({ user, setUser }) {
       });
   };
 
-  function updateFormData(event, fieldname) {
+  function updateFormData(event, fieldName) {
     setFormData((formData) => ({
       ...formData,
-      [fieldname]: event.target.value,
+      [fieldName]: event.target.value,
     }));
   }
 

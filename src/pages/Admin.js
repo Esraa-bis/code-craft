@@ -36,18 +36,15 @@ function Admin({ signedIn, setSignedIn, user }) {
       });
   }
 
-  function updateFormData(event, fieldname) {
-    setFormData({ ...formData, [fieldname]: event.target.value });
+  function updateFormData(event, fieldName) {
+    setFormData({ ...formData, [fieldName]: event.target.value });
   }
-  
+
   return (
- 
     <section className={`${styles.signFormSection}`}>
-       {signedIn && (
-  user.role === "superAdmin" && (
-    <Navigate to="/AdminDashboard" replace={true} />
-  ) 
-) }
+      {signedIn && user.role === "superAdmin" && (
+        <Navigate to="/AdminDashboard" replace={true} />
+      )}
       <div className={`${styles.container}`}>
         <h2>Sign in</h2>
         {/* sign in with google btn */}

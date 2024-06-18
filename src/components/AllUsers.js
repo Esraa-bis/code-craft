@@ -34,11 +34,6 @@ function AllUsers() {
 
   const [userCourses, setUserCourses] = useState(() => ({}));
 
-  let loading = false;
-  const setLoading = (value) => {
-    loading = value;
-  };
-
   const getUsers = () => {
     getAllUsers(filters)
       .then((response) => {
@@ -49,17 +44,14 @@ function AllUsers() {
         } else {
           setError("Failed to fetch users");
         }
-        setLoading(false);
       })
       .catch((err) => {
         setError(err.message);
-        setLoading(false);
       });
   };
 
   // Fetch users when the component mounts
   useEffect(() => {
-    setLoading(true);
     getUsers();
     getUsersStats().then((response) => {
       if (response.success) {

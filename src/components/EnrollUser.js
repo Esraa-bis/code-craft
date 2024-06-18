@@ -37,8 +37,8 @@ function EnrollUser() {
       });
   }
 
-  function updateFormData(event, fieldname) {
-    setFormData({ ...formData, [fieldname]: event.target.value });
+  function updateFormData(event, fieldName) {
+    setFormData({ ...formData, [fieldName]: event.target.value });
   }
 
   return (

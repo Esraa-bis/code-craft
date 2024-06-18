@@ -87,8 +87,8 @@ function Checkout() {
   // }
 
   // handle create order
-  const updateFormData = (event, fieldname) => {
-    setFormData({ ...formData, [fieldname]: event.target.value });
+  const updateFormData = (event, fieldName) => {
+    setFormData({ ...formData, [fieldName]: event.target.value });
   };
   async function handleCreateOrder(e) {
     e.preventDefault();

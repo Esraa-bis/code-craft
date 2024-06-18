@@ -5,12 +5,17 @@ import styles from "../assets/css/AdminPage.module.css";
 import { addCoupon, deleteCoupon, getAllCoupons } from "../services/admin";
 import { sweetAlert } from "../services/sweetalert";
 
+let loading = false;
+const setLoading = (value) => {
+  loading = value;
+};
+
 function AllCoupons() {
   const [, setError] = useState(null);
   const [formData, setFormData] = useState({});
   const [coupons, setCoupons] = useState([]);
-  const updateFormData = (event, fieldname) => {
-    setFormData({ ...formData, [fieldname]: event.target.value });
+  const updateFormData = (event, fieldName) => {
+    setFormData({ ...formData, [fieldName]: event.target.value });
   };
 
   const handleDeleteCoupon = (coupon) => {
@@ -71,15 +76,10 @@ function AllCoupons() {
         setLoading(false);
       });
   }
-  const [loaded, setLoaded] = useState(false);
 
-  let loading = false;
-  const setLoading = (value) => {
-    loading = value;
-  };
   // Fetch users when the component mounts
   useEffect(() => {
-    if (loading || loaded) return;
+    if (loading) return;
     setLoading(true);
     getAllCoupons()
       .then((response) => {

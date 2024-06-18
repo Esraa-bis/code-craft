@@ -317,9 +317,7 @@ function AllCourses() {
                 <button
                   className={styles.deleteBtn}
                   onClick={() => {
-                    {
-                      confirmDeleteCourse(course);
-                    }
+                    confirmDeleteCourse(course);
                   }}
                 >
                   <FontAwesomeIcon icon={faTrash} />
