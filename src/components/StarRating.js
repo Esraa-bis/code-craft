@@ -6,7 +6,9 @@ const StarRating = ({ rating, onRatingChange }) => {
       {[1, 2, 3, 4, 5].map((star) => (
         <span
           key={star}
-          className={`${styles.star} ${star <= rating ? styles.filled : ""}`}
+          className={`${styles.star} ${
+            star <= rating ? styles.filled : styles.empty
+          }`}
           onClick={() => onRatingChange(star)}
         >
           ★

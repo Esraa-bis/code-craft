@@ -439,3 +439,7 @@ tr:nth-child(even) {
   font-size: 25px;
   color: #ffbc15;
 }
+.empty {
+  font-size: 25px;
+  color: #b2b1ae;
+}
