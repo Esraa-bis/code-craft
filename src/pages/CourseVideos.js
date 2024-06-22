@@ -146,7 +146,9 @@ function CourseVideos() {
                   />
                 </svg>
                 <button
-                  className={styles.videoTitle}
+                  className={`${styles.videoTitle} ${
+                    courseCompleted(video?._id) ? styles.completed : ""
+                  }`}
                   type="button"
                   onClick={() => setSelectedVideo(() => video)}
                 >
@@ -167,11 +169,11 @@ function CourseVideos() {
                 controls
                 className={styles.video}
                 preload="auto"
-                src={selectedVideo.video.url}
+                src={selectedVideo.video?.url}
                 onEnded={() => handleUpdateProgress(selectedVideo._id)}
               >
-                <source src={selectedVideo.video.url} type="video/mp4" />
-                <source src={selectedVideo.video.url} type="video/ogg" />
+                <source src={selectedVideo.video?.url} type="video/mp4" />
+                <source src={selectedVideo.video?.url} type="video/ogg" />
                 Your browser does not support the video tag.
               </video>
               <div className={styles.Arrows}>
