@@ -70,35 +70,10 @@ function CourseFilters({ setFilters, filtersVisible }) {
         setLoading(false);
       });
   }, []);
-  //
-  //
-  // const [filtersVisible, setFiltersVisible] = useState(false);
 
-  // const toggleFiltersVisibility = () => {
-  //   setFiltersVisible(!filtersVisible);
-  // };
   return (
     <>
       <div className={styles.filtersDiv}>
-        {/* <button className={styles.filtersBtn} onClick={toggleFiltersVisibility}>
-          <p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className={`w-6 h-6 ${styles.filterIcon}`}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"
-              />
-            </svg>
-            Filters
-          </p>
-        </button> */}
         <div
           className={`${styles.filters} ${
             filtersVisible ? styles.visible : ""
@@ -125,61 +100,61 @@ function CourseFilters({ setFilters, filtersVisible }) {
                 <input
                   type="radio"
                   name="price"
-                  value="0:999"
+                  value="0:500"
                   onClick={(e) => shouldUncheck(e)}
                   onChange={(e) => onFiltersChange("price", e)}
                 />
-                Up to 999 EGP
+                Up to 500 EGP
               </label>
               <label>
                 <input
                   type="radio"
                   name="price"
-                  value="1000:1999"
+                  value="500:1000"
                   onClick={(e) => shouldUncheck(e)}
                   onChange={(e) => onFiltersChange("price", e)}
                 />
-                1000 to 1999 EGP
+                500 to 1000 EGP
               </label>
               <label>
                 <input
                   type="radio"
                   name="price"
-                  value="2000:2999"
+                  value="1000:1500"
                   onClick={(e) => shouldUncheck(e)}
                   onChange={(e) => onFiltersChange("price", e)}
                 />
-                2000 to 2999 EGP
+                1000 to 1500 EGP
               </label>
               <label>
                 <input
                   type="radio"
                   name="price"
-                  value="3000:4999"
+                  value="1500:2000"
                   onClick={(e) => shouldUncheck(e)}
                   onChange={(e) => onFiltersChange("price", e)}
                 />
-                3000 to 4999 EGP
+                1500 to 2000 EGP
               </label>
               <label>
                 <input
                   type="radio"
                   name="price"
-                  value="5000:7999"
+                  value="2000:2500"
                   onClick={(e) => shouldUncheck(e)}
                   onChange={(e) => onFiltersChange("price", e)}
                 />
-                5000 to 7999 EGP
+                2000 to 2500 EGP
               </label>
               <label>
                 <input
                   type="radio"
                   name="price"
-                  value="8000"
+                  value="3000"
                   onClick={(e) => shouldUncheck(e)}
                   onChange={(e) => onFiltersChange("price", e)}
                 />
-                8000 & above EGP
+                3000 EGP
               </label>
             </div>
           </div>
