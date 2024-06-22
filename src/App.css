@@ -87,6 +87,7 @@ body {
 .table-pagination {
   display: flex;
   justify-content: center;
+  margin: 20px;
 }
 
 .table-pagination button {
@@ -99,9 +100,9 @@ body {
 }
 
 .table-pagination button.active {
-  background-color: #4caf50;
+  background-color: #0f4294;
   color: white;
-  border: 1px solid #4caf50;
+  border: 1px solid #0f4294;
 }
 
 .table-pagination button:not(:disabled):hover:not(.active) {
