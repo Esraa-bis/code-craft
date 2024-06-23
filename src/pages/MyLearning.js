@@ -230,7 +230,12 @@ function InProgress() {
             </p>
           </div>
           <div className={styles.ACtion}>
-            <Link className={styles.viewCourse}>Continue &#8594;</Link>
+            <Link
+              className={styles.viewCourse}
+              to={`/CourseVideos?courseId=${course?.course?._id}`}
+            >
+              Continue &#8594;
+            </Link>
           </div>
         </div>
       ))}
