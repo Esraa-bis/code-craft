@@ -327,7 +327,7 @@ function Post({
               <p className={styles.content}>{post.content} </p>
               <div className={styles.imageContainer}>
                 {post.images.map((image) => (
-                  <img key={image.id} src={image.url} alt="Post" />
+                  <img key={image.id} src={image?.url} alt="Post" />
                 ))}
               </div>
             </>
