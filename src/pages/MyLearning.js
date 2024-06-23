@@ -213,24 +213,15 @@ function InProgress() {
             </p>
             <p className={styles.NotCompletedProgress}>
               {course.progress.toFixed(0)}% Completed
-              {/* <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className={`${styles.ProgressIcon}w-6 h-6`}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg> */}
             </p>
           </div>
           <div className={styles.ACtion}>
-            <Link className={styles.viewCourse}>Continue &#8594;</Link>
+            <Link
+              to={`/ViewCourse?courseId=${course?.course?._id}`}
+              className={styles.viewCourse}
+            >
+              Continue &#8594;
+            </Link>
           </div>
         </div>
       ))}
@@ -297,7 +288,9 @@ function Completed() {
             </p>
           </div>
           <div className={styles.ACtion}>
-            <Link className={styles.viewCourse}>Get Certificate</Link>
+            <Link to="/ContactUs" className={styles.viewCourse}>
+              Get Certificate
+            </Link>
           </div>
         </div>
       ))}
