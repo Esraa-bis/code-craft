@@ -173,6 +173,7 @@ function CourseVideos() {
                 className={styles.video}
                 preload="auto"
                 src={selectedVideo.video?.url}
+                controlsList="nodownload"
                 onEnded={() => handleUpdateProgress(selectedVideo._id)}
               >
                 <source src={selectedVideo.video?.url} type="video/mp4" />
