@@ -101,7 +101,7 @@ function Checkout() {
         if (response.success) {
           payWithStripe(response.order._id).then((response) => {
             if (response.success) {
-              window.location.href = response.checkOutSession.url;
+              window.location.href = response.checkOutSession?.url;
             }
           });
         } else {
@@ -129,7 +129,7 @@ function Checkout() {
         if (response.success) {
           payWithStripe(response.order._id).then((response) => {
             if (response.success) {
-              window.location.href = response.checkOutSession.url;
+              window.location.href = response.checkOutSession?.url;
             }
           });
         } else {
@@ -156,7 +156,7 @@ function Checkout() {
             <div key={index}>
               <div className={styles.item}>
                 <img
-                  src={course.image.url}
+                  src={course.image?.url}
                   alt={course.title}
                   className={styles.courseImg}
                 />

@@ -119,3 +119,6 @@
     border-right: none;
   }
 }
+.completed {
+  color: #0054ad;
+}

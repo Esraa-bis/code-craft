@@ -37,7 +37,7 @@ function UploadCourse() {
             ...response.videos.map((video) => ({
               id: video._id,
               name: video.title,
-              src: video.video.url,
+              src: video.video?.url,
               preload: "metadata",
               duration: video.duration,
               uploaded: true,

@@ -79,7 +79,7 @@ function Approved({ user }) {
       {courses?.map((course, index) => (
         <div className={`${styles.MyLearningCard} `}>
           <img
-            src={course.image.url}
+            src={course.image?.url}
             alt="course css"
             className={`${styles.courseImg}`}
           />
@@ -160,7 +160,7 @@ function Disapproved({ user }) {
       {courses?.map((course, index) => (
         <div className={`${styles.MyLearningCard}`}>
           <img
-            src={course.image.url}
+            src={course.image?.url}
             alt={course.courseName}
             className={`${styles.courseImg}`}
           />
