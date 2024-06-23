@@ -8,10 +8,11 @@ import { signIn } from "../services/auth";
 import { SessionTokenStorage } from "../services/local-storage";
 import { sweetAlert } from "../services/sweetalert";
 
-function SignIn({ signedIn, setSignedIn }) {
+function SignIn({ signedIn, setSignedIn, user }) {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({});
+  const [isAdmin, setIsAdmin] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -21,6 +22,7 @@ function SignIn({ signedIn, setSignedIn }) {
         if (response.success) {
           SessionTokenStorage.saveToken(response.data.token);
           setSignedIn(true);
+          setIsAdmin(true);
         } else {
           sweetAlert({
             title: response.message,
@@ -39,9 +41,16 @@ function SignIn({ signedIn, setSignedIn }) {
   function updateFormData(event, fieldName) {
     setFormData({ ...formData, [fieldName]: event.target.value });
   }
+
+  console.log(user.role);
+
   return (
     <section className={`${styles.signFormSection}`}>
       {signedIn && <Navigate to="/" replace={true} />}
+      {signedIn && (
+        <Navigate to={isAdmin ? "/AdminDashboard" : "/"} replace={true} />
+      )}
+      {console.log(user.role)}
 
       <div className={`${styles.container}`}>
         <h2>Sign in</h2>

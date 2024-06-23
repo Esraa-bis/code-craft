@@ -73,7 +73,13 @@ function App() {
           <Route path="/" element={<Home signedIn={signedIn} />} />
           <Route
             path="/SignIn"
-            element={<SignIn signedIn={signedIn} setSignedIn={setSignedIn} />}
+            element={
+              <SignIn
+                signedIn={signedIn}
+                setSignedIn={setSignedIn}
+                user={user}
+              />
+            }
           />
           <Route path="/SignUp" element={<SignUp signedIn={signedIn} />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
@@ -111,7 +117,11 @@ function App() {
               signedIn ? (
                 <PaymentMethods signedIn={signedIn} user={user} />
               ) : (
-                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+                <SignIn
+                  signedIn={signedIn}
+                  setSignedIn={setSignedIn}
+                  user={user}
+                />
               )
             }
           />
@@ -121,7 +131,11 @@ function App() {
               signedIn ? (
                 <Cart signedIn={signedIn} />
               ) : (
-                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+                <SignIn
+                  signedIn={signedIn}
+                  setSignedIn={setSignedIn}
+                  user={user}
+                />
               )
             }
           />
@@ -131,7 +145,11 @@ function App() {
               signedIn ? (
                 <ContactUs />
               ) : (
-                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+                <SignIn
+                  signedIn={signedIn}
+                  setSignedIn={setSignedIn}
+                  user={user}
+                />
               )
             }
           />
@@ -152,7 +170,11 @@ function App() {
               signedIn ? (
                 <ViewCourse user={user} />
               ) : (
-                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+                <SignIn
+                  signedIn={signedIn}
+                  setSignedIn={setSignedIn}
+                  user={user}
+                />
               )
             }
           />
@@ -162,7 +184,11 @@ function App() {
               signedIn ? (
                 <ViewCourse user={user} />
               ) : (
-                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+                <SignIn
+                  signedIn={signedIn}
+                  setSignedIn={setSignedIn}
+                  user={user}
+                />
               )
             }
           />
@@ -172,7 +198,11 @@ function App() {
               signedIn ? (
                 <MyLearning />
               ) : (
-                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+                <SignIn
+                  signedIn={signedIn}
+                  setSignedIn={setSignedIn}
+                  user={user}
+                />
               )
             }
           />
@@ -186,7 +216,11 @@ function App() {
               signedIn ? (
                 <CourseVideos />
               ) : (
-                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+                <SignIn
+                  signedIn={signedIn}
+                  setSignedIn={setSignedIn}
+                  user={user}
+                />
               )
             }
           />
@@ -196,7 +230,11 @@ function App() {
               signedIn ? (
                 <MyCourses user={user} />
               ) : (
-                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+                <SignIn
+                  signedIn={signedIn}
+                  setSignedIn={setSignedIn}
+                  user={user}
+                />
               )
             }
           />
@@ -206,7 +244,11 @@ function App() {
               signedIn ? (
                 <TeachOnCodeCraft edit={true} />
               ) : (
-                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+                <SignIn
+                  signedIn={signedIn}
+                  setSignedIn={setSignedIn}
+                  user={user}
+                />
               )
             }
           />
@@ -232,7 +274,11 @@ function App() {
               signedIn ? (
                 <TeachOnCodeCraft />
               ) : (
-                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+                <SignIn
+                  signedIn={signedIn}
+                  setSignedIn={setSignedIn}
+                  user={user}
+                />
               )
             }
           />
@@ -242,7 +288,11 @@ function App() {
               signedIn ? (
                 <UploadCourse />
               ) : (
-                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+                <SignIn
+                  signedIn={signedIn}
+                  setSignedIn={setSignedIn}
+                  user={user}
+                />
               )
             }
           />
@@ -252,7 +302,11 @@ function App() {
               signedIn ? (
                 <UploadCourse edit={true} />
               ) : (
-                <SignIn signedIn={signedIn} setSignedIn={setSignedIn} />
+                <SignIn
+                  signedIn={signedIn}
+                  setSignedIn={setSignedIn}
+                  user={user}
+                />
               )
             }
           />

@@ -258,7 +258,7 @@ function AllUsers() {
               <td>{index + 1}</td>
               <td>{user._id}</td>
               <td>
-                <img src={user.profile_pic.url} alt={user.userName} />
+                <img src={user?.profile_pic?.url} alt={user.userName} />
               </td>
               <td>
                 {user.firstName} {user.lastName}

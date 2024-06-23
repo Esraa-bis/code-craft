@@ -70,7 +70,7 @@ function Courses({ signedIn, keyword }) {
             <CourseCard
               key={index}
               course={{
-                img: course.image.url,
+                img: course?.image.url,
                 title: course.courseName,
                 description: course.desc,
                 price: course.basePrice,
