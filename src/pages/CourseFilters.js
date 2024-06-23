@@ -164,7 +164,7 @@ function CourseFilters({ setFilters, filtersVisible }) {
               <input
                 type="checkbox"
                 name="level"
-                value="all"
+                value="All"
                 onChange={(e) => onFiltersChange("level", e)}
               />
               All Levels
