@@ -48,7 +48,7 @@ function HomeCoursesSections({ sectionTitle, courses, signedIn }) {
           <SwiperSlide key={index}>
             <CourseCard
               course={{
-                img: course.image.url,
+                img: course?.image?.url,
                 title: course.courseName,
                 description: course.desc,
                 price: course.basePrice,
