@@ -30,7 +30,22 @@ function CourseVideos() {
   const setLoading = (value) => {
     loading = value;
   };
-
+  const refreshCourseProgress = (courseId) => {
+    courseProgress(courseId)
+      .then((response) => {
+        if (response.success) {
+          setProgress(() => response.courseEnrolled);
+          setLoaded(true);
+        } else {
+          setError("Failed to fetch videos");
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  };
   useEffect(() => {
     if (loaded || loading) return;
     setLoading(true);
@@ -48,20 +63,7 @@ function CourseVideos() {
         setError(err.message);
         setLoading(false);
       });
-    courseProgress(courseId)
-      .then((response) => {
-        if (response.success) {
-          setProgress(() => response.courseEnrolled);
-          setLoaded(true);
-        } else {
-          setError("Failed to fetch videos");
-        }
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
+    refreshCourseProgress(courseId);
   }, [courseId]);
 
   const handleVideoClick = (video) => {
@@ -92,6 +94,7 @@ function CourseVideos() {
     if (courseCompleted(videoId)) return;
     try {
       const result = await updateProgress(courseId, videoId);
+      refreshCourseProgress(courseId);
       // Handle the result as needed
     } catch (error) {
       console.error("Error updating progress:", error);
@@ -170,6 +173,7 @@ function CourseVideos() {
                 className={styles.video}
                 preload="auto"
                 src={selectedVideo.video?.url}
+                controlsList="nodownload"
                 onEnded={() => handleUpdateProgress(selectedVideo._id)}
               >
                 <source src={selectedVideo.video?.url} type="video/mp4" />
