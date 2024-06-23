@@ -50,7 +50,7 @@ function ImageUploader({ user, setUser }) {
     e.preventDefault();
     setLoading(true);
     (user.profile_pic?.id ===
-      "Code-Craft/user/profilepics/defaults/Windows_10_Default_Profile_Picture.svg_vz3o73"
+      "Code-Craft/user/profilepics/defaults/Windows_10_Default_Profile_Picture.svg_gxjd0w.png"
       ? uploadProfilePicture
       : updateProfilePicture)({
       file,
