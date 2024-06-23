@@ -288,7 +288,9 @@ function Completed() {
             </p>
           </div>
           <div className={styles.ACtion}>
-            <Link className={styles.viewCourse}>Get Certificate</Link>
+            <Link to="/ContactUs" className={styles.viewCourse}>
+              Get Certificate
+            </Link>
           </div>
         </div>
       ))}
